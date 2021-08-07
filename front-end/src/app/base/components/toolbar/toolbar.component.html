@@ -1,0 +1,27 @@
+<div class="toolbar">
+  <mat-toolbar color="accent">
+    <div class="vertical-center">
+      <span>Gestionale</span>
+    </div>
+    <ng-container *ngIf="username">
+      <p class="username-box">{{ username }}</p>
+      <div class="functions-box vertical-center">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="goToHome()"
+        >
+          <mat-icon aria-hidden="false" aria-label="Dashboard">home</mat-icon>
+        </button>
+        <button
+          class="icon-logout"
+          mat-icon-button
+          type="button"
+          (click)="doLogout()"
+        >
+          <mat-icon aria-hidden="false" aria-label="Logout">logout</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+  </mat-toolbar>
+</div>

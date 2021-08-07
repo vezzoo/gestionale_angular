@@ -1,0 +1,11 @@
+.form-container {
+  background-color: $white;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: calc(1.34375em + 10px) 0 10px 0;
+
+  .content {
+    width: 94%;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,26 @@
+@import "./app/base/style/variables.scss";
+
+@import "./app/base/style/form-container";
+@import "./app/base/style/toolbar";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family;
+  background-color: $bgColor;
+}
+
+.mat-form-field,
+button {
+  width: 100%;
+}
+
+div.vertical-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
