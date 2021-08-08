@@ -1,11 +1,23 @@
-<div (click)="onClick()" class="card">
+<div
+  (click)="onClick($event)"
+  class="card"
+  [ngClass]="{ 'card--small': small }"
+>
   <div class="card__header">
-    <div class="card__header-icon">
+    <div class="card__header-icon" *ngIf="icon">
       <mat-icon aria-hidden="false">{{ icon }}</mat-icon>
     </div>
     <span class="card__header-title">{{ title }}</span>
   </div>
   <div class="card__body">
-    <span class="card__body-description">{{ description }}</span>
+    <span class="card__body-description" *ngIf="description">
+      {{ description }}
+    </span>
+    <span class="card__body-price" *ngIf="price">
+      {{ price | number: "1.2-2" }} {{ currency }}
+    </span>
+    <span class="card__body-quantity" *ngIf="quantity !== undefined">
+      {{ quantity }}
+    </span>
   </div>
 </div>

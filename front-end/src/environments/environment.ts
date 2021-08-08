@@ -12,6 +12,8 @@ export const environment = {
   // path: 'http://wrk.applehome.it',  // Connection to WAN server
   // port: undefined,
   // optionalLayer: '/api',
+
+  currency: '€',
 };
 
 /*

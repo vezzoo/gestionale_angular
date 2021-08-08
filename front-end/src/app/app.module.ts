@@ -10,20 +10,27 @@ import { ToolbarComponent } from './base/components/toolbar/toolbar.component';
 import { CardComponent } from './base/components/card/card.component';
 import { CategoryComponent } from './base/components/category/category.component';
 import { FormContainer } from './base/components/form-container/form-container.component';
+import { SectionTitleComponent } from './base/components/section-title/section-title.component';
+import { CartDetailComponent } from './base/components/cart-detail/cart-detail.component';
 import { AddHeaderInterceptor } from './base/guards/addHeader.interceptor';
 import { MaterialModule } from './material.module';
 import { AuthComponent } from './modules/auth/auth.component';
 import { HomeComponent } from './modules/home/home.component';
+import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     HomeComponent,
+    CashDeskComponent,
     ToolbarComponent,
     CardComponent,
     CategoryComponent,
     FormContainer,
+    SectionTitleComponent,
+    CartDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +41,7 @@ import { HomeComponent } from './modules/home/home.component';
     ReactiveFormsModule,
     TextMaskModule,
     HttpClientModule,
+    NgbModule,
   ],
   bootstrap: [AppComponent],
   providers: [

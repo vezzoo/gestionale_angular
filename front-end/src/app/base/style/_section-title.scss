@@ -1,20 +1,13 @@
 @import "./variables.scss";
 
-.category {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-
+.section {
   &-title {
+    display: block;
     color: $primary-color;
     padding: 5px;
     font-size: 26px;
     font-weight: 600;
     border-bottom: 1px solid $secondary-color;
-    padding-bottom: 5px;
-  }
-
-  &-body {
-    margin-top: 15px;
+    padding-bottom: 7px;
   }
 }

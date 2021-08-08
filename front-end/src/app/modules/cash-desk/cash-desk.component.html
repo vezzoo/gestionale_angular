@@ -1,0 +1,55 @@
+<div class="cash-desk container">
+  <div class="row mt-20">
+    <div class="col">
+      <ng-container *ngFor="let category of categories">
+        <app-category
+          [cardSmall]="true"
+          [title]="category.title"
+          [childrens]="category.childrens"
+          (onCardClickEvent)="
+            onCardClick($event.cardTitle, $event.isShiftPressed)
+          "
+        ></app-category>
+      </ng-container>
+
+      <ng-container *ngIf="cart.length > 0">
+        <app-section-title [title]="'Riepilogo'"></app-section-title>
+        <div class="mt-15">
+          <ng-container *ngFor="let el of cart">
+            <app-cart-detail
+              [title]="el.title"
+              [quantity]="el.quantity"
+              [price]="el.price"
+            ></app-cart-detail>
+          </ng-container>
+        </div>
+        <div class="cash-desk__total-wrapper">
+          <span class="cash-desk__total-title">Totale</span>
+          <span class="cash-desk__total-value">
+            {{ getTotal() | number: "1.2-2" }} {{ currency }}
+          </span>
+        </div>
+
+        <div class="mt-30">
+          <app-section-title [title]="'Note'"></app-section-title>
+        </div>
+        <div class="mt-15">
+          <form-container>
+            <form #form="ngForm">
+              <mat-form-field appearance="outline">
+                <mat-label>Note cucina</mat-label>
+                <textarea
+                  matInput
+                  ngModel
+                  name="notes"
+                  type="text"
+                  #notes
+                ></textarea>
+              </mat-form-field>
+            </form>
+          </form-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

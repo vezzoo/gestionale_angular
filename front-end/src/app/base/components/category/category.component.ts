@@ -6,12 +6,19 @@ import { Card } from '../../models/card.model';
   templateUrl: './category.component.html',
 })
 export class CategoryComponent {
+  @Input() cardSmall: boolean = false;
   @Input() title: string;
   @Input() childrens: Card[];
 
-  @Output() onCardClickEvent = new EventEmitter<string>();
+  @Output() onCardClickEvent = new EventEmitter<{
+    cardTitle: string;
+    isShiftPressed: boolean;
+  }>();
 
-  onClick(cardTitle: string) {
-    this.onCardClickEvent.emit(`${this.title}/${cardTitle}`);
+  onClick(cardTitle: string, isShiftPressed: boolean) {
+    this.onCardClickEvent.emit({
+      cardTitle: `${this.title}/${cardTitle}`,
+      isShiftPressed: isShiftPressed,
+    });
   }
 }
