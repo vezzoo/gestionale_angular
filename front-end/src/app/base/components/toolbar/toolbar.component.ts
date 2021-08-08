@@ -36,4 +36,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   goToHome(): void {
     this.routerService.navigate(Urls.HOME);
   }
+
+  isHome(): boolean {
+    return this.routerService.getUrl() === Urls.HOME
+  }
 }

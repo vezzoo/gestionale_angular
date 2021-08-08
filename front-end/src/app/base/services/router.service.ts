@@ -9,4 +9,8 @@ export class RouterService {
   navigate(url: Urls): void {
     this.router.navigateByUrl(`/${url}`);
   }
+
+  getUrl(): string {
+    return this.router.url.slice(1);
+  }
 }
