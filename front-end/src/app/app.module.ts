@@ -7,6 +7,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './base/components/toolbar/toolbar.component';
+import { CardComponent } from './base/components/card/card.component';
+import { CategoryComponent } from './base/components/category/category.component';
 import { FormContainer } from './base/components/form-container/form-container.component';
 import { AddHeaderInterceptor } from './base/guards/addHeader.interceptor';
 import { MaterialModule } from './material.module';
@@ -19,6 +21,8 @@ import { HomeComponent } from './modules/home/home.component';
     AuthComponent,
     HomeComponent,
     ToolbarComponent,
+    CardComponent,
+    CategoryComponent,
     FormContainer,
   ],
   imports: [

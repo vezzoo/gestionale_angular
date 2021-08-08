@@ -1,0 +1,14 @@
+<div class="category">
+  <span class="category-title">{{ title }}</span>
+  <div class="category-body">
+    <ng-container *ngFor="let card of childrens">
+      <app-card
+        [title]="card.title"
+        [description]="card.description"
+        [quantity]="card.quantity"
+        [icon]="card.icon"
+        (onClickEvent)="onClick($event)"
+      ></app-card>
+    </ng-container>
+  </div>
+</div>

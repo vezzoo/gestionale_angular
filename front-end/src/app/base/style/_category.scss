@@ -1,0 +1,21 @@
+@import "./variables.scss";
+
+.category {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+
+  &-title {
+    color: $primary-color;
+    padding: 5px;
+    font-size: 26px;
+    font-weight: 600;
+    border-bottom: 1px solid $secondary-color;
+    padding-bottom: 5px;
+  }
+
+  &-body {
+    display: flex;
+    margin-top: 15px;
+  }
+}
