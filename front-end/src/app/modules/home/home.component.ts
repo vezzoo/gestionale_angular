@@ -80,8 +80,6 @@ export class HomeComponent implements OnInit {
 
   onCardClick(cardTitle: string) {
     const path = this.getUrlFromTitle(cardTitle);
-    console.log(`TODO aggiungere categoria a url`);
-    console.log(path);
     if (path && Urls[path]) {
       this.routerService.navigate(Urls[path]);
     } else {
@@ -93,10 +91,10 @@ export class HomeComponent implements OnInit {
     return title
       .split('')
       .map((e) => {
-        if (e === ' ') return '_';
+        if (e === ' ' || e === '/') return '_';
         else return e;
       })
       .join('')
-      .toLowerCase();
+      .toUpperCase();
   }
 }
