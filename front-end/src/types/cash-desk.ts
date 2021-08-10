@@ -1,8 +1,8 @@
-interface CashDeskGetRequest {
+export interface CashDeskGetRequest {
   id: string;
 }
 
-interface CashDeskGetResponse {
+export interface CashDeskGetResponse {
   categories: Array<{
     title: string;
     childrens: Array<{
@@ -16,19 +16,19 @@ interface CashDeskGetResponse {
   }>;
 }
 
-interface CashDeskOrderConfirmRequest {
+export interface CashDeskOrderConfirmRequest {
   cart: Array<{
     id: string;
     quantity?: number;
   }>;
 }
 
-interface CashDeskOrderConfirmResponse {
+export interface CashDeskOrderConfirmResponse {
   orderId: string;
 }
 
-interface CashDeskPrintRequest {
+export interface CashDeskPrintRequest {
   orderId: string;
 }
 
-interface CashDeskPrintResponse {}
+export interface CashDeskPrintResponse {}

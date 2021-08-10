@@ -1,6 +1,6 @@
-interface DashBoardGetRequest {}
+export interface DashBoardGetRequest {}
 
-interface DashBoardGetResponse {
+export interface DashBoardGetResponse {
   categories: Array<{
     title: string;
     childrens: Array<{

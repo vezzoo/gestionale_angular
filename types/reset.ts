@@ -1,3 +1,0 @@
-interface ResetGetRequest {}
-
-interface ResetGetResponse {}

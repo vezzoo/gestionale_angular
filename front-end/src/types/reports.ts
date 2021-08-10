@@ -1,9 +1,9 @@
-interface ReportsGetRequest {
+export interface ReportsGetRequest {
   dateFrom: number;
   dateTo: number;
 }
 
-interface ReportsGetResponse {
+export interface ReportsGetResponse {
   fileName: string;
   fileBase64: string;
 }

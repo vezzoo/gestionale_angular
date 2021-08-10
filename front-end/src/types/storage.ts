@@ -1,6 +1,6 @@
-interface StorageInitRequest {}
+export interface StorageInitRequest {}
 
-interface StorageInitResponse {
+export interface StorageInitResponse {
   items: Array<{
     id: string;
     title: string;
@@ -11,7 +11,7 @@ interface StorageInitResponse {
   }>;
 }
 
-interface StorageUpdateRequest {
+export interface StorageUpdateRequest {
   editedItems: Array<{
     id: string;
     title?: string;
@@ -22,4 +22,4 @@ interface StorageUpdateRequest {
   }>;
 }
 
-interface StorageUpdateResponse {}
+export interface StorageUpdateResponse {}
