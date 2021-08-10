@@ -1,5 +1,6 @@
 interface ReportsRequest {
-  date: string;
+  dateFrom: number;
+  dateTo: number;
 }
 
 interface ReportsResponse {

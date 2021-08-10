@@ -1,11 +1,12 @@
 interface CashDeskInitRequest {
-  type: string;
+  id: string;
 }
 
 interface CashDeskInitResponse {
   categories: Array<{
     title: string;
     childrens: Array<{
+      id: string;
       title: string;
       price: number;
       description?: string;
@@ -14,15 +15,23 @@ interface CashDeskInitResponse {
   }>;
 }
 
-interface CashDeskSavePrintRequest {
+interface CashDeskOrderConfirmRequest {
   cart: Array<{
-    title: string;
-    price: number;
-    description?: string;
+    id: string;
     quantity?: number;
   }>;
 }
 
-interface CashDeskSavePrintResponse {
-  status: string;
+interface CashDeskOrderConfirmResponse {
+  orderId: string;
+}
+
+interface CashDeskPrintRequest {
+  cart: Array<{
+    id: string;
+    quantity?: number;
+  }>;
+}
+
+interface CashDeskPrintResponse {
 }
