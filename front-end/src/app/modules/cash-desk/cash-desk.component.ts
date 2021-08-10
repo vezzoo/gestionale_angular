@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { title } from 'process';
-import { Urls } from 'src/app/base/enums/enums';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Card } from 'src/app/base/models/card.model';
 import { Category } from 'src/app/base/models/category.model';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
@@ -12,12 +17,27 @@ import { AuthService } from '../auth/auth.service';
   selector: 'app-cash-desk',
   templateUrl: './cash-desk.component.html',
   styleUrls: ['./cash-desk.component.scss'],
+  animations: [
+    // prettier-ignore
+    trigger('animateScrollButton', [
+      state('visible', style({
+          transform: 'translateY(0)',
+        })
+      ),
+      state('hidden', style({
+        transform: 'translateY(100px)',
+        })
+      ),
+      transition('visible <=> hidden', animate('0.2s')),
+    ]),
+  ],
 })
 export class CashDeskComponent implements OnInit {
   categories: Category[] = [];
   cart: Card[] = [];
 
   currency = environment.currency;
+  showScrollButton: boolean = false;
 
   constructor(
     private httpService: HttpClientService,
@@ -52,6 +72,16 @@ export class CashDeskComponent implements OnInit {
             price: 3,
             quantity: 0,
           },
+          {
+            title: 'Alette',
+            price: 2,
+            quantity: 0,
+          },
+          {
+            title: 'Calamari',
+            price: 2.5,
+            quantity: 0,
+          },
         ],
       },
       {
@@ -74,6 +104,11 @@ export class CashDeskComponent implements OnInit {
     this.categories = response;
   }
 
+  @HostListener('window:scroll')
+  onScroll() {
+    this.checkIfShowScrollButton();
+  }
+
   onCardClick(cardTitle: string, isShiftPressed: boolean) {
     const card = this.getCardFromTitle(cardTitle);
 
@@ -92,6 +127,22 @@ export class CashDeskComponent implements OnInit {
     return this.cart.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.price * currentValue.quantity;
     }, 0);
+  }
+
+  scrollToBottom() {
+    const element = document.querySelector('#scrollDestionation');
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
+
+  checkIfShowScrollButton() {
+    this.showScrollButton = !(
+      document.body.scrollHeight - (window.innerHeight + window.scrollY) <=
+      10
+    );
   }
 
   private updateCart(newElement: Card) {

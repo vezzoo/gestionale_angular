@@ -1,6 +1,6 @@
 <div class="cash-desk container">
   <div class="row mt-20">
-    <div class="col">
+    <div class="col" (resized)="checkIfShowScrollButton()">
       <ng-container *ngFor="let category of categories">
         <app-category
           [cardSmall]="true"
@@ -52,4 +52,17 @@
       </ng-container>
     </div>
   </div>
+
+  <button
+    class="cash-desk__scroll-button"
+    mat-fab
+    type="button"
+    color="primary"
+    (click)="scrollToBottom()"
+    [@animateScrollButton]="showScrollButton ? 'visible' : 'hidden'"
+  >
+    <mat-icon aria-hidden="false">arrow_downward</mat-icon>
+  </button>
+
+  <div id="scrollDestionation" style="visibility: hidden"></div>
 </div>

@@ -16,6 +16,13 @@ body {
   margin: 0;
   font-family: $font-family;
   background-color: $bgColor;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .mat-form-field,

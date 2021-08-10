@@ -1,4 +1,10 @@
 .cash-desk {
+  margin-left: 10px;
+
+  @media (min-width: 1920px) {
+    width: 1720px;
+  }
+
   &__total {
     &-wrapper {
       display: flex;
@@ -6,10 +12,17 @@
       align-items: center;
       padding: 10px;
       border-radius: 8px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       background-color: #fff;
     }
+  }
+
+  &__scroll-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    transform: translateY(100px);
   }
 }
 

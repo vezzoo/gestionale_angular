@@ -18,6 +18,7 @@ import { AuthComponent } from './modules/auth/auth.component';
 import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TextMaskModule,
     HttpClientModule,
     NgbModule,
+    AngularResizedEventModule,
   ],
   bootstrap: [AppComponent],
   providers: [
