@@ -1,28 +1,34 @@
-interface CashDeskInitRequest {
-  type: string;
+interface CashDeskGetRequest {
+  id: string;
 }
 
-interface CashDeskInitResponse {
+interface CashDeskGetResponse {
   categories: Array<{
     title: string;
     childrens: Array<{
+      id: string;
       title: string;
       price: number;
+      left: number;
       description?: string;
       quantity?: number;
     }>;
   }>;
 }
 
-interface CashDeskSavePrintRequest {
+interface CashDeskOrderConfirmRequest {
   cart: Array<{
-    title: string;
-    price: number;
-    description?: string;
+    id: string;
     quantity?: number;
   }>;
 }
 
-interface CashDeskSavePrintResponse {
-  status: string;
+interface CashDeskOrderConfirmResponse {
+  orderId: string;
 }
+
+interface CashDeskPrintRequest {
+  orderId: string;
+}
+
+interface CashDeskPrintResponse {}

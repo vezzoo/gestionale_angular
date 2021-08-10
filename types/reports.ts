@@ -1,8 +1,9 @@
-interface ReportsRequest {
-  date: string;
+interface ReportsGetRequest {
+  dateFrom: number;
+  dateTo: number;
 }
 
-interface ReportsResponse {
+interface ReportsGetResponse {
   fileName: string;
   fileBase64: string;
 }

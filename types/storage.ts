@@ -1,25 +1,25 @@
 interface StorageInitRequest {}
 
 interface StorageInitResponse {
-  foods: Array<{
+  items: Array<{
+    id: string;
     title: string;
     price: number;
+    stock: number;
+    category: string;
     description?: string;
-    stock?: number;
-    category?: string;
   }>;
 }
 
 interface StorageUpdateRequest {
-  editedFoods: Array<{
-    title: string;
-    price: number;
-    description?: string;
+  editedItems: Array<{
+    id: string;
+    title?: string;
+    price?: number;
     stock?: number;
+    description?: string;
     category?: string;
   }>;
 }
 
-interface StorageUpdateResponse {
-  status: string;
-}
+interface StorageUpdateResponse {}

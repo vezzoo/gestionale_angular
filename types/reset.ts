@@ -1,5 +1,3 @@
-interface ResetRequest {}
+interface ResetGetRequest {}
 
-interface ResetResponse {
-  status: string;
-}
+interface ResetGetResponse {}
