@@ -5,5 +5,5 @@ export interface LoginGetRequest {
 
 export interface LoginGetResponse {
   username: string;
-  id: string;
+  token: string;
 }

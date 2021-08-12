@@ -16,11 +16,11 @@ export class AddHeaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const id = this.authService.getUserId();
+    const id = this.authService.getTokenJWT();
 
     if (id) {
       return next.handle(
-        req.clone({ headers: req.headers.append('user', String(id)) })
+        req.clone({ headers: req.headers.append('token', String(id)) })
       );
     } else {
       return next.handle(req);
