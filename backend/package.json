@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "tsc": "tsc --resolveJsonModule",
+    "run": "tsc; node lib/index.js",
+    "jwt_keygen": "openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem && openssl ec -in ec-secp256k1-priv-key.pem -pubout -out ec-secp256k1-priv-key.pub.pem"
   },
   "author": "tetofonta",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^4.3.5",
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "fastify": "^3.20.1",
-    "@types/node": "^16.4.13"
+    "@types/node": "^16.4.13",
+    "async-mutex": "^0.3.1",
+    "mongoose": "^5.13.6",
+    "@types/mongoose": "^5.11.97",
+    "jsonwebtoken": "^8.5.1",
+    "@types/jsonwebtoken": "^8.5.4"
   }
 }

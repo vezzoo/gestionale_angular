@@ -3,3 +3,6 @@ node_modules
 *.map
 *.tsmap
 *.log
+package-lock.json
+lib/
+*.pem

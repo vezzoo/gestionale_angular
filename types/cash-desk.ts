@@ -9,6 +9,7 @@ interface CashDeskInitResponse {
       id: string;
       title: string;
       price: number;
+      left: number;
       description?: string;
       quantity?: number;
     }>;
