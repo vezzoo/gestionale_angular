@@ -1,0 +1,18 @@
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "d70497gmd7"
+}
+
+###
+
+PUT http://localhost:3000/api/usr/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNDY4MTgzNmMwMWM4NDhiYTMzMiIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI4ODg2MzA1LCJleHAiOjE2Mjg5MDA3MDV9.wxnS3UCgmdG37aWAcXcEicYNeTYOnStcN74CdbVWEEcPS77i7h2GyZALeHThcFuSbYPRLui9BCvnNL3fBVfqJA
+
+{
+  "username": "mario",
+  "permissions": ["user_management"]
+}
