@@ -12,3 +12,10 @@ export const SETTING_JWT_PUBLIC = "-----BEGIN PUBLIC KEY-----\n" +
     "-----END PUBLIC KEY-----\n"
 
 export const SETTING_TOKEN_EXPIRE_HOURS = "4h"
+
+export const SETTING_API_ROOT = "/api"
+export const SETTING_WEBSERVER_HTTP_PORT = 3000
+export const SETTING_WEBSERVER_BIND = "0.0.0.0"
+export const SETTING_AUTHENTICATION_HEADER = "Authorization"
+
+export const SETTING_PID_FILE = "./pid"

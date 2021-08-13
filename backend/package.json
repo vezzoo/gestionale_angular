@@ -8,7 +8,6 @@
     "jwt_keygen": "openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem && openssl ec -in ec-secp256k1-priv-key.pem -pubout -out ec-secp256k1-priv-key.pub.pem"
   },
   "author": "tetofonta",
-  "license": "ISC",
   "devDependencies": {
     "typescript": "^4.3.5"
   },
@@ -19,6 +18,7 @@
     "mongoose": "^5.13.6",
     "@types/mongoose": "^5.11.97",
     "jsonwebtoken": "^8.5.1",
-    "@types/jsonwebtoken": "^8.5.4"
+    "@types/jsonwebtoken": "^8.5.4",
+    "fluent-json-schema": "^3.0.1"
   }
 }

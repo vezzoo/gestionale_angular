@@ -14,7 +14,7 @@ export interface IUser {
 }
 
 const UserSchema = new Schema({
-    username: String,
+    username: {type: String, unique : true, required : true, dropDups: true},
     password: String,
     password_salt: String,
     permissions: Array<String>()
@@ -41,7 +41,7 @@ UserSchema.methods.authenticate = function (psw: string): string | null {
         console.warn("Login failed for user", this.get('username'))
         return null;
     }
-    return jwt.sign(new UserAuthData(this as unknown as IUserDocument).toJsonValue(), SETTING_JWT_PRIVATE, {algorithm: 'ES256', expiresIn: SETTING_TOKEN_EXPIRE_HOURS})
+    return jwt.sign(UserAuthData.fromUserDocument(this as unknown as IUserDocument).toJsonValue(), SETTING_JWT_PRIVATE, {algorithm: 'ES256', expiresIn: SETTING_TOKEN_EXPIRE_HOURS})
 };
 
 export interface IUserDocument extends IUser, Document {
