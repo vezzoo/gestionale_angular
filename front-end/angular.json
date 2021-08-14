@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "rapportinis": {
+    "gestionale_angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/rapportinis",
+            "outputPath": "dist/gestionale_angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -29,7 +29,8 @@
               "src/styles.scss",
               "src/app/base/style/theme.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["angular2-text-mask"]
           },
           "configurations": {
             "production": {
@@ -64,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "rapportinis:build"
+            "browserTarget": "gestionale_angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "rapportinis:build:production"
+              "browserTarget": "gestionale_angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rapportinis:build"
+            "browserTarget": "gestionale_angular:build"
           }
         },
         "test": {
@@ -105,16 +106,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "rapportinis:serve"
+            "devServerTarget": "gestionale_angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "rapportinis:serve:production"
+              "devServerTarget": "gestionale_angular:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "rapportinis"
+  "defaultProject": "gestionale_angular"
 }
