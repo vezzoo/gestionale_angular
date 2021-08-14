@@ -1,3 +1,5 @@
+@import "../../base/style/variables.scss";
+
 .cash-desk {
   margin-left: 10px;
 
@@ -23,6 +25,41 @@
     right: 20px;
     bottom: 20px;
     transform: translateY(100px);
+  }
+
+  &__summary {
+    border-left: 1px solid $secondary-color;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  &__splitter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__amounts {
+      &-received {
+        width: 50%;
+      }
+
+      &-computed {
+        white-space: nowrap;
+        line-height: 1.125;
+        padding-bottom: 1.34375em;
+        margin: 0.25em 0;
+        margin-left: 30px;
+
+        &-amount {
+          font-size: 18px;
+        }
+      }
+    }
+
+    &-button {
+      width: 30%;
+      height: 70px;
+    }
   }
 }
 

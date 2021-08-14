@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Card } from '../../models/card.model';
+import { CashDeskItem } from '../../models/cashDeskItem.model';
+import { DashboardItem } from '../../models/dashboardItem.model';
 
 @Component({
   selector: 'app-category',
@@ -8,7 +9,7 @@ import { Card } from '../../models/card.model';
 export class CategoryComponent {
   @Input() cardSmall: boolean = false;
   @Input() title: string;
-  @Input() childrens: Card[];
+  @Input() childrens: Array<DashboardItem | CashDeskItem>;
 
   @Output() onCardClickEvent = new EventEmitter<{
     cardTitle: string;
@@ -20,5 +21,13 @@ export class CategoryComponent {
       cardTitle: `${this.title}/${cardTitle}`,
       isShiftPressed: isShiftPressed,
     });
+  }
+
+  getCashDeskItem(item: DashboardItem | CashDeskItem): CashDeskItem {
+    return <CashDeskItem>item;
+  }
+
+  getDashboardItem(item: DashboardItem | CashDeskItem): DashboardItem {
+    return <DashboardItem>item;
   }
 }

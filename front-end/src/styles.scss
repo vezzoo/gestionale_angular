@@ -35,3 +35,13 @@ div.vertical-center {
   display: flex;
   align-items: center;
 }
+
+.mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+  font-weight: 400;
+}
+
+.iframe-hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}

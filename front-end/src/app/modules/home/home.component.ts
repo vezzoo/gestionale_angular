@@ -27,16 +27,19 @@ export class HomeComponent implements OnInit {
         title: 'Cassa',
         childrens: [
           {
+            id: 'foo',
             title: 'Standard',
             description: 'Cassa completa di tutte le categorie',
             icon: 'local_atm',
           },
           {
+            id: 'foo',
             title: 'Bar',
             description: 'Cassa comprendente solo la categoria bar',
             icon: 'money',
           },
           {
+            id: 'foo',
             title: 'Asporto',
             description: 'Cassa completa, solo da asporto',
             icon: 'local_atm',
@@ -47,11 +50,13 @@ export class HomeComponent implements OnInit {
         title: 'Gestione',
         childrens: [
           {
+            id: 'foo',
             title: 'Magazzino',
             description: '<Desc here>',
             icon: 'storage',
           },
           {
+            id: 'foo',
             title: 'Reports',
             description: '<Desc here>',
             icon: 'equalizer',
@@ -62,11 +67,13 @@ export class HomeComponent implements OnInit {
         title: 'Amministrazione',
         childrens: [
           {
+            id: 'foo',
             title: 'Gestione utenti',
             description: '<Desc here>',
             icon: 'account_circle',
           },
           {
+            id: 'foo',
             title: 'Chiudi giornata',
             description: '<Desc here>',
             icon: 'close',

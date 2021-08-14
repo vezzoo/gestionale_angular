@@ -10,5 +10,5 @@ export class CartDetailComponent {
   @Input() quantity: number;
   @Input() price: number;
 
-  currency = environment.currency;
+  readonly currency = environment.currency;
 }

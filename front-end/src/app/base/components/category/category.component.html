@@ -1,15 +1,17 @@
 <div class="category">
   <app-section-title [title]="title"></app-section-title>
   <div class="category-body">
-    <ng-container *ngFor="let card of childrens">
+    <ng-container *ngFor="let item of childrens">
       <app-card
         [small]="cardSmall"
-        [title]="card.title"
-        [description]="card.description"
-        [quantity]="card.quantity"
-        [price]="card.price"
-        [icon]="card.icon"
-        (onClickEvent)="onClick(card.title, $event)"
+        [title]="item.title"
+        [description]="item.description"
+        [id]="item.id"
+        [quantity]="getCashDeskItem(item).quantity"
+        [price]="getCashDeskItem(item).price"
+        [left]="getCashDeskItem(item).left"
+        [icon]="getDashboardItem(item).icon"
+        (onClickEvent)="onClick(item.title, $event)"
       ></app-card>
     </ng-container>
   </div>

@@ -1,6 +1,7 @@
-import { Card } from './card.model';
+import { CashDeskItem } from './cashDeskItem.model';
+import { DashboardItem } from './dashboardItem.model';
 
 export interface Category {
   title: string;
-  childrens: Card[];
+  childrens: Array<DashboardItem | CashDeskItem>;
 }

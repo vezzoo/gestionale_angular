@@ -7,15 +7,17 @@ import { environment } from 'src/environments/environment';
 })
 export class CardComponent {
   @Input() small: boolean = false;
+  @Input() id: string;
   @Input() title: string;
   @Input() description: string;
   @Input() quantity: number;
   @Input() price: number;
+  @Input() left: number;
   @Input() icon: string;
 
   @Output() onClickEvent = new EventEmitter<boolean>();
 
-  currency = environment.currency;
+  readonly currency = environment.currency;
 
   onClick(event: any) {
     this.onClickEvent.emit(event.shiftKey);
