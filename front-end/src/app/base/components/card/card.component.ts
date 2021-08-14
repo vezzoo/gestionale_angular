@@ -18,8 +18,25 @@ export class CardComponent {
   @Output() onClickEvent = new EventEmitter<boolean>();
 
   readonly currency = environment.currency;
+  readonly steps = [20, 0];
 
   onClick(event: any) {
     this.onClickEvent.emit(event.shiftKey);
+  }
+
+  getLeft() {
+    return this.left - this.quantity;
+  }
+
+  getCardStatus(): 'warning' | 'readonly' {
+    if (this.left < this.steps[0] && this.left > this.steps[1]) {
+      return 'warning';
+    } else if (this.left === this.steps[1]) {
+      return 'readonly';
+    }
+  }
+
+  isOutOfStock(): boolean {
+    return this.quantity > 0 && this.left === this.quantity;
   }
 }

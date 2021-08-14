@@ -78,28 +78,28 @@ export class CashDeskComponent implements OnInit, OnDestroy {
             title: 'Panino e salamella',
             price: 2.5,
             quantity: 0,
-            left: 100,
+            left: 21,
           },
           {
             id: 'foo',
             title: 'Patatine',
             price: 2,
             quantity: 0,
-            left: 100,
+            left: 19,
           },
           {
             id: 'foo',
             title: 'Pizza',
             price: 2.5,
             quantity: 0,
-            left: 100,
+            left: 5,
           },
           {
             id: 'foo',
             title: 'Costine',
             price: 3,
             quantity: 0,
-            left: 100,
+            left: 0,
           },
           {
             id: 'foo',
@@ -167,7 +167,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       if (card.quantity > 0) {
         card.quantity--;
       }
-    } else {
+    } else if (card.quantity < card.left) {
       card.quantity++;
     }
 

@@ -1,7 +1,11 @@
 <div
   (click)="onClick($event)"
   class="card"
-  [ngClass]="{ 'card--small': small }"
+  [ngClass]="{
+    'card--small': small,
+    'card--warning': getCardStatus() === 'warning',
+    'card--readonly': getCardStatus() === 'readonly'
+  }"
 >
   <div class="card__header">
     <div class="card__header-icon" *ngIf="icon">
@@ -16,8 +20,16 @@
     <span class="card__body-price" *ngIf="price">
       {{ price | number: "1.2-2" }} {{ currency }}
     </span>
-    <span class="card__body-quantity" *ngIf="quantity !== undefined">
-      {{ quantity }}
+    <span class="card__body-left" *ngIf="getCardStatus() === 'warning'">
+      x{{ getLeft() }}
     </span>
+    <div
+      class="card__body-quantity"
+      [ngClass]="{ 'card__body-quantity-error': isOutOfStock() }"
+      *ngIf="quantity !== undefined"
+    >
+      <span *ngIf="left > 0">{{ quantity }}</span>
+      <span *ngIf="left === 0">--</span>
+    </div>
   </div>
 </div>

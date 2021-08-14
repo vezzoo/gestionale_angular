@@ -22,6 +22,15 @@
     }
   }
 
+  &--warning {
+    background-color: rgb(255, 238, 0);
+  }
+
+  &--readonly {
+    background-color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
@@ -71,6 +80,20 @@
       right: 0;
       bottom: 0;
       line-height: 40px;
+
+      &-error {
+        color: red;
+      }
+    }
+
+    &-left {
+      color: $tertiary-color;
+      padding: 10px;
+      font-size: 14px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      line-height: 14px;
     }
 
     &-price {
