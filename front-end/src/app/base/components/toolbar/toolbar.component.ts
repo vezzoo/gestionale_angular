@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../../../modules/auth/auth.service';
 import { Urls } from '../../enums/enums';
 import { RouterService } from '../../services/router.service';
@@ -9,6 +10,8 @@ import { RouterService } from '../../services/router.service';
   templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
+  title;
+
   username: string = null;
 
   private sub: Subscription;
@@ -19,6 +22,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    setTimeout(() => this.title = environment.title);
+
     this.sub = this.authService.onUserChange.subscribe(
       (user) => (this.username = user)
     );
@@ -38,6 +43,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   isHome(): boolean {
-    return this.routerService.getUrl() === Urls.HOME
+    return this.routerService.getUrl() === Urls.HOME;
   }
 }
