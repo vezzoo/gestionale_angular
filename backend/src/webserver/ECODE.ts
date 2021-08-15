@@ -30,12 +30,16 @@ export default class ECODE{
     public static readonly E_VALIDATION: ErrorCode
     @ErrorCode(403, "Malformed request", "something gone really wrong with the request")
     public static readonly E_MALFORMED_REQ: ErrorCode
-    @ErrorCode(403, "invalid jwt token", "something gone really wrong with the request")
+    @ErrorCode(403, "invalid jwt token", "invalid jwt token")
     public static readonly E_JWT_INVALID: ErrorCode
-    @ErrorCode(406, "no user found into the database", "something gone really wrong with the request")
+    @ErrorCode(406, "no usr found into the database", "no usr has been found in the database")
     public static readonly E_NO_USER: ErrorCode
-    @ErrorCode(403, "Authentication error", "something gone really wrong with the request")
+    @ErrorCode(403, "Authentication error", "Authentication error")
     public static readonly E_AUTH: ErrorCode
-    @ErrorCode(403, "permission error", "something gone really wrong with the request")
+    @ErrorCode(403, "permission error", "usr does not have the right permission")
     public static readonly E_PERM: ErrorCode
+    @ErrorCode(423, "timeout", "A mutex call hit the timeout")
+    public static readonly E_TIMEOUT: ErrorCode
+    @ErrorCode(406, "Duplicate entry", "tried to add a duplicated unique entry into the database")
+    public static readonly E_DUP: ErrorCode
 }
