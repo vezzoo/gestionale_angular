@@ -16,3 +16,40 @@ Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNDY4MTgzNmMw
   "username": "mario",
   "permissions": ["user_management"]
 }
+
+###
+GET http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNDY4MTgzNmMwMWM4NDhiYTMzMiIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5MDM2NDEzLCJleHAiOjE2MjkwNTA4MTN9.6DVnomVuOn1tfE6uq3QvNKQI4c7HKvmqUE3tI7jEUJox7KuYksi79orj4OXgdyqvdAzqvfw6czMtfURGMv8AFQ
+
+###
+GET http://localhost:3000/api/usr/6116d66b110e481e9412e2fa
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNDY4MTgzNmMwMWM4NDhiYTMzMiIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5MDM2NDEzLCJleHAiOjE2MjkwNTA4MTN9.6DVnomVuOn1tfE6uq3QvNKQI4c7HKvmqUE3tI7jEUJox7KuYksi79orj4OXgdyqvdAzqvfw6czMtfURGMv8AFQ
+
+###
+PATCH http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNDY4MTgzNmMwMWM4NDhiYTMzMiIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5MDM2NDEzLCJleHAiOjE2MjkwNTA4MTN9.6DVnomVuOn1tfE6uq3QvNKQI4c7HKvmqUE3tI7jEUJox7KuYksi79orj4OXgdyqvdAzqvfw6czMtfURGMv8AFQ
+Content-Type: application/json
+
+{
+  "id": "6116d66b110e481e9412e2fa",
+  "permissions": [],
+  "password": "ciao1234"
+}
+
+###
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "mario",
+  "password": "ciao1234"
+}
+
+###
+PATCH http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMTZkNjZiMTEwZTQ4MWU5NDEyZTJmYSIsInBlcm1pc3Npb25zIjpbXSwiaWF0IjoxNjI5MDM2OTA3LCJleHAiOjE2MjkwNTEzMDd9.W8PsWvXDKQdvRdr2J8xRXlZUbp4jwo50NzgnN9DAiCu1jBR6QX7bNxyE19OAY3BE_H9UQbo8XjuOQyA9EMQRAg
+Content-Type: application/json
+
+{
+  "password": "ciao1235"
+}

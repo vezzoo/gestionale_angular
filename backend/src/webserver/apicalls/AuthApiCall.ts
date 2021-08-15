@@ -7,11 +7,12 @@ import UserAuthData from "../../UserAuthData";
 import jwt from "jsonwebtoken"
 import UserModel from "../../database/models/User.model";
 import ECODE from "../ECODE";
+import {UserPermission} from "../../@types/permissions";
 
 export default class AuthApiCall extends AbstractCall {
 
     constructor(
-        permission: string,
+        permission: UserPermission | UserPermission[] | null,
         method: HTTPMethods,
         url: string,
         handler: (req: FastifyRequest, res: FastifyReply, user: IUserDocument, body: any, headers: any, parameters: any) => any,
@@ -38,7 +39,7 @@ export default class AuthApiCall extends AbstractCall {
         });
     }
 
-    public static async tokenValidation(permission: string, req: FastifyRequest): Promise<IUserDocument>{
+    public static async tokenValidation(permission: UserPermission | UserPermission[] | null, req: FastifyRequest): Promise<IUserDocument>{
         const token: string | undefined | string[] = req.headers[SETTING_AUTHENTICATION_HEADER.toLowerCase()]
 
         if(!token)
@@ -49,13 +50,29 @@ export default class AuthApiCall extends AbstractCall {
 
         const user_data: UserAuthData = UserAuthData.fromToken(jwt.verify(token, SETTING_JWT_PUBLIC) as any); //BAD
         if (!user_data) throw Error("E_JWT_INVALID");
-        if (!user_data.permissions.includes(permission) && !user_data.permissions.includes("root")) throw Error("E_PERM");
+        if (!this.has_permission(user_data, permission)) throw Error("E_PERM");
 
         const user = await UserModel.findById(user_data.id).exec()
         if(!user)
             throw Error("E_NO_USER")
 
         return user
+    }
+
+    public static has_permission(user: IUserDocument | UserAuthData, perms: UserPermission[] | UserPermission | null, ored=true): boolean{
+        if (perms === null) return true
+        if (!Array.isArray(perms)) perms = [perms]
+
+        if(user.permissions.includes("root")) return true
+
+        for(let p of perms){
+            if(user.permissions.includes(p))
+                if(ored) return true
+            else
+                if (!ored) return false
+        }
+
+        return !ored
     }
 
 }
