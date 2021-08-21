@@ -1,4 +1,4 @@
-import {IUserDocument} from "./database/models/User.model"
+import User from "./database/models/User.model"
 
 export default class UserAuthData{
     private _permissions: string[]
@@ -24,9 +24,9 @@ export default class UserAuthData{
         }
     }
 
-    public static fromUserDocument(user: IUserDocument){
+    public static fromUserDocument(user: User){
         return new UserAuthData({
-            id: user._id.toString(),
+            id: user._id?.toString() || "",
             permissions: user.permissions || []
         })
     }

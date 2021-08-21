@@ -1,64 +1,66 @@
-import {model, Model, Document, Schema} from "mongoose";
+import {ObjectId} from "mongoose";
 import * as crypto from "crypto";
 import jwt from 'jsonwebtoken'
 import UserAuthData from "../../UserAuthData";
 import {SETTING_JWT_PRIVATE, SETTING_TOKEN_EXPIRE_HOURS} from "../../settings";
 import {UserPermission} from "../../@types/permissions";
 import AuthApiCall from "../../webserver/apicalls/AuthApiCall";
-import {IProductModel} from "./Product.model";
+import DBDocument from "../wrapper/DBDocument";
+import Field from "../wrapper/decorators/Field";
+import Unique from "../wrapper/decorators/Unique";
+import Required from "../wrapper/decorators/Required";
+import Collection from "../wrapper/decorators/Collection";
 
+@Collection
+export default class User extends DBDocument{
+    public _id?: ObjectId
+    public __v?: number
 
-export interface IUser {
-    username: string;
-    password: string;
-    password_salt: string;
-    permissions: string[];
-}
+    @Field
+    @Unique
+    @Required
+    public username: string;
 
-const UserSchema = new Schema({
-    username: {type: String, unique: true, required: true, dropDups: true},
-    password: String,
-    password_salt: String,
-    permissions: Array<String>()
-})
+    @Field
+    @Required
+    private _password?: string;
 
-UserSchema.pre('save', function (next) {
-    if (this.isNew || this.isModified("password")) {
-        if (this.get('password') === "-") {
-            this.set("password_salt", "LQ==")
-            this.set("password", "LQ==")
-        } else {
-            const salt = Math.random().toString(26).substr(2);
-            const psw = Buffer.from(this.get('password'), 'utf-8');
-            this.set('password', crypto.createHmac("sha384", psw).update(salt).digest('base64'));
-            this.set('password_salt', salt)
+    @Field
+    private password_salt: string;
+
+    @Field
+    @Required
+    public permissions: string[]
+
+    set password(value: string) {
+        const psw = Buffer.from(value || "insecure", 'utf-8');
+        this._password = crypto.createHmac("sha384", psw).update(this.password_salt).digest('base64');
+    }
+
+    public authenticate(password: string): string | null{
+        const hmac = crypto.createHmac("sha384", password).update(this.password_salt).digest('base64')
+        if (hmac !== this._password) {
+            console.warn("Login failed for usr", this.get('username'))
+            return null;
         }
+        return jwt.sign(UserAuthData.fromUserDocument(this).toJsonValue(), SETTING_JWT_PRIVATE, {
+            algorithm: 'ES256',
+            expiresIn: SETTING_TOKEN_EXPIRE_HOURS
+        })
     }
-    return next();
-})
 
-UserSchema.methods.authenticate = function (psw: string): string | null {
-    const hmac = crypto.createHmac("sha384", psw).update(this.get('password_salt')).digest('base64')
-    if (hmac !== this.get('password')) {
-        console.warn("Login failed for usr", this.get('username'))
-        return null;
+    public has_permission(perms: UserPermission | UserPermission[] | null, ored = true): boolean {
+        return AuthApiCall.has_permission(this, perms, ored)
     }
-    return jwt.sign(UserAuthData.fromUserDocument(this as unknown as IUserDocument).toJsonValue(), SETTING_JWT_PRIVATE, {
-        algorithm: 'ES256',
-        expiresIn: SETTING_TOKEN_EXPIRE_HOURS
-    })
-};
 
-UserSchema.methods.has_permission = function (perms: UserPermission | UserPermission[] | null, ored = true): boolean {
-    return AuthApiCall.has_permission(this as unknown as IUserDocument, perms, ored)
+    constructor(username: string, password: string, permissions: string[], password_salt?: string) {
+        super();
+        this.username = username
+        if(password_salt)
+            this.password_salt = password_salt
+        else
+            this.password_salt = Math.random().toString(26).substr(2)
+        this.password = password
+        this.permissions = permissions
+    }
 }
-
-export interface IUserDocument extends IUser, Document {
-    authenticate: (this: IUserDocument, psw: string) => string | null
-    has_permission: (perms: UserPermission | UserPermission[] | null, ored?: boolean) => boolean
-}
-
-export interface IUserModel extends Model<IUserDocument> {
-}
-
-export default model<IUserDocument>("user", UserSchema)

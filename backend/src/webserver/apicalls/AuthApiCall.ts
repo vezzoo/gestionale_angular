@@ -1,6 +1,6 @@
 import AbstractCall from "./AbstractApiCall";
 import {FastifyReply, FastifyRequest, FastifySchema, HTTPMethods} from "fastify";
-import {IUserDocument} from "../../database/models/User.model";
+import User from "../../database/models/User.model";
 import Endpoint from "../Endpoint";
 import {SETTING_AUTHENTICATION_HEADER, SETTING_JWT_PUBLIC} from "../../settings";
 import UserAuthData from "../../UserAuthData";
@@ -15,7 +15,7 @@ export default class AuthApiCall extends AbstractCall {
         permission: UserPermission | UserPermission[] | null,
         method: HTTPMethods,
         url: string,
-        handler: (req: FastifyRequest, res: FastifyReply, user: IUserDocument, body: any, headers: any, parameters: any) => any,
+        handler: (req: FastifyRequest, res: FastifyReply, user: User, body: any, headers: any, parameters: any) => any,
         schema: FastifySchema,
         fallback?: (req: FastifyRequest, res: FastifyReply, err: Error) => any) {
 
@@ -39,7 +39,7 @@ export default class AuthApiCall extends AbstractCall {
         });
     }
 
-    public static async tokenValidation(permission: UserPermission | UserPermission[] | null, req: FastifyRequest): Promise<IUserDocument>{
+    public static async tokenValidation(permission: UserPermission | UserPermission[] | null, req: FastifyRequest): Promise<User>{
         const token: string | undefined | string[] = req.headers[SETTING_AUTHENTICATION_HEADER.toLowerCase()]
 
         if(!token)
@@ -52,14 +52,14 @@ export default class AuthApiCall extends AbstractCall {
         if (!user_data) throw Error("E_JWT_INVALID");
         if (!this.has_permission(user_data, permission)) throw Error("E_PERM");
 
-        const user = await UserModel.findById(user_data.id).exec()
+        const user = await UserModel.findById(user_data.id) as User
         if(!user)
             throw Error("E_NO_USER")
 
         return user
     }
 
-    public static has_permission(user: IUserDocument | UserAuthData, perms: UserPermission[] | UserPermission | null, ored=true): boolean{
+    public static has_permission(user: User | UserAuthData, perms: UserPermission[] | UserPermission | null, ored=true): boolean{
         if (perms === null) return true
         if (!Array.isArray(perms)) perms = [perms]
 

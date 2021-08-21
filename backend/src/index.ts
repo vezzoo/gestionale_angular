@@ -1,10 +1,11 @@
-import Database from "./database/database";
 import Webserver from "./webserver/Webserver";
-import {SETTING_PID_FILE} from "./settings";
+import {SETTING_MONGO_URL, SETTING_PID_FILE} from "./settings";
 import user_endpoint from "./webserver/api/user_endpoint";
 import fs from "fs";
 import {sleep} from "./_utils";
 import UserModel from "./database/models/User.model";
+import storage_endpoint from "./webserver/api/storage_endpoint";
+import Database from "./database/wrapper/Database";
 
 
 (async function (){
@@ -19,15 +20,15 @@ import UserModel from "./database/models/User.model";
     }
     fs.writeFileSync(SETTING_PID_FILE, Buffer.from("" + process.pid))
 
-    await Database.connect();
+    await Database.connect(SETTING_MONGO_URL);
 
     //checking for root
-    const root_user = await UserModel.findOne({permissions: "root"}).exec()
+    const root_user = await UserModel.findOne({permissions: "root"}) as UserModel
     if(!root_user && process.env.NO_ROOT !== "true"){
         console.warn("Cannot find any root usr... to prevent root usr creation use env NO_ROOT=true")
         const root_psw = Math.random().toString(26).substr(2)
 
-        await new UserModel({username: "root", password: root_psw, permissions: ["root"]}).save()
+        await new UserModel("root", root_psw, ["root"]).save()
 
         fs.writeFileSync("root_credentials", Buffer.from("root : " + root_psw))
         console.warn("Root usr credentials sored in current working directory under ./root_credentials")
@@ -36,6 +37,7 @@ import UserModel from "./database/models/User.model";
 
     const webserver = new Webserver()
         .add(user_endpoint)
+        .add(storage_endpoint)
 
     process.on('SIGINT', () => {
         webserver.close()

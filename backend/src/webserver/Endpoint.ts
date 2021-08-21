@@ -1,5 +1,6 @@
 import {FastifyInstance, FastifyReply, FastifyRequest, RouteOptions} from "fastify";
 import AbstractCall from "./apicalls/AbstractApiCall";
+import ECODE from "./ECODE";
 
 export default class Endpoint{
     protected base_path: string;
@@ -17,7 +18,6 @@ export default class Endpoint{
 
     public static secureCallback(callback: (req: FastifyRequest, res: FastifyReply) => any) {
         return async (req: FastifyRequest, res: any) => {
-            //@ts-ignore
             if (req.validationError) return Endpoint.codereturn(res,400, Object.assign(ECODE.E_VALIDATION.data, {aux: req.validationError.message}))
             return await callback(req, res);
         }

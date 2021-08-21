@@ -1,7 +1,7 @@
 import AuthApiCall from "./AuthApiCall";
 import {UserPermission} from "../../@types/permissions";
 import {FastifyReply, FastifyRequest, FastifySchema, HTTPMethods} from "fastify";
-import {IUserDocument} from "../../database/models/User.model";
+import User from "../../database/models/User.model";
 import {Mutex, withTimeout, E_TIMEOUT} from "async-mutex"
 import ECODE from "../ECODE";
 
@@ -12,7 +12,7 @@ export default class MutexAuthApiCall extends AuthApiCall{
         permission: UserPermission | UserPermission[] | null,
         method: HTTPMethods,
         url: string,
-        handler: (req: FastifyRequest, res: FastifyReply, user: IUserDocument, body: any, headers: any, parameters: any, end_lock: () => void) => any,
+        handler: (req: FastifyRequest, res: FastifyReply, user: User, body: any, headers: any, parameters: any, end_lock: () => void) => any,
         schema: FastifySchema,
         fallback?: (req: FastifyRequest, res: FastifyReply, err: Error) => any,
         timeout?: number)
