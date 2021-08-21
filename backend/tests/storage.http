@@ -1,0 +1,56 @@
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "nfc929b8894l"
+}
+###
+
+PUT http://localhost:3000/api/storage/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ5NjQwLCJleHAiOjE2Mjk1NjQwNDB9.dI3nQPeeUAILxpfSrW4CU75VpKR_V_RPsflcBTqH8sUnzuSsYu4k3SWceyiQMRp7ES2VNChP6eB3RayYsf9TIQ
+
+{
+  "title": "Bananana",
+  "category": "assy",
+  "price": 10000,
+  "stock": 5,
+  "description": "a banana in da ass"
+}
+
+###
+
+GET http://localhost:3000/api/storage/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ5NjQwLCJleHAiOjE2Mjk1NjQwNDB9.dI3nQPeeUAILxpfSrW4CU75VpKR_V_RPsflcBTqH8sUnzuSsYu4k3SWceyiQMRp7ES2VNChP6eB3RayYsf9TIQ
+
+
+###
+
+GET http://localhost:3000/api/storage/all
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ5NjQwLCJleHAiOjE2Mjk1NjQwNDB9.dI3nQPeeUAILxpfSrW4CU75VpKR_V_RPsflcBTqH8sUnzuSsYu4k3SWceyiQMRp7ES2VNChP6eB3RayYsf9TIQ
+
+
+###
+
+GET http://localhost:3000/api/storage/ass&assy
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ5NjQwLCJleHAiOjE2Mjk1NjQwNDB9.dI3nQPeeUAILxpfSrW4CU75VpKR_V_RPsflcBTqH8sUnzuSsYu4k3SWceyiQMRp7ES2VNChP6eB3RayYsf9TIQ
+
+###
+
+PATCH http://localhost:3000/api/storage/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ5NjQwLCJleHAiOjE2Mjk1NjQwNDB9.dI3nQPeeUAILxpfSrW4CU75VpKR_V_RPsflcBTqH8sUnzuSsYu4k3SWceyiQMRp7ES2VNChP6eB3RayYsf9TIQ
+
+{
+  "editedItems": [
+    {
+      "id": "6120f4c67274249b116535dc",
+      "stock": 10
+    },
+    {
+      "id": "6120f609aad33c9e80d4f585",
+      "title": "Banana"
+    }
+  ]
+}

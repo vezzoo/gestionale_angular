@@ -1,13 +1,15 @@
 import AuthApiCall from "../../apicalls/AuthApiCall";
 import S from "fluent-json-schema";
-import ProductModel, {IProductDocument, IProductModel} from "../../../database/models/Product.model";
+import ProductModel from "../../../database/models/Product.model";
 
 export default new AuthApiCall(
     ["storage_read", "cash_desk"],
     "GET",
     "/:category", //List all categoruies concatenated by '&' and specify all for all categories
     async (req, res, user, _, __, params) => {
-        const products = await ProductModel.find(params === "all" ? {} : {category: {"$in": params.split("&")}}).exec()
+        if(!params.category)
+            params.category = "all"
+        const products = await ProductModel.find(params.category === "all" ? {} : {category: {"$in": params.category.split("&")}})
         const data: any = {}
 
         products.forEach((e: any) => {

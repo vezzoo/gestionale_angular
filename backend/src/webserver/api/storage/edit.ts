@@ -14,10 +14,10 @@ export default new AuthApiCall(
             const update_object = JSON.parse(JSON.stringify(e))
             delete update_object.id
             try {
-                await ProductModel.findByIdAndUpdate(e.id, {"$set": update_object}).exec()
+                await ProductModel.findByIdAndUpdate(e.id, {"$set": update_object})
                 ret[e.id] = {status: true}
-            } catch (e) {
-                ret[e.id] = {status: false, err: e}
+            } catch (ex) {
+                ret[e.id] = {status: false, err: ex}
                 errored = true
             }
         }))

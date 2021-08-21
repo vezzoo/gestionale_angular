@@ -1,7 +1,7 @@
 import AuthApiCall from "../../apicalls/AuthApiCall";
 import S from "fluent-json-schema";
 import ECODE from "../../ECODE";
-import UserModel from "../../../database/models/User.model";
+import User from "../../../database/models/User.model";
 
 export default new AuthApiCall(
     null, //allow anyone (in order to self edit password)
@@ -9,14 +9,14 @@ export default new AuthApiCall(
     "/",
     async (req, res, user, body) => {
         if (!body.id)
-            body.id = user._id.toString()
+            body.id = user._id?.toString()
 
-        if ((body.id !== user._id.toString() || !!body.permissions) && ! user.has_permission("user_management"))
+        if ((body.id !== user._id?.toString() || !!body.permissions) && ! user.has_permission("user_management"))
             //se si sta cercando di modificare un altro utente oppure i permessi di un utente
             //bisogna essere root oppure avere il permesso "user_management"
             return ECODE.E_PERM
 
-        const target_user = (body.id !== user._id.toString()) ? await UserModel.findById(body.id).exec() : user
+        const target_user = (body.id !== user._id?.toString()) ? await User.findById(body.id) as User: user
         if(!target_user)
             return ECODE.E_NO_USER
 

@@ -19,6 +19,7 @@
     "@types/mongoose": "^5.11.97",
     "jsonwebtoken": "^8.5.1",
     "@types/jsonwebtoken": "^8.5.4",
-    "fluent-json-schema": "^3.0.1"
+    "fluent-json-schema": "^3.0.1",
+    "reflect-metadata": "^0.1.13"
   }
 }

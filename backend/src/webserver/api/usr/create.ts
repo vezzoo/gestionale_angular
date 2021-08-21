@@ -14,11 +14,7 @@ export default new AuthApiCall(
     "/",
     async (req, res, user, body)=>{
         const psw = Math.random().toString(26).substr(2);
-        const new_user = new UserModel({
-            username: body.username,
-            password: psw,
-            permissions: body.permissions
-        })
+        const new_user = new UserModel(body.username, psw, body.permissions)
         try {
             await new_user.save()
         } catch (e) {
@@ -28,13 +24,13 @@ export default new AuthApiCall(
         }
 
         return {
-            id: new_user._id.toString(),
+            id: new_user._id?.toString(),
             password: psw
         }
     },
     {
         body: S.object()
             .prop("username", S.string()).required()
-            .prop("permissions", S.array().items(S.string().enum(["user_management", "cassa", "todo"]))) //todo
+            .prop("permissions", S.array().items(S.string().enum(["user_management", "storage_write", "storage_read", "cash_desk", "todo"]))) //todo
     }
 )

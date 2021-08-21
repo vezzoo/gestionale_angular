@@ -1,6 +1,6 @@
 import ApiCall from "../../../apicalls/ApiCall";
 import S from "fluent-json-schema"
-import UserModel from "../../../../database/models/User.model";
+import User from "../../../../database/models/User.model";
 import ECODE from "../../../ECODE";
 
 
@@ -8,7 +8,7 @@ export default new ApiCall(
     "POST",
     "/login",
     async (req, res, body) => {
-        const user = await UserModel.findOne({username: body.username}).exec()
+        const user = await User.findOne({username: body.username}) as User
         if(!user)
             return ECODE.E_NO_USER
 
@@ -17,7 +17,7 @@ export default new ApiCall(
             return ECODE.E_AUTH
         return {
             username: user.username,
-            id: user._id.toString(),
+            id: user._id?.toString(),
             token: tok,
             permissions: user.permissions //Aggiunta
         }

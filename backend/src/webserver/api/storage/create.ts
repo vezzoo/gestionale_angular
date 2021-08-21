@@ -1,6 +1,6 @@
 import AuthApiCall from "../../apicalls/AuthApiCall";
 import S from "fluent-json-schema";
-import ProductModel from "../../../database/models/Product.model";
+import Product from "../../../database/models/Product.model";
 import ECODE from "../../ECODE";
 
 export default new AuthApiCall(
@@ -8,17 +8,8 @@ export default new AuthApiCall(
     "PUT",
     "/",
     async (req, res, user, body) => {
-        // title: string;
-        // price: number;
-        // left: number;
-        // description: string | undefined;
-        const product = new ProductModel({ //todo maybe sanitize those things
-            title: body.title,
-            price: body.price, //price is in cents !!
-            stock: body.stock,
-            category: body.category,
-            description: body.description || ""
-        })
+
+        const product = new Product(body.title, body.price, body.category, body.stock, body.description || "")
         try{
             await product.save()
         } catch (e) {
@@ -32,8 +23,8 @@ export default new AuthApiCall(
         body: S.object()
             .prop("title", S.string()).required()
             .prop("category", S.string()).required()
-            .prop("price", S.integer()).required()
-            .prop("stock", S.integer()).default(0)
+            .prop("price", S.integer().minimum(1)).required()
+            .prop("stock", S.integer().minimum(0)).default(0)
             .prop("description", S.string()).default("")
     }
 )
