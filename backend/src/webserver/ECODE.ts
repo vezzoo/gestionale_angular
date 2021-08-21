@@ -42,4 +42,9 @@ export default class ECODE{
     public static readonly E_TIMEOUT: ErrorCode
     @ErrorCode(406, "Duplicate entry", "tried to add a duplicated unique entry into the database")
     public static readonly E_DUP: ErrorCode
+
+    @ErrorCode(403, "Jwt expired", "tried to add a duplicated unique entry into the database")
+    public static readonly E_JWT_EXPIRED: ErrorCode
+    @ErrorCode(406, "Duplicate entry", "tried to add a duplicated unique entry into the database")
+    public static readonly E_NO_JWT: ErrorCode
 }

@@ -48,7 +48,23 @@ export default class AuthApiCall extends AbstractCall {
         if(Array.isArray(token))
             throw Error("E_MALFORMED_REQ")
 
-        const user_data: UserAuthData = UserAuthData.fromToken(jwt.verify(token, SETTING_JWT_PUBLIC) as any); //BAD
+        let ver_data: any
+        try{
+            ver_data = jwt.verify(token, SETTING_JWT_PUBLIC) as any
+        } catch (e){
+            switch (e.message) {
+                case "jwt expired":
+                    throw Error("E_JWT_EXPIRED")
+                case "jwt must be provided":
+                    throw Error("E_NO_JWT")
+                case "jwt malformed":
+                    throw Error("E_MALFORMED_REQ")
+                default:
+                    throw Error(e.message)
+            }
+        }
+
+        const user_data: UserAuthData = UserAuthData.fromToken(ver_data); //BAD
         if (!user_data) throw Error("E_JWT_INVALID");
         if (!this.has_permission(user_data, permission)) throw Error("E_PERM");
 
