@@ -9,7 +9,7 @@ import { DashboardItem } from '../../models/dashboardItem.model';
 export class CategoryComponent {
   @Input() cardSmall: boolean = false;
   @Input() title: string;
-  @Input() childrens: Array<DashboardItem | CashDeskItem>;
+  @Input() children: Array<DashboardItem | CashDeskItem>;
 
   @Output() onCardClickEvent = new EventEmitter<{
     cardTitle: string;

@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     const response: Category[] = [
       {
         title: 'Cassa',
-        childrens: [
+        children: [
           {
             id: 'foo',
             title: 'Standard',
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
       },
       {
         title: 'Gestione',
-        childrens: [
+        children: [
           {
             id: 'foo',
             title: 'Magazzino',
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
       },
       {
         title: 'Amministrazione',
-        childrens: [
+        children: [
           {
             id: 'foo',
             title: 'Gestione utenti',

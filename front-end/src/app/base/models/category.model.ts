@@ -3,5 +3,5 @@ import { DashboardItem } from './dashboardItem.model';
 
 export interface Category {
   title: string;
-  childrens: Array<DashboardItem | CashDeskItem>;
+  children: Array<DashboardItem | CashDeskItem>;
 }

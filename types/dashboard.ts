@@ -3,7 +3,7 @@ interface DashBoardRequest {}
 interface DashBoardResponse {
   categories: Array<{
     title: string;
-    childrens: Array<{
+    children: Array<{
       id: string;
       title: string;
       icon: string;

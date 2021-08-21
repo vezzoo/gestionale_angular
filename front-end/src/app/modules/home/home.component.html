@@ -4,7 +4,7 @@
       <ng-container *ngFor="let category of categories">
         <app-category
           [title]="category.title"
-          [childrens]="category.childrens"
+          [children]="category.children"
           (onCardClickEvent)="onCardClick($event.cardTitle)"
         ></app-category>
       </ng-container>

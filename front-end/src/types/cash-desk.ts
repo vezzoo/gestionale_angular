@@ -5,7 +5,7 @@ export interface CashDeskGetRequest {
 export interface CashDeskGetResponse {
   categories: Array<{
     title: string;
-    childrens: Array<{
+    children: Array<{
       id: string;
       title: string;
       price: number;
