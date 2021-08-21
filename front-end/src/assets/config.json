@@ -1,6 +1,6 @@
 {
   "title": "Sagra San Luigi",
-  "basePathToTemplates": "/assets/bill_templates",
+  "basePathToTemplates": "/assets/bill_print/bill_templates",
   "categoriesToPrint": [
     {
       "path": "summary.html"
