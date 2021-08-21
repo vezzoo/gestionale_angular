@@ -20,7 +20,7 @@ export class AddHeaderInterceptor implements HttpInterceptor {
 
     if (id) {
       return next.handle(
-        req.clone({ headers: req.headers.append('token', String(id)) })
+        req.clone({ headers: req.headers.append('Authorization', String(id)) })
       );
     } else {
       return next.handle(req);
