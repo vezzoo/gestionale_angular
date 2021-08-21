@@ -38,6 +38,32 @@ export class HttpClientService {
     );
   }
 
+  patch<T>(
+    url: string,
+    body: any | null,
+    callBackSuccess?: (response: T) => void,
+    callBackError?: (error: any) => void
+  ) {
+    this.subscribeToHttp(
+      this.http.patch<T>(this.getUrl(url), body, this.options),
+      callBackSuccess,
+      callBackError
+    );
+  }
+
+  put<T>(
+    url: string,
+    body: any | null,
+    callBackSuccess?: (response: T) => void,
+    callBackError?: (error: any) => void
+  ) {
+    this.subscribeToHttp(
+      this.http.put<T>(this.getUrl(url), body, this.options),
+      callBackSuccess,
+      callBackError
+    );
+  }
+
   get<T>(
     url: string,
     callBackSuccess?: (response: T) => void,
