@@ -1,12 +1,14 @@
-import {model, Model, Schema, ObjectId} from "mongoose";
+import {model, Model, Document, Schema} from "mongoose";
 import * as crypto from "crypto";
 import jwt from 'jsonwebtoken'
 import UserAuthData from "../../UserAuthData";
 import {SETTING_JWT_PRIVATE, SETTING_TOKEN_EXPIRE_HOURS} from "../../settings";
+import {UserPermission} from "../../@types/permissions";
+import AuthApiCall from "../../webserver/apicalls/AuthApiCall";
+import {IProductModel} from "./Product.model";
 
 
 export interface IUser {
-    _id: ObjectId;
     username: string;
     password: string;
     password_salt: string;
@@ -14,15 +16,15 @@ export interface IUser {
 }
 
 const UserSchema = new Schema({
-    username: {type: String, unique : true, required : true, dropDups: true},
+    username: {type: String, unique: true, required: true, dropDups: true},
     password: String,
     password_salt: String,
     permissions: Array<String>()
 })
 
-UserSchema.pre('save', function(next){
+UserSchema.pre('save', function (next) {
     if (this.isNew || this.isModified("password")) {
-        if(this.get('password') === "-"){
+        if (this.get('password') === "-") {
             this.set("password_salt", "LQ==")
             this.set("password", "LQ==")
         } else {
@@ -38,14 +40,22 @@ UserSchema.pre('save', function(next){
 UserSchema.methods.authenticate = function (psw: string): string | null {
     const hmac = crypto.createHmac("sha384", psw).update(this.get('password_salt')).digest('base64')
     if (hmac !== this.get('password')) {
-        console.warn("Login failed for user", this.get('username'))
+        console.warn("Login failed for usr", this.get('username'))
         return null;
     }
-    return jwt.sign(UserAuthData.fromUserDocument(this as unknown as IUserDocument).toJsonValue(), SETTING_JWT_PRIVATE, {algorithm: 'ES256', expiresIn: SETTING_TOKEN_EXPIRE_HOURS})
+    return jwt.sign(UserAuthData.fromUserDocument(this as unknown as IUserDocument).toJsonValue(), SETTING_JWT_PRIVATE, {
+        algorithm: 'ES256',
+        expiresIn: SETTING_TOKEN_EXPIRE_HOURS
+    })
 };
+
+UserSchema.methods.has_permission = function (perms: UserPermission | UserPermission[] | null, ored = true): boolean {
+    return AuthApiCall.has_permission(this as unknown as IUserDocument, perms, ored)
+}
 
 export interface IUserDocument extends IUser, Document {
     authenticate: (this: IUserDocument, psw: string) => string | null
+    has_permission: (perms: UserPermission | UserPermission[] | null, ored?: boolean) => boolean
 }
 
 export interface IUserModel extends Model<IUserDocument> {

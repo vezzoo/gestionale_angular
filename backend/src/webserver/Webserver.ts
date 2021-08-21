@@ -21,20 +21,21 @@ export default class Webserver {
         return this;
     }
 
-    exec(): Promise<void> {
-        return new Promise<void>(() => {
+    exec(): Promise<any> {
+        return new Promise<void>((resolve) => {
             this.server.setNotFoundHandler(async (req, res) => {
                 res.code(404);
                 return ECODE.E_NOT_FOUND.data;
             })
             this.server.setErrorHandler(async (error, req, res) => {
                 if(error.validation) return Endpoint.codereturn(res, 406, ECODE.E_VALIDATION.data)
-                console.log(error)
-                if(process.env.PRODUCTION !== "1") console.error(error.stack)
+                if(process.env.PRODUCTION !== "1") console.error(error, error.stack)
                 res.code(error.statusCode || 500);
-                return ECODE.E_UNCOMMON(500, error.code).data;
+                return ECODE.E_UNCOMMON(500, error.code, {aux: process.env.PRODUCTION !== "1" ? error : null}).data;
             })
-            this.server.listen(SETTING_WEBSERVER_HTTP_PORT, SETTING_WEBSERVER_BIND)
+            this.server.listen(SETTING_WEBSERVER_HTTP_PORT, SETTING_WEBSERVER_BIND).then((e: any) => {
+                resolve(e)
+            })
             console.info(`Listening on ${SETTING_WEBSERVER_BIND}:${SETTING_WEBSERVER_HTTP_PORT}`)
         });
     }

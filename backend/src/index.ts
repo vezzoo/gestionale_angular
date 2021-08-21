@@ -24,13 +24,13 @@ import UserModel from "./database/models/User.model";
     //checking for root
     const root_user = await UserModel.findOne({permissions: "root"}).exec()
     if(!root_user && process.env.NO_ROOT !== "true"){
-        console.warn("Cannot find any root user... to prevent root user creation use env NO_ROOT=true")
+        console.warn("Cannot find any root usr... to prevent root usr creation use env NO_ROOT=true")
         const root_psw = Math.random().toString(26).substr(2)
 
         await new UserModel({username: "root", password: root_psw, permissions: ["root"]}).save()
 
         fs.writeFileSync("root_credentials", Buffer.from("root : " + root_psw))
-        console.warn("Root user credentials sored in current working directory under ./root_credentials")
+        console.warn("Root usr credentials sored in current working directory under ./root_credentials")
         console.warn("copy them in a safe place and delete the file")
     }
 
