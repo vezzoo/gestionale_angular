@@ -19,6 +19,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularResizedEventModule } from 'angular-resize-event';
+import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
       useClass: AddHeaderInterceptor,
       multi: true,
     },
+    TranslateErrorPipe,
   ],
 })
 export class AppModule {}

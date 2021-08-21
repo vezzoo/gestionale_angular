@@ -5,3 +5,7 @@ export enum Urls {
   CASSA_BAR = 'cassa/bar',
   CASSA_ASPORTO = 'cassa/asporto',
 }
+
+export enum ApiUrls {
+  LOGIN = '/usr/login',
+}

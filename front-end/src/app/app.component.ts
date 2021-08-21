@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Configs } from './base/models/configs.model';
+import { ConfigurationsService } from './base/services/configurations.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,9 @@ import { Configs } from './base/models/configs.model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private configurationsService: ConfigurationsService) {}
 
   ngOnInit(): void {
-    this.http.get('./assets/config.json').subscribe((data: Configs) => {
-      if (data) {
-        environment.title = data.title;
-        environment.basePathToTemplates = data.basePathToTemplates;
-        environment.categoriesToPrint = data.categoriesToPrint;
-      }
-    });
+    this.configurationsService.loadConfigurations();
   }
 }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Urls } from 'src/app/base/enums/enums';
+import { ApiUrls, Urls } from 'src/app/base/enums/enums';
+import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { RouterService } from 'src/app/base/services/router.service';
+import { ApiError } from 'src/types/api-error';
 import { LoginGetRequest, LoginGetResponse } from 'src/types/login';
 import { HttpClientService } from '../../base/services/httpClient.service';
 
@@ -13,7 +15,8 @@ export class AuthService {
 
   constructor(
     private routerService: RouterService,
-    private httpClientService: HttpClientService
+    private httpClientService: HttpClientService,
+    private translateErrorPipe: TranslateErrorPipe
   ) {}
 
   private setUser(value: string) {
@@ -32,23 +35,19 @@ export class AuthService {
       password: pwd,
     };
 
-    console.log('TODO DO LOGIN API CALL');
-    this.setUser('luca');
-    this.tokenJWT = 'questoeunbellixximotokentgeivuti';
-    callBackSuccess(null);
-
-    // this.httpClientService.post<LoginGetResponse>(
-    //   '/login',
-    //   body,
-    //   (response: LoginGetResponse) => {
-    //     if (response) {
-    //       this.setUser(response.username);
-    //       this.tokenJWT = response.token;
-    //       callBackSuccess(response);
-    //     }
-    //   },
-    //   (error: { error: ApiError }) => callBackError(error?.error?.errorMessage)
-    // );
+    this.httpClientService.post<LoginGetResponse>(
+      ApiUrls.LOGIN,
+      body,
+      (response: LoginGetResponse) => {
+        if (response) {
+          this.setUser(response.username);
+          this.tokenJWT = response.token;
+          callBackSuccess(response);
+        }
+      },
+      (error: ApiError) =>
+        callBackError(this.translateErrorPipe.transform(error))
+    );
   }
 
   doLogout(): void {
