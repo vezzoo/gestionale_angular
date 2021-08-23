@@ -6,12 +6,11 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
 
     const model_name = constructor.name
     const model = Database.getModel(model_name).getModel(model_name);
-    let instance_document: any = null
 
     return class extends constructor{
-
+        private instance_document: any;
         private update_document(){
-            const doc = instance_document || {}
+            const doc = this.instance_document || {}
             Object.keys(Database.getModel(model_name).schema_definition).forEach((e: string) => {
                 if (this.exists(e) && this.get(e) !== doc[e]) {
                     if (Database.getModel(model_name).model_references[e])
@@ -20,29 +19,30 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
                         doc[e] = this.get(e)
                 }
             })
-            if(!instance_document) instance_document = new model(doc)
+            if(!this.instance_document) this.instance_document = new model(doc)
         }
 
         private update_from_document(){
-            Object.keys(instance_document._doc).forEach(e => {
+            Object.keys(this.instance_document._doc).forEach(e => {
                 if(Database.getModel(model_name).model_references[e]) {
-                    if (instance_document?.populated(e)) {
-                        this.set(e, new (Database.getModel(model_name).model_references[e])(instance_document._doc[e]))
-                        this.set(e + "_id", instance_document._doc[e]._id)
+                    if (this.instance_document?.populated(e)) {
+                        this.set(e, new (Database.getModel(model_name).model_references[e])(this.instance_document._doc[e]))
+                        this.set(e + "_id", this.instance_document._doc[e]._id)
                     } else
-                        this.set(e + "_id", instance_document._doc[e])
+                        this.set(e + "_id", this.instance_document._doc[e])
                 } else
-                    this.set(e, instance_document._doc[e])
+                    this.set(e, this.instance_document._doc[e])
             })
         }
 
         constructor(...args: any[]) {
             if(args.length === 1 && args[0].constructor.name === "model") {
                 super()
-                instance_document = args[0]
+                this.instance_document = args[0]
                 this.update_from_document()
             } else {
                 super(...args)
+                this.instance_document = null
                 this.update_document()
                 this.update_from_document()
             }
@@ -83,17 +83,20 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
             return new this(doc)
         }
 
+        public static async delete(id: string | ObjectId) {
+            await model.findById(id).remove().exec()
+        }
 
         public async save(): Promise<DBDocument>{
-            if(!instance_document) return this;
+            if(!this.instance_document) return this;
             //todo presave
 
             await Promise.all(Object.keys(Database.getModel(model_name).model_references).map(async (e: string) => {
-                if(instance_document?.populated(e))
+                if(this.instance_document?.populated(e))
                     await this.get(e).save()
             }))
             this.update_document()
-            instance_document = await instance_document.save();
+            this.instance_document = await this.instance_document.save();
             //todo postsave
             this.update_from_document()
             return this
@@ -104,7 +107,7 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
         }
 
         public getDocument(){
-            return instance_document
+            return this.instance_document
         }
     }
 }

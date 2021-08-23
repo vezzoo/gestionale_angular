@@ -42,20 +42,3 @@ export default class Product extends DBDocument {
     @Field
     public description?: string
 }
-
-export interface IProduct {
-    title: string;
-    price: number;
-    stock: number;
-    description: string | undefined;
-    category: string
-}
-
-const ProductSchema = new Schema({
-    title: {type: String, required: true, unique: true},
-    price: {type: String, required: true},
-    category: {type: String, required: true},
-    stock: {type: String, default: 0},
-    description: {type: String, required: false}
-})
-

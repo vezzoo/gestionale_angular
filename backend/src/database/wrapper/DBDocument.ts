@@ -22,6 +22,10 @@ export default class DBDocument{
         throw Error("Not implemented")
     }
 
+    public static async delete(id: any): Promise<void>{
+        throw Error("Not implemented")
+    }
+
     protected set(e: string, v:any): void{
         //@ts-ignore
         this[e] = v
