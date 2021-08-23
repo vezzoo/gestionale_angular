@@ -7,6 +7,9 @@
 @import "./app/base/style/section-title";
 @import "./app/base/style/cart-detail";
 
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
 html,
 body {
   height: 100%;
@@ -44,4 +47,12 @@ div.vertical-center {
   visibility: hidden;
   height: 0;
   width: 0;
+}
+
+.modal-backdrop.fade {
+  opacity: 0.5;
+}
+
+.modal-open .modal {
+  opacity: 1;
 }

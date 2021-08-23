@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { Configs } from './base/models/configs.model';
 import { ConfigurationsService } from './base/services/configurations.service';
 
 @Component({

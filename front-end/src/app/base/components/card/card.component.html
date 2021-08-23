@@ -1,31 +1,31 @@
 <div
-  (click)="onClick($event)"
-  class="card"
+  class="custom-card"
   [ngClass]="{
-    'card--small': small,
-    'card--warning': getCardStatus() === 'warning',
-    'card--readonly': getCardStatus() === 'readonly'
+    'custom-card--small': small,
+    'custom-card--warning': getCardStatus() === 'warning',
+    'custom-card--readonly': getCardStatus() === 'readonly'
   }"
+  (click)="onClick($event)"
 >
-  <div class="card__header">
-    <div class="card__header-icon" *ngIf="icon">
+  <div class="custom-card__header">
+    <div class="custom-card__header-icon" *ngIf="icon">
       <mat-icon aria-hidden="false">{{ icon }}</mat-icon>
     </div>
-    <span class="card__header-title">{{ title }}</span>
+    <span class="custom-card__header-title">{{ title }}</span>
   </div>
-  <div class="card__body">
-    <span class="card__body-description" *ngIf="description">
+  <div class="custom-card__body">
+    <span class="custom-card__body-description" *ngIf="description">
       {{ description }}
     </span>
-    <span class="card__body-price" *ngIf="price">
+    <span class="custom-card__body-price" *ngIf="price">
       {{ price | normalizePrice | number: "1.2-2" }} {{ currency }}
     </span>
-    <span class="card__body-left" *ngIf="getCardStatus() === 'warning'">
+    <span class="custom-card__body-left" *ngIf="getCardStatus() === 'warning'">
       x{{ getLeft() }}
     </span>
     <div
-      class="card__body-quantity"
-      [ngClass]="{ 'card__body-quantity-error': isOutOfStock() }"
+      class="custom-card__body-quantity"
+      [ngClass]="{ 'custom-card__body-quantity-error': isOutOfStock() }"
       *ngIf="quantity !== undefined"
     >
       <span *ngIf="left > 0">{{ quantity }}</span>
