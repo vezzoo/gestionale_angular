@@ -83,6 +83,9 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
             return new this(doc)
         }
 
+        public static async delete(id: string | ObjectId) {
+            await model.findById(id).remove().exec()
+        }
 
         public async save(): Promise<DBDocument>{
             if(!this.instance_document) return this;
