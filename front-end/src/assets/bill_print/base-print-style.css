@@ -1,3 +1,7 @@
+@Page {
+  margin: 0 0.5cm 0 0.3cm;
+}
+
 /* separatore */
 .separator {
   border-bottom: 1px solid black;
