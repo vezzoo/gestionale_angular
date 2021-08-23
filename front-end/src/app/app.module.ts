@@ -20,6 +20,7 @@ import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
+import { NormalizePricePipe } from './base/pipes/normalizePrice.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
     FormContainer,
     SectionTitleComponent,
     CartDetailComponent,
+    NormalizePricePipe,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
       multi: true,
     },
     TranslateErrorPipe,
+    NormalizePricePipe,
   ],
 })
 export class AppModule {}

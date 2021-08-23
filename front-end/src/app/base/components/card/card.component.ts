@@ -25,7 +25,8 @@ export class CardComponent {
   }
 
   getLeft() {
-    return this.left - this.quantity;
+    if (isNaN(this.quantity)) return this.left;
+    else return this.left - this.quantity;
   }
 
   getCardStatus(): 'warning' | 'readonly' {

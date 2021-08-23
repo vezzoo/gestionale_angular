@@ -9,12 +9,17 @@ import { DecimalPipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ApiUrls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
 import { CategoryToPrint } from 'src/app/base/models/categoryToPrint.model';
+import { NormalizePricePipe } from 'src/app/base/pipes/normalizePrice.pipe';
+import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
 import { environment } from 'src/environments/environment';
+import { ApiError } from 'src/types/api-error';
+import { CashDeskGetResponse } from 'src/types/cash-desk';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -49,10 +54,12 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private httpService: HttpClientService,
     private routerService: RouterService,
     private authService: AuthService,
     private decimalPipe: DecimalPipe,
+    private httpClientService: HttpClientService,
+    private translateErrorPipe: TranslateErrorPipe,
+    private normalizePricePipe: NormalizePricePipe,
     fb: FormBuilder
   ) {
     this.formGroup = fb.group({
@@ -67,78 +74,21 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('TODO CALL CASH-DESK');
+    this.httpClientService.get<CashDeskGetResponse>(
+      ApiUrls.CASH_DESK,
+      (response: CashDeskGetResponse) =>
+        (this.categories = response?.categories?.map((c) => {
+          c.children = c.children.map((e) => {
+            delete e.description;
+            e.quantity = 0;
 
-    const response: Category[] = [
-      {
-        title: 'Cucina',
-        childrens: [
-          {
-            id: 'foo',
-            title: 'Panino e salamella',
-            price: 2.5,
-            quantity: 0,
-            left: 21,
-          },
-          {
-            id: 'foo',
-            title: 'Patatine',
-            price: 2,
-            quantity: 0,
-            left: 19,
-          },
-          {
-            id: 'foo',
-            title: 'Pizza',
-            price: 2.5,
-            quantity: 0,
-            left: 5,
-          },
-          {
-            id: 'foo',
-            title: 'Costine',
-            price: 3,
-            quantity: 0,
-            left: 0,
-          },
-          {
-            id: 'foo',
-            title: 'Alette',
-            price: 2,
-            quantity: 0,
-            left: 100,
-          },
-          {
-            id: 'foo',
-            title: 'Calamari',
-            price: 2.5,
-            quantity: 0,
-            left: 100,
-          },
-        ],
-      },
-      {
-        title: 'Bar',
-        childrens: [
-          {
-            id: 'foo',
-            title: 'Coca-cola',
-            price: 1.5,
-            quantity: 0,
-            left: 100,
-          },
-          {
-            id: 'foo',
-            title: 'Acqua',
-            price: 0.5,
-            quantity: 0,
-            left: 100,
-          },
-        ],
-      },
-    ];
+            return e;
+          });
 
-    this.categories = response;
+          return c;
+        })),
+      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+    );
   }
 
   ngOnDestroy(): void {
@@ -201,6 +151,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
 
   calculateComputedAmount(value: number) {
     const total = this.getTotal();
+    value *= 100;
 
     if (value && value >= total) {
       this.computedAmount = value - total;
@@ -265,7 +216,12 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   }
 
   private formatPrice(value: number): string {
-    return this.decimalPipe.transform(value, '1.2-2') + this.currency;
+    return (
+      this.decimalPipe.transform(
+        this.normalizePricePipe.transform(value),
+        '1.2-2'
+      ) + this.currency
+    );
   }
 
   private getProductsToPrint() {
@@ -305,7 +261,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     return <CashDeskItem>(
       this.categories
         ?.find((cat) => cat.title === category)
-        ?.childrens?.find((c) => c.title === card)
+        ?.children?.find((c) => c.title === card)
     );
   }
 }

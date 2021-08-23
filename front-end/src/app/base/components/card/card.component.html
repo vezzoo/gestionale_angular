@@ -18,7 +18,7 @@
       {{ description }}
     </span>
     <span class="card__body-price" *ngIf="price">
-      {{ price | number: "1.2-2" }} {{ currency }}
+      {{ price | normalizePrice | number: "1.2-2" }} {{ currency }}
     </span>
     <span class="card__body-left" *ngIf="getCardStatus() === 'warning'">
       x{{ getLeft() }}
