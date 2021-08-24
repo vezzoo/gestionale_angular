@@ -6,7 +6,7 @@ import {SETTING_JWT_PRIVATE, SETTING_TOKEN_EXPIRE_HOURS} from "../../settings";
 import {UserPermission} from "../../@types/permissions";
 import AuthApiCall from "../../webserver/apicalls/AuthApiCall";
 import DBDocument from "../wrapper/DBDocument";
-import Field from "../wrapper/decorators/Field";
+import Field, {FieldArray} from "../wrapper/decorators/Field";
 import Unique from "../wrapper/decorators/Unique";
 import Required from "../wrapper/decorators/Required";
 import Collection from "../wrapper/decorators/Collection";
@@ -28,7 +28,7 @@ export default class User extends DBDocument{
     @Field
     private password_salt: string;
 
-    @Field
+    @FieldArray(String)
     @Required
     public permissions: string[]
 
