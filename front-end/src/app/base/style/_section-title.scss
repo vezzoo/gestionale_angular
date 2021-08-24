@@ -9,5 +9,12 @@
     font-weight: 600;
     border-bottom: 1px solid $secondary-color;
     padding-bottom: 7px;
+
+    &.secondary {
+      color: $secondary-color;
+      font-size: 22px;
+      font-weight: 500;
+      border-bottom: none;
+    }
   }
 }

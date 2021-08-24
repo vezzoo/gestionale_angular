@@ -1,3 +1,5 @@
 <div class="section">
-  <span class="section-title">{{ title }}</span>
+  <span class="section-title" [ngClass]="{ secondary: type === 'secondary' }">
+    {{ title }}
+  </span>
 </div>

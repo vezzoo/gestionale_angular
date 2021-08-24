@@ -6,4 +6,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SectionTitleComponent {
   @Input() title: string;
+  @Input() type: 'primary' | 'secondary' = 'primary';
 }
