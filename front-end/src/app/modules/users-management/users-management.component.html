@@ -1,0 +1,157 @@
+<div class="users-management__header">
+  <span class="users-management__title">Gestione utenti</span>
+  <button
+    class="users-management__close"
+    mat-icon-button
+    type="button"
+    (click)="modal.dismiss()"
+  >
+    <mat-icon aria-hidden="false" aria-label="Chiudi">close</mat-icon>
+  </button>
+</div>
+<div class="users-management__body">
+  <div class="row">
+    <div class="col-2">
+      <div class="users-wrapper">
+        <ng-container *ngFor="let user of users">
+          <div
+            class="user-wrapper"
+            [ngClass]="{ selected: isUserSelected(user.id) }"
+            (click)="onUserSelected(user)"
+          >
+            <div class="user-icon">
+              <mat-icon aria-hidden="false">
+                {{ getUserIcon(user.id) }}
+              </mat-icon>
+            </div>
+            <span class="user-name">{{ user.username }}</span>
+          </div>
+        </ng-container>
+        <div
+          *ngIf="hasPermissions()"
+          class="user-wrapper"
+          [ngClass]="{ selected: addingUser }"
+          (click)="onAdd()"
+        >
+          <div class="user-icon">
+            <mat-icon aria-hidden="false">add</mat-icon>
+          </div>
+          <span class="user-name">Nuovo</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="user-details">
+        <form #form="ngForm">
+          <ng-container *ngIf="addingUser">
+            <app-section-title
+              [title]="'Username'"
+              [type]="'secondary'"
+            ></app-section-title>
+            <div class="row user-details__username">
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Inserire il nome utente</mat-label>
+                  <input matInput ngModel name="username" [type]="'text'" />
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-container>
+          <app-section-title
+            [title]="'Password'"
+            [type]="'secondary'"
+          ></app-section-title>
+          <div class="row user-details__password">
+            <div class="col-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Inserire la nuova password</mat-label>
+                <input
+                  matInput
+                  ngModel
+                  name="newPassword"
+                  [type]="newPasswordHide ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="newPasswordHide = !newPasswordHide"
+                  [attr.aria-label]="'Mostra password'"
+                  [attr.aria-pressed]="newPasswordHide"
+                >
+                  <mat-icon>{{
+                    newPasswordHide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="col-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Confermare la nuova password</mat-label>
+                <input
+                  matInput
+                  ngModel
+                  name="confirmPassword"
+                  [type]="confirmPassword ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="confirmPassword = !confirmPassword"
+                  [attr.aria-label]="'Mostra password'"
+                  [attr.aria-pressed]="confirmPassword"
+                >
+                  <mat-icon>{{
+                    confirmPassword ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+          <app-section-title
+            [title]="'Gestione permessi'"
+            [type]="'secondary'"
+          ></app-section-title>
+          <div class="row user-details__permissions">
+            <div class="col-3" *ngFor="let p of permissions">
+              <mat-checkbox
+                [name]="p.name"
+                [(ngModel)]="p.value"
+                [disabled]="!hasPermissions()"
+              >
+                {{ p.name }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="users-management__footer">
+  <div class="row">
+    <div class="col-3">
+      <button
+        color="primary"
+        type="button"
+        mat-raised-button
+        ngbAutofocus
+        [disabled]="!isValid()"
+        (click)="onSave()"
+      >
+        Salva
+      </button>
+    </div>
+    <div class="col-3" *ngIf="hasPermissions() && !addingUser">
+      <button
+        color="warn"
+        type="button"
+        mat-raised-button
+        (click)="onDelete($event)"
+      >
+        Elimina
+      </button>
+    </div>
+  </div>
+</div>

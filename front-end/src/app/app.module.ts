@@ -17,6 +17,7 @@ import { MaterialModule } from './material.module';
 import { AuthComponent } from './modules/auth/auth.component';
 import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
+import { UsersManagementComponent } from './modules/users-management/users-management.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
@@ -28,6 +29,7 @@ import { NormalizePricePipe } from './base/pipes/normalizePrice.pipe';
     AuthComponent,
     HomeComponent,
     CashDeskComponent,
+    UsersManagementComponent,
     ToolbarComponent,
     CardComponent,
     CategoryComponent,

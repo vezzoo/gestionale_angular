@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Urls } from 'src/app/base/enums/enums';
 import { Category } from 'src/app/base/models/category.model';
-import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
-import { AuthService } from '../auth/auth.service';
+import { UsersManagementService } from '../users-management/users-management.service';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +13,8 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
 
   constructor(
-    private httpService: HttpClientService,
     private routerService: RouterService,
-    private authService: AuthService
+    private usersManagementService: UsersManagementService
   ) {}
 
   ngOnInit(): void {
@@ -87,7 +85,9 @@ export class HomeComponent implements OnInit {
 
   onCardClick(cardTitle: string) {
     const path = this.getUrlFromTitle(cardTitle);
-    if (path && Urls[path]) {
+    if (path === 'AMMINISTRAZIONE_GESTIONE_UTENTI') {
+      this.usersManagementService.openModal();
+    } else if (path && Urls[path]) {
       this.routerService.navigate(Urls[path]);
     } else {
       console.warn(`Route ${path} not defined!`);
