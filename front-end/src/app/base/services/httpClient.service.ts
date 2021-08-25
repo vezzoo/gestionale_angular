@@ -77,6 +77,18 @@ export class HttpClientService {
     );
   }
 
+  delete<T>(
+    url: string,
+    callBackSuccess?: (response: T) => void,
+    callBackError?: (error: ApiError) => void
+  ) {
+    this.subscribeToHttp(
+      this.http.delete<T>(this.getUrl(url), this.options),
+      callBackSuccess,
+      callBackError
+    );
+  }
+
   private subscribeToHttp<T>(
     obs: Observable<HttpEvent<T>>,
     callBackSuccess: (response: T) => void,
@@ -94,14 +106,14 @@ export class HttpClientService {
     response: T,
     callBackSuccess: (response: T) => void
   ): void {
-    if (callBackSuccess) callBackSuccess(response);
+    if (response && callBackSuccess) callBackSuccess(response);
   }
 
   private handleError(
     error: ApiError,
     callBackError: (error: ApiError) => void
   ): void {
-    console.error(error.message);
+    console.error(error.message || 'No error message found');
 
     if (callBackError) callBackError(error);
     else console.log(error);
