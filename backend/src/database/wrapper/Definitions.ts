@@ -11,6 +11,7 @@ export default class DatabaseModelDefinition{
 
     private _schema_definition: {[p: string]: any} = {}
     private schema_options: {[p: string]: any} = {}
+    private schema?: Mongoose.Schema
     private model?: Mongoose.Model<any, any, any> | null
     private default_populate_list: string[] = []
     private _model_references: {[local_field: string]: Function} = {}
@@ -26,8 +27,13 @@ export default class DatabaseModelDefinition{
     }
 
     public getModel(name: string){
-        if(!this.model) this.model = Mongoose.model<any>(name, new Mongoose.Schema(this._schema_definition))
+        if(!this.model) this.model = Mongoose.model<any>(name, this.getSchema())
         return this.model
+    }
+
+    public getSchema(){
+        if(!this.schema) this.schema = new Mongoose.Schema(this._schema_definition, this.schema_options)
+        return this.schema
     }
 
     public addDefaultPopulate(field: string){
@@ -44,4 +50,5 @@ export default class DatabaseModelDefinition{
         this._model_references[field] = model_reference
         this.add_definition(field, "ref", model_reference.model_name())
     }
+
 }

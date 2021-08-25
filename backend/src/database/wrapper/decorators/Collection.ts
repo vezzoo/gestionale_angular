@@ -14,7 +14,13 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
             Object.keys(Database.getModel(model_name).schema_definition).forEach((e: string) => {
                 if (this.exists(e) && this.get(e) !== doc[e]) {
                     if (Database.getModel(model_name).model_references[e])
-                        doc[e] = this.get(e).getDocument()
+                        if(Array.isArray(this.get(e)))
+                            this.get(e).forEach((v: any, i: number) => {
+                                if(!doc[e]) doc[e] = []
+                                doc[e][i] = v.getDocument()
+                            })
+                        else
+                            doc[e] = this.get(e).getDocument()
                     else
                         doc[e] = this.get(e)
                 }
@@ -22,12 +28,22 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
             if(!this.instance_document) this.instance_document = new model(doc)
         }
 
-        private update_from_document(){
+        private update_from_document(){ //todo array support
             Object.keys(this.instance_document._doc).forEach(e => {
                 if(Database.getModel(model_name).model_references[e]) {
                     if (this.instance_document?.populated(e)) {
                         this.set(e, new (Database.getModel(model_name).model_references[e])(this.instance_document._doc[e]))
                         this.set(e + "_id", this.instance_document._doc[e]._id)
+                    } else if (Array.isArray(this.instance_document[e])){
+                        this.instance_document[e].forEach((v: any, i: number) => {
+                            if (v?.populated(e)) {
+                                // @ts-ignore
+                                this[e][i] = new (Database.getModel(model_name).model_references[e])(v)
+                            } else {
+                                // @ts-ignore
+                                this[e][i] = v._id
+                            }
+                        })
                     } else
                         this.set(e + "_id", this.instance_document._doc[e])
                 } else
