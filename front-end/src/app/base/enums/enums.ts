@@ -11,4 +11,5 @@ export enum ApiUrls {
   CASH_DESK = '/storage/',
   USERS = '/usr/',
   PERMISSIONS = '/permissions/',
+  ORDER = '/order/',
 }

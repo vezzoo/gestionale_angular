@@ -19,7 +19,11 @@ import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
 import { environment } from 'src/environments/environment';
 import { ApiError } from 'src/types/api-error';
-import { CashDeskGetResponse } from 'src/types/cash-desk';
+import {
+  CashDeskGetResponse,
+  CashDeskOrderConfirmRequest,
+  CashDeskOrderConfirmResponse,
+} from 'src/types/cash-desk';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -161,10 +165,24 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('TODO ORDER CONFIRM CALL');
-    console.log('TODO PRINT CALL');
+    const body: CashDeskOrderConfirmRequest = {
+      cart: Object.fromEntries(this.cart.map((p) => [p.id, p.quantity])),
+    };
 
-    this.print();
+    this.httpClientService.put<CashDeskOrderConfirmResponse>(
+      ApiUrls.ORDER,
+      body,
+      (response: CashDeskOrderConfirmResponse) => {
+        if (response?.code) {
+          this.print(Number(response.code) || 0);
+        }
+
+        Object.keys(response?.printLists).forEach((pl) => {
+          console.log(`TODO PRINT CALL FOR ${pl}`);
+        });
+      },
+      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+    );
   }
 
   private reset() {
@@ -172,7 +190,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     this.ngOnInit();
   }
 
-  private print() {
+  private print(orderNumber: number) {
     const basePath = window.location.href.substr(
       0,
       window.location.href.indexOf('#') - 1
@@ -186,7 +204,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       iframeElement.src = `${basePath}${environment.basePathToTemplates}/${c.path}`;
       iframeElement.onload = () => {
         const iframe = window.frames[name];
-        iframe.setData(this.getDataToPrint(c.title, c.category));
+        iframe.setData(this.getDataToPrint(c.title, c.category, orderNumber));
         iframe.printBill();
 
         document.body.removeChild(iframeElement);
@@ -200,7 +218,11 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getDataToPrint(title: string, categoryTitle: string) {
+  private getDataToPrint(
+    title: string,
+    categoryTitle: string,
+    orderNumber: number
+  ) {
     let products = this.getProductsToPrint();
 
     if (categoryTitle) {
@@ -209,7 +231,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
 
     return {
       title: title || environment.title,
-      orderNumber: '0020', // TODO get from BE
+      orderNumber: this.decimalPipe.transform(orderNumber, '4.0').replace(/,/g, ""),
       total: this.formatPrice(this.getTotal()),
       products: products,
     };

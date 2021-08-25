@@ -17,14 +17,17 @@ export interface CashDeskGetResponse {
 }
 
 export interface CashDeskOrderConfirmRequest {
-  cart: Array<{
-    id: string;
-    quantity?: number;
-  }>;
+  cart: {
+    [id: string]: number;
+  };
 }
 
 export interface CashDeskOrderConfirmResponse {
-  orderId: string;
+  code: string;
+  price: number;
+  printLists: {
+    [id: string]: string;
+  };
 }
 
 export interface CashDeskPrintRequest {
