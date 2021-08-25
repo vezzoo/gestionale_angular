@@ -18,9 +18,9 @@ export default class ECODE{
         return this.ERR_RETURN(code, "E_UNCOMMON", message, "", aux)
     }
 
-    public static get(s: string): ErrorCode{
+    public static get(s: string, aux: any = {}): ErrorCode{
         // @ts-ignore
-        if(this[s]) return this[s]
+        if(this[s]) return Object.assign(this[s], aux)
         throw Error("Unexistent code " + s)
     }
 
@@ -42,6 +42,10 @@ export default class ECODE{
     public static readonly E_TIMEOUT: ErrorCode
     @ErrorCode(406, "Duplicate entry", "tried to add a duplicated unique entry into the database")
     public static readonly E_DUP: ErrorCode
+
+    @ErrorCode(406, "Not enought stock left for this order", "tried to add a duplicated unique entry into the database")
+    public static readonly E_NO_STOCK: ErrorCode
+
 
     @ErrorCode(403, "Jwt expired", "tried to add a duplicated unique entry into the database")
     public static readonly E_JWT_EXPIRED: ErrorCode
