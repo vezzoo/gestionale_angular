@@ -14,6 +14,8 @@ export default new AuthApiCall(
     "/:userid",
     async (req, res, user, body, headers, parameters)=>{
         await UserModel.delete(parameters.userid)
+
+        return {status: true};
     },
     {
         params: S.object()

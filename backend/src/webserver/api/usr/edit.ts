@@ -31,7 +31,7 @@ export default new AuthApiCall(
         }
 
         await target_user.save()
-        return {stats: true}
+        return {status: true}
     },
     {
         body: S.object()
