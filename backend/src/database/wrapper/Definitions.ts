@@ -17,8 +17,17 @@ export default class DatabaseModelDefinition{
     private _model_references: {[local_field: string]: Function} = {}
 
     public add_definition(field: string, property: string, value: any) {
-        if(!this._schema_definition[field]) this._schema_definition[field] = {}
-        Object.assign(this._schema_definition[field], {[property]: value})
+        if(Array.isArray(this.schema_definition[field]))
+            this.add_array_definition(field, property, value)
+        else {
+            if (!this._schema_definition[field]) this._schema_definition[field] = {}
+            Object.assign(this._schema_definition[field], {[property]: value})
+        }
+    }
+
+    public add_array_definition(field: string, property: string, value: any) {
+        if(!this._schema_definition[field]) this._schema_definition[field] = [{}]
+        Object.assign(this._schema_definition[field][0], {[property]: value})
     }
 
     public add_option(field: string, value: any) {
@@ -48,7 +57,10 @@ export default class DatabaseModelDefinition{
     public addDocumentRef(field: string, model_reference: any){
         if(!model_reference.model_name) return
         this._model_references[field] = model_reference
-        this.add_definition(field, "ref", model_reference.model_name())
+        if(Array.isArray(this.schema_definition[field]))
+            this.add_array_definition(field, "ref", model_reference.model_name())
+        else
+            this.add_definition(field, "ref", model_reference.model_name())
     }
 
 }

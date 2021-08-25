@@ -7,13 +7,19 @@ import Default from "../wrapper/decorators/Default";
 import Unique from "../wrapper/decorators/Unique";
 import Product from "./Product.model";
 import Ref, {RefArray} from "../wrapper/decorators/Ref";
+import Populate from "../wrapper/decorators/Populate";
+import SchemaOption from "../wrapper/decorators/SchemaOption";
+import User from "./User.model";
 
 @Collection
+@SchemaOption("timestamps", true)
 export default class Order extends DBDocument {
-    constructor(code: string, products: Product[]) {
+    constructor(code: string, user: User, products: Product[], quantities: number[]) {
         super();
         this.code = code
         this.products = products
+        this.user = user
+        this.quantities = quantities
     }
 
     public _id?: ObjectId
@@ -22,8 +28,17 @@ export default class Order extends DBDocument {
     @Field
     @Required
     @Unique
-    public code?: string
+    public code: string
 
+    @Default([])
+    @Populate
     @RefArray(Product)
-    public products?: Product[]
+    public products: Product[]
+
+    @FieldArray(Number)
+    public quantities: number[]
+
+    @Ref
+    @Populate
+    public user: User
 }

@@ -13,6 +13,7 @@ export default class Product extends DBDocument {
         this.title = title;
         this.price = price;
         this.category = category;
+        this.stock = 0
         if(stock)
             this.stock = stock;
         if(description)
@@ -37,7 +38,7 @@ export default class Product extends DBDocument {
 
     @Field
     @Default(0)
-    public stock?: number
+    public stock: number
 
     @Field
     public description?: string
