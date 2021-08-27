@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../../../modules/auth/auth.service';
 import { Urls } from '../../enums/enums';
+import { ConfigurationsService } from '../../services/configurations.service';
 import { RouterService } from '../../services/router.service';
 
 @Component({
@@ -10,27 +11,33 @@ import { RouterService } from '../../services/router.service';
   templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
-  title;
+  title: string;
 
   username: string = null;
 
-  private sub: Subscription;
+  private subs: Array<Subscription> = [];
 
   constructor(
     private authService: AuthService,
+    private configurationsService: ConfigurationsService,
     private routerService: RouterService
   ) {}
 
   ngOnInit(): void {
-    setTimeout(() => this.title = environment.title);
+    this.subs.push(
+      this.configurationsService.onEnvironmentReady.subscribe(
+        (e) => (this.title = environment.title)
+      )
+    );
 
-    this.sub = this.authService.onUserChange.subscribe(
-      (user) => (this.username = user)
+    this.subs.push(
+      this.authService.onUserChange.subscribe((user) => (this.username = user))
     );
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.subs.forEach((sub) => sub?.unsubscribe());
+    this.subs = [];
   }
 
   doLogout(): void {
