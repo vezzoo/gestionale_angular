@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Configs } from '../models/configs.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationsService {
+  onEnvironmentReady = new Subject<string>();
   errorTranslations: Object;
 
   constructor(private http: HttpClient) {}
@@ -18,6 +20,8 @@ export class ConfigurationsService {
       if (data) {
         Object.keys(data).forEach((k) => (environment[k] = data[k]));
       }
+
+      this.onEnvironmentReady.next();
     });
   }
 
