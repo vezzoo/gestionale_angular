@@ -18,6 +18,16 @@ const routes: Routes = [
     component: CashDeskComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: Urls.CASSA_BAR,
+    component: CashDeskComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: Urls.CASSA_ASPORTO,
+    component: CashDeskComponent,
+    canActivate: [AuthGuard],
+  },
   { path: Urls.AUTH, component: AuthComponent },
 ];
 

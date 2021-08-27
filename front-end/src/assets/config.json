@@ -10,5 +10,6 @@
       "category": "Bar",
       "path": "bar.html"
     }
-  ]
+  ],
+  "barCashDeskCategories": ["Bar"]
 }

@@ -9,7 +9,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ApiUrls } from 'src/app/base/enums/enums';
+import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
 import { CategoryToPrint } from 'src/app/base/models/categoryToPrint.model';
@@ -64,9 +64,11 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     private httpClientService: HttpClientService,
     private translateErrorPipe: TranslateErrorPipe,
     private normalizePricePipe: NormalizePricePipe,
-    fb: FormBuilder
-  ) {
-    this.formGroup = fb.group({
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.formGroup = this.fb.group({
       notes: '',
       takeAway: false,
       receivedAmount: null,
@@ -75,11 +77,17 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     this.formGroup.controls['receivedAmount'].valueChanges.subscribe((value) =>
       this.calculateComputedAmount(value)
     );
-  }
 
-  ngOnInit(): void {
+    let url: string = ApiUrls.CASH_DESK;
+    if (this.routerService.getUrl() === Urls.CASSA_BAR) {
+      url += environment.barCashDeskCategories?.join(`&`);
+    } else if (this.routerService.getUrl() === Urls.CASSA_ASPORTO) {
+      this.formGroup.controls['takeAway'].disable();
+      this.formGroup.controls['takeAway'].setValue(true);
+    }
+
     this.httpClientService.get<CashDeskGetResponse>(
-      ApiUrls.CASH_DESK,
+      url,
       (response: CashDeskGetResponse) =>
         (this.categories = response?.categories?.map((c) => {
           c.children = c.children.map((e) => {
@@ -231,7 +239,9 @@ export class CashDeskComponent implements OnInit, OnDestroy {
 
     return {
       title: title || environment.title,
-      orderNumber: this.decimalPipe.transform(orderNumber, '4.0').replace(/,/g, ""),
+      orderNumber: this.decimalPipe
+        .transform(orderNumber, '4.0')
+        .replace(/,/g, ''),
       total: this.formatPrice(this.getTotal()),
       products: products,
     };

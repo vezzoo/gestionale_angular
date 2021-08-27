@@ -65,8 +65,9 @@
                     <span
                       *ngIf="computedAmount !== undefined"
                       class="cash-desk__splitter__amounts-computed-amount"
-                      >{{ computedAmount | normalizePrice | number: "1.2-2" }}</span
                     >
+                      {{ computedAmount | normalizePrice | number: "1.2-2" }}
+                    </span>
                     <span *ngIf="computedAmount === undefined">----</span>
                     <span> {{ currency }}</span>
                   </div>

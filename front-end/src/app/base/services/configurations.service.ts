@@ -16,9 +16,7 @@ export class ConfigurationsService {
 
     this.readFile('./assets/config.json', (data: Configs) => {
       if (data) {
-        environment.title = data.title;
-        environment.basePathToTemplates = data.basePathToTemplates;
-        environment.categoriesToPrint = data.categoriesToPrint;
+        Object.keys(data).forEach((k) => (environment[k] = data[k]));
       }
     });
   }
