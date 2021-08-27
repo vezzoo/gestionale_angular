@@ -130,6 +130,7 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
         }
 
         public getDocument(){
+            this.update_document()
             return this.instance_document
         }
     }
