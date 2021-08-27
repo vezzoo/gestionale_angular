@@ -27,6 +27,14 @@
     transform: translateY(100px);
   }
 
+  &__notes {
+    padding-top: 15px;
+
+    textarea {
+      height: 100px;
+    }
+  }
+
   &__summary {
     border-left: 1px solid $secondary-color;
     padding-top: 15px;
