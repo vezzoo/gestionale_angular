@@ -33,7 +33,7 @@ export default class DBDocument{
 
     protected exists(e: string): boolean{
         //@ts-ignore
-        return !!this[e]
+        return typeof(this[e]) !== "undefined"
     }
 
     protected get(e: string): any{
