@@ -11,7 +11,7 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
         private instance_document: any;
 
         public getObject(){
-            return Object.keys(Database.getModel(model_name).schema_definition).reduce((a: any, b: string) => {
+            return [...Object.keys(Database.getModel(model_name).schema_definition), "_id"].reduce((a: any, b: string) => {
                 a[b] = this.get(b);
                 return a
             }, {})
