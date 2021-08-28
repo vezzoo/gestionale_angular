@@ -12,4 +12,5 @@ export const environment = {
   categoriesToPrint: [],
   barCashDeskCategories: [],
   stockWarningLimit: undefined,
+  cashDeskCategoriesOrder: [],
 };

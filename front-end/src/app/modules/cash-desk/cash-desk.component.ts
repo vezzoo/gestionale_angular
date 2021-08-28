@@ -88,9 +88,9 @@ export class CashDeskComponent implements OnInit, OnDestroy {
 
     this.httpClientService.get<CashDeskGetResponse>(
       url,
-      (response: CashDeskGetResponse) =>
-        (this.categories = response?.categories?.map((c) => {
-          c.children = c.children.map((e) => {
+      (response: CashDeskGetResponse) => {
+        const categories = response?.categories?.map((c) => {
+          c.children.forEach((e) => {
             delete e.description;
             e.quantity = 0;
 
@@ -98,7 +98,15 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           });
 
           return c;
-        })),
+        });
+
+        environment.cashDeskCategoriesOrder.forEach((co) => {
+          const cat = categories.find((c) => c.title === co);
+
+          if (cat) this.categories.push(cat);
+          else console.warn(`No category found for ${co}!`);
+        });
+      },
       (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
     );
   }
