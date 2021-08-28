@@ -26,7 +26,7 @@ export default class DBDocument{
         throw Error("Not implemented")
     }
 
-    public getObject(): any{
+    public getObject(ignore_keys:string[]=[], map_keys:any={}): any{
         throw Error("Not implemented")
     }
 
