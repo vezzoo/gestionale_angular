@@ -15,13 +15,19 @@ export class CardComponent {
   @Input() stock: number;
   @Input() icon: string;
 
-  @Output() onClickEvent = new EventEmitter<boolean>();
+  @Output() onClickEvent = new EventEmitter<{
+    isShiftPressed: boolean;
+    isCtrlPressed: boolean;
+  }>();
 
   readonly currency = environment.currency;
   readonly steps = [environment.stockWarningLimit, 0];
 
   onClick(event: any) {
-    this.onClickEvent.emit(event.shiftKey);
+    this.onClickEvent.emit({
+      isShiftPressed: event.shiftKey,
+      isCtrlPressed: event.ctrlKey,
+    });
   }
 
   getLeft() {

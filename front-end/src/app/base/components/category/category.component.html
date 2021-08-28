@@ -11,7 +11,7 @@
         [price]="getCashDeskItem(item).price"
         [stock]="getCashDeskItem(item).stock"
         [icon]="getDashboardItem(item).icon"
-        (onClickEvent)="onClick(item.title, $event)"
+        (onClickEvent)="onClick(item.title, $event.isShiftPressed, $event.isCtrlPressed)"
       ></app-card>
     </ng-container>
   </div>

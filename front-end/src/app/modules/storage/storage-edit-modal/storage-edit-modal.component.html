@@ -14,19 +14,19 @@
     <div class="col-4">
       <mat-form-field appearance="outline">
         <mat-label>Id</mat-label>
-        <input matInput formControlName="id" [type]="'text'" />
+        <input matInput autocomplete="off" formControlName="id" [type]="'text'" />
       </mat-form-field>
     </div>
     <div class="col-4">
       <mat-form-field appearance="outline">
         <mat-label>Titolo</mat-label>
-        <input matInput formControlName="title" required [type]="'text'" />
+        <input matInput autocomplete="off" formControlName="title" required [type]="'text'" />
       </mat-form-field>
     </div>
     <div class="col-4">
       <mat-form-field appearance="outline">
         <mat-label>Descrizione</mat-label>
-        <input matInput formControlName="description" [type]="'text'" />
+        <input matInput autocomplete="off" formControlName="description" [type]="'text'" />
       </mat-form-field>
     </div>
   </div>
@@ -36,6 +36,7 @@
         <mat-label>Prezzo</mat-label>
         <input
           matInput
+          autocomplete="off"
           formControlName="price"
           required
           [type]="'text'"
@@ -48,6 +49,7 @@
         <mat-label>Giacenza</mat-label>
         <input
           matInput
+          autocomplete="off"
           formControlName="stock"
           required
           [type]="'text'"

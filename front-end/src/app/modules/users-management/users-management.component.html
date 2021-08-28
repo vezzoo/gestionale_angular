@@ -52,7 +52,13 @@
               <div class="col-6">
                 <mat-form-field appearance="outline">
                   <mat-label>Inserire il nome utente</mat-label>
-                  <input matInput ngModel name="username" [type]="'text'" />
+                  <input
+                    matInput
+                    ngModel
+                    autocomplete="off"
+                    name="username"
+                    [type]="'text'"
+                  />
                 </mat-form-field>
               </div>
             </div>
@@ -68,6 +74,7 @@
                 <input
                   matInput
                   ngModel
+                  autocomplete="off"
                   name="newPassword"
                   [type]="newPasswordHide ? 'password' : 'text'"
                 />
@@ -91,6 +98,7 @@
                 <input
                   matInput
                   ngModel
+                  autocomplete="off"
                   name="confirmPassword"
                   [type]="confirmPassword ? 'password' : 'text'"
                 />

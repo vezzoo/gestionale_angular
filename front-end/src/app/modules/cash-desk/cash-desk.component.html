@@ -7,7 +7,11 @@
           [title]="category?.title"
           [children]="category?.children"
           (onCardClickEvent)="
-            onCardClick($event.cardTitle, $event.isShiftPressed)
+            onCardClick(
+              $event.cardTitle,
+              $event.isShiftPressed,
+              $event.isCtrlPressed
+            )
           "
         ></app-category>
       </ng-container>
@@ -55,6 +59,7 @@
                     <mat-label>Importo ricevuto {{ currency }} </mat-label>
                     <input
                       matInput
+                      autocomplete="off"
                       type="number"
                       formControlName="receivedAmount"
                       (keypress)="formatReceivedAmount($event)"

@@ -17,6 +17,7 @@ import { MaterialModule } from './material.module';
 import { AuthComponent } from './modules/auth/auth.component';
 import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
+import { CashDeskModalComponent } from './modules/cash-desk/cash-desk-modal/cash-desk-modal.component';
 import { UsersManagementComponent } from './modules/users-management/users-management.component';
 import { StorageComponent } from './modules/storage/storage.component';
 import { StorageEditModalComponent } from './modules/storage/storage-edit-modal/storage-edit-modal.component';
@@ -32,6 +33,7 @@ import { DecimalPipe } from '@angular/common';
     AuthComponent,
     HomeComponent,
     CashDeskComponent,
+    CashDeskModalComponent,
     UsersManagementComponent,
     StorageComponent,
     StorageEditModalComponent,

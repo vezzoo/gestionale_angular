@@ -14,12 +14,14 @@ export class CategoryComponent {
   @Output() onCardClickEvent = new EventEmitter<{
     cardTitle: string;
     isShiftPressed: boolean;
+    isCtrlPressed: boolean;
   }>();
 
-  onClick(cardTitle: string, isShiftPressed: boolean) {
+  onClick(cardTitle: string, isShiftPressed: boolean, isCtrlPressed: boolean) {
     this.onCardClickEvent.emit({
       cardTitle: `${this.title}/${cardTitle}`,
       isShiftPressed: isShiftPressed,
+      isCtrlPressed: isCtrlPressed,
     });
   }
 

@@ -8,6 +8,7 @@ import {
 import { DecimalPipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
@@ -26,6 +27,7 @@ import {
   CashDeskOrderConfirmResponse,
 } from 'src/types/cash-desk';
 import { AuthService } from '../auth/auth.service';
+import { CashDeskModalComponent } from './cash-desk-modal/cash-desk-modal.component';
 
 @Component({
   selector: 'app-cash-desk',
@@ -59,7 +61,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
 
   constructor(
     private routerService: RouterService,
-    private authService: AuthService,
+    private ngbModal: NgbModal,
     private decimalPipe: DecimalPipe,
     private httpClientService: HttpClientService,
     private translateErrorPipe: TranslateErrorPipe,
@@ -130,15 +132,42 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     return isCharCodeOk && isLenOk;
   }
 
-  onCardClick(cardTitle: string, isShiftPressed: boolean) {
+  onCardClick(
+    cardTitle: string,
+    isShiftPressed: boolean,
+    isCtrlPressed: boolean
+  ) {
     const card = this.getCardFromTitle(cardTitle);
 
+    if (isCtrlPressed) {
+      const ref = this.ngbModal.open(CashDeskModalComponent, {
+        backdrop: 'static',
+        centered: true,
+      });
+
+      ref.componentInstance.min = -card.quantity;
+      ref.componentInstance.max = card.stock;
+      ref.result.then(
+        (qta) => this.compute(card, cardTitle, isShiftPressed, qta),
+        () => {}
+      );
+    } else {
+      this.compute(card, cardTitle, isShiftPressed, 1);
+    }
+  }
+
+  private compute(
+    card: CashDeskItem,
+    cardTitle: string,
+    isShiftPressed: boolean,
+    qta: number
+  ) {
     if (isShiftPressed) {
       if (card.quantity > 0) {
-        card.quantity--;
+        card.quantity -= qta;
       }
     } else if (card.quantity < card.stock) {
-      card.quantity++;
+      card.quantity += qta;
     }
 
     this.updateCart(card, cardTitle.substr(0, cardTitle.indexOf('/')));
