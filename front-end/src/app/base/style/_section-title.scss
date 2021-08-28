@@ -9,6 +9,11 @@
     font-weight: 600;
     border-bottom: 1px solid $secondary-color;
     padding-bottom: 7px;
+    text-transform: lowercase;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
 
     &.secondary {
       color: $secondary-color;
