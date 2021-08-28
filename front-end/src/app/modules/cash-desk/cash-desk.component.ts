@@ -17,6 +17,7 @@ import { NormalizePricePipe } from 'src/app/base/pipes/normalizePrice.pipe';
 import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
+import { CommonUtils } from 'src/app/base/utils/common.utils';
 import { environment } from 'src/environments/environment';
 import { ApiError } from 'src/types/api-error';
 import {
@@ -30,7 +31,6 @@ import { AuthService } from '../auth/auth.service';
   selector: 'app-cash-desk',
   templateUrl: './cash-desk.component.html',
   styleUrls: ['./cash-desk.component.scss'],
-  providers: [DecimalPipe],
   animations: [
     // prettier-ignore
     trigger('animateScrollButton', [
@@ -129,7 +129,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       if (card.quantity > 0) {
         card.quantity--;
       }
-    } else if (card.quantity < card.left) {
+    } else if (card.quantity < card.stock) {
       card.quantity++;
     }
 
@@ -175,6 +175,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   onSubmit() {
     const body: CashDeskOrderConfirmRequest = {
       cart: Object.fromEntries(this.cart.map((p) => [p.id, p.quantity])),
+      notes: CommonUtils.getFormControlValue(this.formGroup, 'notes'),
+      takeAway: CommonUtils.getFormControlValue(this.formGroup, 'takeAway'),
     };
 
     this.httpClientService.put<CashDeskOrderConfirmResponse>(
@@ -185,7 +187,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           this.print(Number(response.code) || 0);
         }
 
-        Object.keys(response?.printLists).forEach((pl) => {
+        Object.keys(response?.printList).forEach((pl) => {
           console.log(`TODO PRINT CALL FOR ${pl}`);
         });
       },
@@ -248,12 +250,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   }
 
   private formatPrice(value: number): string {
-    return (
-      this.decimalPipe.transform(
-        this.normalizePricePipe.transform(value),
-        '1.2-2'
-      ) + this.currency
-    );
+    return this.normalizePricePipe.transform(value) + this.currency;
   }
 
   private getProductsToPrint() {

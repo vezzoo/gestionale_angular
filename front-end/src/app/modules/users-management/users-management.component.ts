@@ -5,6 +5,7 @@ import { ApiUrls } from 'src/app/base/enums/enums';
 import { User } from 'src/app/base/models/user.model';
 import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
+import { CommonUtils } from 'src/app/base/utils/common.utils';
 import { ApiError } from 'src/types/api-error';
 import {
   UsersGetResponse,
@@ -92,22 +93,22 @@ export class UsersManagementComponent implements OnInit {
 
   isValid(): boolean {
     if (!this.addingUser) {
-      if (this.getFormControlValue('newPassword')) {
+      if (CommonUtils.getFormControlValue(this.form, 'newPassword')) {
         return (
-          this.getFormControlValue('newPassword') ===
-          this.getFormControlValue('confirmPassword')
+          CommonUtils.getFormControlValue(this.form, 'newPassword') ===
+          CommonUtils.getFormControlValue(this.form, 'confirmPassword')
         );
       } else {
         return this.arePermissionsChanged();
       }
     } else {
-      const isUsrOk = !!this.getFormControlValue('username');
+      const isUsrOk = !!CommonUtils.getFormControlValue(this.form, 'username');
       let isPwdOk: boolean = false;
 
-      if (this.getFormControlValue('newPassword')) {
+      if (CommonUtils.getFormControlValue(this.form, 'newPassword')) {
         isPwdOk =
-          this.getFormControlValue('newPassword') ===
-          this.getFormControlValue('confirmPassword');
+          CommonUtils.getFormControlValue(this.form, 'newPassword') ===
+          CommonUtils.getFormControlValue(this.form, 'confirmPassword');
       }
 
       return isUsrOk && isPwdOk && this.arePermissionsChanged();
@@ -119,7 +120,7 @@ export class UsersManagementComponent implements OnInit {
       this.updateUser(this.selected?.id);
     } else {
       const body: UsersPutRequest = {
-        username: this.getFormControlValue('username'),
+        username: CommonUtils.getFormControlValue(this.form, 'username'),
         permissions: this.permissions.filter((p) => p.value).map((p) => p.name),
       };
       this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
@@ -204,8 +205,8 @@ export class UsersManagementComponent implements OnInit {
       id: id,
     };
 
-    const newPassword = this.getFormControlValue('newPassword');
-    const confirmPassword = this.getFormControlValue('confirmPassword');
+    const newPassword = CommonUtils.getFormControlValue(this.form, 'newPassword');
+    const confirmPassword = CommonUtils.getFormControlValue(this.form, 'confirmPassword');
 
     if (newPassword && newPassword === confirmPassword) {
       body.password = newPassword;
@@ -231,9 +232,5 @@ export class UsersManagementComponent implements OnInit {
     return (
       JSON.stringify(this.permissions) !== JSON.stringify(this.oldPermissions)
     );
-  }
-
-  private getFormControlValue(formControlName: string): any {
-    return this.form?.controls[formControlName]?.value;
   }
 }

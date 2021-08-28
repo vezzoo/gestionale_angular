@@ -11,4 +11,5 @@ export const environment = {
   basePathToTemplates: undefined,
   categoriesToPrint: [],
   barCashDeskCategories: [],
+  stockWarningLimit: undefined,
 };

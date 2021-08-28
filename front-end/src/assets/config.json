@@ -11,5 +11,6 @@
       "path": "bar.html"
     }
   ],
+  "stockWarningLimit": 20,
   "barCashDeskCategories": ["Bar"]
 }

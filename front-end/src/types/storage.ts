@@ -1,25 +1,32 @@
-export interface StorageInitRequest {}
+import { Product } from 'src/app/base/models/product.model';
 
-export interface StorageInitResponse {
-  items: Array<{
-    id: string;
+export interface StorageGetRequest {}
+
+export interface StorageGetResponse {
+  categories: Array<{
     title: string;
-    price: number;
-    stock: number;
-    category: string;
-    description?: string;
+    children: Array<Product>;
   }>;
 }
 
-export interface StorageUpdateRequest {
-  editedItems: Array<{
-    id: string;
-    title?: string;
-    price?: number;
-    stock?: number;
-    description?: string;
-    category?: string;
-  }>;
+export interface StoragePutRequest {
+  title: string;
+  price: number;
+  stock: number;
+  category: string;
+  description?: string;
 }
 
-export interface StorageUpdateResponse {}
+export interface StoragePutResponse {
+  status: boolean;
+}
+
+export interface StoragePatchRequest {
+  editedItems: Array<Product>;
+}
+
+export interface StoragePatchResponse {
+  [id: string]: {
+    status: boolean;
+  };
+}

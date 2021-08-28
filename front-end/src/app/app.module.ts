@@ -18,10 +18,13 @@ import { AuthComponent } from './modules/auth/auth.component';
 import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
 import { UsersManagementComponent } from './modules/users-management/users-management.component';
+import { StorageComponent } from './modules/storage/storage.component';
+import { StorageEditModalComponent } from './modules/storage/storage-edit-modal/storage-edit-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
 import { NormalizePricePipe } from './base/pipes/normalizePrice.pipe';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { NormalizePricePipe } from './base/pipes/normalizePrice.pipe';
     HomeComponent,
     CashDeskComponent,
     UsersManagementComponent,
+    StorageComponent,
+    StorageEditModalComponent,
     ToolbarComponent,
     CardComponent,
     CategoryComponent,
@@ -59,6 +64,7 @@ import { NormalizePricePipe } from './base/pipes/normalizePrice.pipe';
     },
     TranslateErrorPipe,
     NormalizePricePipe,
+    DecimalPipe,
   ],
 })
 export class AppModule {}

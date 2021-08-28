@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { ToolbarFunction } from '../../models/function.model';
 
 @Injectable({ providedIn: 'root' })
 export class ToolbarService {
-  selectedDate = new BehaviorSubject<Date>(new Date());
+  addToolbarFunction = new Subject<ToolbarFunction>();
+  removeToolbarFunction = new Subject<string>();
 
-  setSelectedDate(date: Date): void {
-    this.selectedDate.next(date);
+  addFunction(f: ToolbarFunction) {
+    this.addToolbarFunction.next(f);
   }
 
-  getSelectedDate(): Date {
-    return this.selectedDate.getValue();
+  removeFunction(name: string) {
+    this.removeToolbarFunction.next(name);
   }
 }

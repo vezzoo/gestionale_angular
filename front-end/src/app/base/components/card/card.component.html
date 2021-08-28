@@ -20,7 +20,7 @@
     <span class="custom-card__body-price" *ngIf="price">
       {{ price | normalizePrice | number: "1.2-2" }} {{ currency }}
     </span>
-    <span class="custom-card__body-left" *ngIf="getCardStatus() === 'warning'">
+    <span class="custom-card__body-stock" *ngIf="getCardStatus() === 'warning'">
       x{{ getLeft() }}
     </span>
     <div
@@ -28,8 +28,8 @@
       [ngClass]="{ 'custom-card__body-quantity-error': isOutOfStock() }"
       *ngIf="quantity !== undefined"
     >
-      <span *ngIf="left > 0">{{ quantity }}</span>
-      <span *ngIf="left === 0">--</span>
+      <span *ngIf="stock > 0">{{ quantity }}</span>
+      <span *ngIf="stock === 0">--</span>
     </div>
   </div>
 </div>

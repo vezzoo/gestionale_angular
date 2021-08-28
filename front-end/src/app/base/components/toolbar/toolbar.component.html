@@ -7,6 +7,14 @@
       <p class="username-box">{{ username }}</p>
       <div class="functions-box vertical-center">
         <button
+          *ngFor="let f of functions"
+          mat-icon-button
+          type="button"
+          (click)="f.onClick()"
+        >
+          <mat-icon aria-hidden="false">{{ f.name }}</mat-icon>
+        </button>
+        <button
           *ngIf="!isHome()"
           mat-icon-button
           type="button"

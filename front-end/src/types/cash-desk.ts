@@ -9,7 +9,7 @@ export interface CashDeskGetResponse {
       id: string;
       title: string;
       price: number;
-      left: number;
+      stock: number;
       description?: string;
       quantity?: number;
     }>;
@@ -20,12 +20,14 @@ export interface CashDeskOrderConfirmRequest {
   cart: {
     [id: string]: number;
   };
+  notes: string;
+  takeAway: boolean;
 }
 
 export interface CashDeskOrderConfirmResponse {
   code: string;
   price: number;
-  printLists: {
+  printList: {
     [id: string]: string;
   };
 }

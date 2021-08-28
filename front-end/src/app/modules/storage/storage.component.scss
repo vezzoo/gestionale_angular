@@ -1,0 +1,49 @@
+@import "../../base/style/variables.scss";
+
+.storage {
+  margin-left: 10px;
+
+  @media (min-width: 1920px) {
+    width: 1720px;
+  }
+
+  .product {
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ddd;
+    }
+
+    &-wrapper {
+      border-radius: 8px;
+      background-color: #fff;
+      font-size: 18px;
+      font-weight: 400;
+      color: $secondary-color;
+    }
+  }
+
+  .warning {
+    background-color: rgb(255, 238, 0);
+  }
+
+  .empty {
+    background-color: rgba(255, 0, 0, 0.7);
+  }
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mat-column-actions {
+  width: 104px;
+}
+
+table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}

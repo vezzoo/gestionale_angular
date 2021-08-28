@@ -12,32 +12,32 @@ export class CardComponent {
   @Input() description: string;
   @Input() quantity: number;
   @Input() price: number;
-  @Input() left: number;
+  @Input() stock: number;
   @Input() icon: string;
 
   @Output() onClickEvent = new EventEmitter<boolean>();
 
   readonly currency = environment.currency;
-  readonly steps = [20, 0];
+  readonly steps = [environment.stockWarningLimit, 0];
 
   onClick(event: any) {
     this.onClickEvent.emit(event.shiftKey);
   }
 
   getLeft() {
-    if (isNaN(this.quantity)) return this.left;
-    else return this.left - this.quantity;
+    if (isNaN(this.quantity)) return this.stock;
+    else return this.stock - this.quantity;
   }
 
   getCardStatus(): 'warning' | 'readonly' {
-    if (this.left < this.steps[0] && this.left > this.steps[1]) {
+    if (this.stock < this.steps[0] && this.stock > this.steps[1]) {
       return 'warning';
-    } else if (this.left === this.steps[1]) {
+    } else if (this.stock === this.steps[1]) {
       return 'readonly';
     }
   }
 
   isOutOfStock(): boolean {
-    return this.quantity > 0 && this.left === this.quantity;
+    return this.quantity > 0 && this.stock === this.quantity;
   }
 }

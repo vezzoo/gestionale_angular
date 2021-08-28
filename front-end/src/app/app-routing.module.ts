@@ -5,6 +5,7 @@ import { AuthGuard } from './base/guards/auth.guard';
 import { Urls } from './base/enums/enums';
 import { HomeComponent } from './modules/home/home.component';
 import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
+import { StorageComponent } from './modules/storage/storage.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: `/${Urls.AUTH}` },
@@ -26,6 +27,11 @@ const routes: Routes = [
   {
     path: Urls.CASSA_ASPORTO,
     component: CashDeskComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: Urls.GESTIONE_MAGAZZINO,
+    component: StorageComponent,
     canActivate: [AuthGuard],
   },
   { path: Urls.AUTH, component: AuthComponent },

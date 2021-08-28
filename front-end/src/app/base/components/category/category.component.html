@@ -9,7 +9,7 @@
         [id]="item.id"
         [quantity]="getCashDeskItem(item).quantity"
         [price]="getCashDeskItem(item).price"
-        [left]="getCashDeskItem(item).left"
+        [stock]="getCashDeskItem(item).stock"
         [icon]="getDashboardItem(item).icon"
         (onClickEvent)="onClick(item.title, $event)"
       ></app-card>
