@@ -6,8 +6,9 @@ import {sleep} from "./_utils";
 import UserModel from "./database/models/User.model";
 import storage_endpoint from "./webserver/api/storage_endpoint";
 import Database from "./database/wrapper/Database";
-import permissions from "./webserver/api/permissions";
+import settings_endpoint from "./webserver/api/settings_endpoint";
 import order_endpoint from "./webserver/api/order_endpoint";
+import OrderManager from "./webserver/OrderManager";
 
 
 (async function (){
@@ -20,6 +21,8 @@ import order_endpoint from "./webserver/api/order_endpoint";
         await sleep(1000)
     }
     fs.writeFileSync(SETTING_PID_FILE, Buffer.from("" + process.pid))
+
+    OrderManager.getInstance(1)
 
     await Database.connect(SETTING_MONGO_URL);
 
@@ -37,7 +40,7 @@ import order_endpoint from "./webserver/api/order_endpoint";
     }
 
     const webserver = new Webserver()
-        .add(permissions)
+        .add(settings_endpoint)
         .add(user_endpoint)
         .add(storage_endpoint)
         .add(order_endpoint)
