@@ -10,9 +10,11 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
     return class extends constructor{
         private instance_document: any;
 
-        public getObject(){
+        public getObject(ignore_keys:string[]=[], map_keys:any={}){
             return [...Object.keys(Database.getModel(model_name).schema_definition), "_id"].reduce((a: any, b: string) => {
-                a[b] = this.get(b);
+                if(ignore_keys.includes(b)) return a
+
+                a[map_keys[b] || b] = this.get(b);
                 return a
             }, {})
         }
