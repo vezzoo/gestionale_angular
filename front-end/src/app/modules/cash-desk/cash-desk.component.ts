@@ -142,7 +142,6 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     if (isCtrlPressed) {
       const ref = this.ngbModal.open(CashDeskModalComponent, {
         backdrop: 'static',
-        centered: true,
       });
 
       ref.componentInstance.min = -card.quantity;
