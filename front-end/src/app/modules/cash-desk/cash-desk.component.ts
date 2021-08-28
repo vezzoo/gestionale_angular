@@ -145,7 +145,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       });
 
       ref.componentInstance.min = -card.quantity;
-      ref.componentInstance.max = card.stock;
+      ref.componentInstance.max = card.stock - card.quantity;
       ref.result.then(
         (qta) => this.compute(card, cardTitle, isShiftPressed, qta),
         () => {}
@@ -165,7 +165,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       if (card.quantity > 0) {
         card.quantity -= qta;
       }
-    } else if (card.quantity < card.stock) {
+    } else if (card.quantity + qta <= card.stock) {
       card.quantity += qta;
     }
 
