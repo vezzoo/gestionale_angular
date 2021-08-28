@@ -39,6 +39,8 @@ export default abstract class AbstractCall{
                 return Endpoint.codereturn(res, ret.code, ret.data)
             return;
         }
+        if(typeof ret === "undefined")
+            return {status: false, reason: "unknown"}
         return ret
     }
 }
