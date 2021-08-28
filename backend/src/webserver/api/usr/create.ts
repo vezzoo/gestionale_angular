@@ -2,6 +2,7 @@ import AuthApiCall from "../../apicalls/AuthApiCall";
 import S from "fluent-json-schema"
 import UserModel from "../../../database/models/User.model";
 import ECODE from "../../ECODE";
+import {SETTING_USER_PERM} from "../../../settings";
 
 /**
  * Crea un utente con username dato.
@@ -31,6 +32,6 @@ export default new AuthApiCall(
     {
         body: S.object()
             .prop("username", S.string()).required()
-            .prop("permissions", S.array().items(S.string().enum(["user_management", "storage_write", "storage_read", "cash_desk", "todo"]))) //todo
+            .prop("permissions", S.array().items(S.string().enum(SETTING_USER_PERM)))
     }
 )
