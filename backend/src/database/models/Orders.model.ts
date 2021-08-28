@@ -29,7 +29,6 @@ export default class Order extends DBDocument {
 
     @Field
     @Required
-    @Unique
     public code: string
 
     @Default([])
