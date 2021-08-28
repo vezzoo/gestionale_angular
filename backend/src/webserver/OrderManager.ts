@@ -5,7 +5,7 @@ import {start} from "repl";
 
 export default class OrderManager{
     private current_order_number: number;
-    private static instance: OrderManager | null;
+    private static instance: OrderManager | null = null;
 
     private constructor(start_number=1) {
 
@@ -19,6 +19,7 @@ export default class OrderManager{
         }
 
         this.current_order_number = start_number
+        this.saveStatus()
     }
 
     private saveStatus(): Promise<void>{
