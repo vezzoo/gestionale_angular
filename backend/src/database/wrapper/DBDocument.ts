@@ -26,6 +26,10 @@ export default class DBDocument{
         throw Error("Not implemented")
     }
 
+    public getObject(): any{
+        throw Error("Not implemented")
+    }
+
     protected set(e: string, v:any): void{
         //@ts-ignore
         this[e] = v

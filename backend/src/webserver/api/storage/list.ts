@@ -14,13 +14,7 @@ export default new AuthApiCall(
 
         products.forEach((e: any) => {
             if(!data[e.category]) data[e.category] = []
-            data[e.category].push({
-                id: e._id.toString(),
-                title: e.title,
-                price: e.price,
-                left: e.stock,
-                description: e.description,
-            })
+            data[e.category].push(e.getObject())
         })
 
         return {

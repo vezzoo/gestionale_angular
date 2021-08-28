@@ -19,3 +19,20 @@ export const SETTING_WEBSERVER_BIND = "0.0.0.0"
 export const SETTING_AUTHENTICATION_HEADER = "Authorization"
 
 export const SETTING_PID_FILE = "./pid"
+export const SETTING_ORDER_FILE = "./order"
+
+export const SETTING_CATEGORY = [
+    "CUCINA",
+    "PIZZA",
+    "BAR",
+    "DOLCI"
+]
+
+export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "todo"]
+
+export const SETTING_PRINTERS = [
+    {
+        name: "http://raspberrypi.sagrasanlorenzo.it/cucina/print",
+        category_filter: ["CUCINA"]
+    }
+]
