@@ -28,6 +28,7 @@ export class StorageEditModalComponent implements OnInit {
   @Input() category: string;
 
   formGroup: FormGroup;
+  categories: { value: string; viewValue: string }[];
 
   private defaultFormValue: string;
 
@@ -51,6 +52,19 @@ export class StorageEditModalComponent implements OnInit {
       stock: [String(this.stock || 0), Validators.min(0)],
       category: this.category,
     });
+
+    this.httpClientService.get<Array<string>>(
+      ApiUrls.CATEGORIES,
+      (response: Array<string>) => {
+        this.categories = response.map((e) => {
+          return {
+            value: e,
+            viewValue: e.charAt(0).toUpperCase() + e.substr(1).toLowerCase(),
+          };
+        });
+      },
+      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+    );
 
     this.defaultFormValue = JSON.stringify(this.formGroup.value);
   }

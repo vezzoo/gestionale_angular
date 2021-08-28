@@ -56,3 +56,8 @@ div.vertical-center {
 .modal-open .modal {
   opacity: 1;
 }
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 99999 !important;
+}

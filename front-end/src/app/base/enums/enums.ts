@@ -14,4 +14,5 @@ export enum ApiUrls {
   PERMISSIONS = '/settings/permissions',
   ORDER = '/order/',
   STORAGE = '/storage/',
+  CATEGORIES = '/settings/categories',
 }

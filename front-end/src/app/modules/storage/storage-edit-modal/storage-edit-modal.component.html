@@ -58,7 +58,11 @@
     <div class="col-4">
       <mat-form-field appearance="outline">
         <mat-label>Categoria</mat-label>
-        <input matInput formControlName="category" required [type]="'text'" />
+        <mat-select required formControlName="category">
+          <mat-option *ngFor="let c of categories" [value]="c.value">
+            {{ c.viewValue }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </div>
