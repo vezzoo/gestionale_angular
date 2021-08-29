@@ -5,7 +5,7 @@
         <app-category
           [title]="category.title"
           [children]="category.children"
-          (onCardClickEvent)="onCardClick($event.cardTitle)"
+          (onCardClickEvent)="onCardClick($event.cardTitle, $event.isCtrlPressed)"
         ></app-category>
       </ng-container>
     </div>

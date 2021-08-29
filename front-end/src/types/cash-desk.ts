@@ -27,9 +27,12 @@ export interface CashDeskOrderConfirmRequest {
 export interface CashDeskOrderConfirmResponse {
   code: string;
   price: number;
-  printList: {
-    [id: string]: string;
-  };
+  printList: [
+    {
+      name: string;
+      payload: string;
+    }
+  ];
 }
 
 export interface CashDeskPrintRequest {
@@ -37,3 +40,7 @@ export interface CashDeskPrintRequest {
 }
 
 export interface CashDeskPrintResponse {}
+
+export interface OrderResetPostResponse {
+  status: boolean;
+}

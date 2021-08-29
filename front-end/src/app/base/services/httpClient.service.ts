@@ -1,10 +1,13 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiError } from 'src/types/api-error';
 import { HttpOptions } from '../models/httpOptions.model';
+import { TranslateErrorPipe } from '../pipes/translateError.pipe';
+import { SnackBarService } from './snackbar.service';
 
 @Injectable({ providedIn: 'root' })
 export class HttpClientService {
@@ -15,7 +18,11 @@ export class HttpClientService {
     observe: 'events',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private snackBarService: SnackBarService,
+    private translateErrorPipe: TranslateErrorPipe
+  ) {}
 
   getUrl(url: string): string {
     return (
@@ -113,7 +120,10 @@ export class HttpClientService {
     error: ApiError,
     callBackError: (error: ApiError) => void
   ): void {
-    console.error(error.message || 'No error message found');
+    console.error(error.message);
+    this.snackBarService.openErrorSnackBar(
+      this.translateErrorPipe.transform(error)
+    );
 
     if (callBackError) callBackError(error);
     else console.log(error);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Urls } from 'src/app/base/enums/enums';
 import { Category } from 'src/app/base/models/category.model';
 import { RouterService } from 'src/app/base/services/router.service';
+import { ResetCounterService } from '../reset-counter/reset-counter.service';
 import { UsersManagementService } from '../users-management/users-management.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private routerService: RouterService,
+    private resetCounterService: ResetCounterService,
     private usersManagementService: UsersManagementService
   ) {}
 
@@ -83,10 +85,16 @@ export class HomeComponent implements OnInit {
     this.categories = response;
   }
 
-  onCardClick(cardTitle: string) {
+  onCardClick(cardTitle: string, isCtrlPressed: boolean) {
     const path = this.getUrlFromTitle(cardTitle);
     if (path === 'AMMINISTRAZIONE_GESTIONE_UTENTI') {
       this.usersManagementService.openModal();
+    } else if (path === 'AMMINISTRAZIONE_CHIUDI_GIORNATA') {
+      if (!isCtrlPressed) {
+        console.log('CTRL + click expected');
+      } else {
+        this.resetCounterService.reset();
+      }
     } else if (path && Urls[path]) {
       this.routerService.navigate(Urls[path]);
     } else {

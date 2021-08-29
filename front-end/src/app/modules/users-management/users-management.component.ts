@@ -55,7 +55,7 @@ export class UsersManagementComponent implements OnInit {
           };
         });
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
 
     this.httpClientService.get<UsersGetResponse>(
@@ -87,7 +87,7 @@ export class UsersManagementComponent implements OnInit {
 
         this.onUserSelected(this.me);
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
   }
 
@@ -134,7 +134,7 @@ export class UsersManagementComponent implements OnInit {
           }
         },
         (error: ApiError) =>
-          console.log(this.translateErrorPipe.transform(error))
+          {}
       );
     }
   }
@@ -149,7 +149,7 @@ export class UsersManagementComponent implements OnInit {
           if (response) this.modal.close();
         },
         (error: ApiError) =>
-          console.log(this.translateErrorPipe.transform(error))
+          {}
       );
     }
   }
@@ -224,7 +224,7 @@ export class UsersManagementComponent implements OnInit {
       (response: UsersPatchResponse) => {
         if (response?.status) this.modal.close();
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
   }
 

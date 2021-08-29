@@ -102,6 +102,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           return c;
         });
 
+        this.categories = [];
         environment.cashDeskCategoriesOrder.forEach((co) => {
           const cat = categories.find((c) => c.title === co);
 
@@ -109,7 +110,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           else console.warn(`No category found for ${co}!`);
         });
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
   }
 
@@ -223,11 +224,11 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           this.print(Number(response.code) || 0);
         }
 
-        Object.keys(response?.printList).forEach((pl) => {
-          console.log(`TODO PRINT CALL FOR ${pl}`);
+        response?.printList.forEach((pl) => {
+          console.log(`TODO PRINT CALL FOR ${pl.name}`);
         });
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
   }
 

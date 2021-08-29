@@ -63,7 +63,7 @@ export class StorageEditModalComponent implements OnInit {
           };
         });
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
 
     this.defaultFormValue = JSON.stringify(this.formGroup.value);

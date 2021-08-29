@@ -72,7 +72,7 @@ export class StorageComponent implements OnInit, OnDestroy {
 
         this.dataSource = new MatTableDataSource(products);
       },
-      (error: ApiError) => console.log(this.translateErrorPipe.transform(error))
+      (error: ApiError) => {}
     );
   }
 
