@@ -1,0 +1,11 @@
+.idea/
+node_modules
+*.map
+*.tsmap
+*.log
+package-lock.json
+lib/
+*.pem
+*/pid
+*/root_credentials
+order

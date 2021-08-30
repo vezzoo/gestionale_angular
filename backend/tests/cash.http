@@ -1,0 +1,19 @@
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "nfc929b8894l"
+}
+
+###
+
+PUT http://localhost:3000/api/order/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjMwMTQxNTIyLCJleHAiOjE2MzAxNTU5MjJ9.TSAprRVd2xXSbJjYakASzIEm6xdlHfn284ap7rT71J32gEBvD6-T0QRwFgIsCP52gdaL_S1fAgB3fjJYIkwb3g
+
+{
+  "cart": {
+    "61262876a82bbf5071f5332d": 1
+  }
+}

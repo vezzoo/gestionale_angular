@@ -1,0 +1,66 @@
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "nfc929b8894l"
+}
+
+###
+
+PUT http://localhost:3000/api/usr/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
+
+{
+  "username": "mario",
+  "permissions": ["user_management"]
+}
+
+###
+GET http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
+
+###
+GET http://localhost:3000/api/usr/6120ed72171eaa908b2a66d5
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
+
+###
+PATCH http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
+Content-Type: application/json
+
+{
+  "id": "6120ed72171eaa908b2a66d5",
+  "permissions": [],
+  "password": "ciao1234"
+}
+
+###
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "mario",
+  "password": "ciao1234"
+}
+
+###
+PATCH http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlZDcyMTcxZWFhOTA4YjJhNjZkNSIsInBlcm1pc3Npb25zIjpbXSwiaWF0IjoxNjI5NTQ4NzE3LCJleHAiOjE2Mjk1NjMxMTd9.3Z3JIEcIMl72DAtI_1CfEEgQTTh0Y_tF_4hFquFI3eK7jhjsjj0NvusdmN1ReBDrPoB4_d1-psp_zGj3naZFQg
+Content-Type: application/json
+
+{
+  "id": "6120ed72171eaa908b2a66d5",
+  "permissions": [],
+  "password": "ciao1234"
+}
+
+###
+PATCH http://localhost:3000/api/usr/
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlZDcyMTcxZWFhOTA4YjJhNjZkNSIsInBlcm1pc3Npb25zIjpbXSwiaWF0IjoxNjI5NTQ4NzE3LCJleHAiOjE2Mjk1NjMxMTd9.3Z3JIEcIMl72DAtI_1CfEEgQTTh0Y_tF_4hFquFI3eK7jhjsjj0NvusdmN1ReBDrPoB4_d1-psp_zGj3naZFQg
+Content-Type: application/json
+
+{
+  "password": "ciao1235"
+}
