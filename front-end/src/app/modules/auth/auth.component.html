@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row mt-20">
+    <div class="col-xs-12 col-sm-10 col-md-6 offset-sm-1 offset-md-3">
+      <form-container>
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <mat-form-field appearance="outline" [@slideRightLeft]="errorPos">
+            <mat-label>Inserire il nome utente</mat-label>
+            <input
+              matInput
+              ngModel
+              name="username"
+              required
+              type="text"
+              #username
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" [@slideRightLeft]="errorPos">
+            <mat-label>Inserire la password</mat-label>
+            <input
+              matInput
+              ngModel
+              name="password"
+              required
+              [type]="hide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="hide = !hide"
+              [attr.aria-label]="'Mostra password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error>{{ errorMessage }}</mat-error>
+          </mat-form-field>
+
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <button
+                mat-raised-button
+                [disabled]="loading"
+                color="primary"
+                type="submit"
+                [disabled]="form.invalid"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+      </form-container>
+    </div>
+  </div>
+</div>

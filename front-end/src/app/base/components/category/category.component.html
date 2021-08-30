@@ -1,0 +1,18 @@
+<div class="category">
+  <app-section-title [title]="title"></app-section-title>
+  <div class="category-body">
+    <ng-container *ngFor="let item of children">
+      <app-card
+        [small]="cardSmall"
+        [title]="item.title"
+        [description]="item.description"
+        [id]="item.id"
+        [quantity]="getCashDeskItem(item).quantity"
+        [price]="getCashDeskItem(item).price"
+        [stock]="getCashDeskItem(item).stock"
+        [icon]="getDashboardItem(item).icon"
+        (onClickEvent)="onClick(item.title, $event.isShiftPressed, $event.isCtrlPressed)"
+      ></app-card>
+    </ng-container>
+  </div>
+</div>

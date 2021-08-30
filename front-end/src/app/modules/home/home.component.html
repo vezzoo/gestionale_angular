@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row mt-20">
+    <div class="col">
+      <ng-container *ngFor="let category of categories">
+        <app-category
+          [title]="category.title"
+          [children]="category.children"
+          (onCardClickEvent)="onCardClick($event.cardTitle, $event.isCtrlPressed)"
+        ></app-category>
+      </ng-container>
+    </div>
+  </div>
+</div>

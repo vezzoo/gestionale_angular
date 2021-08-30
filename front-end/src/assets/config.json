@@ -1,0 +1,17 @@
+{
+  "title": "Sagra San Luigi",
+  "basePathToTemplates": "/assets/bill_print/bill_templates",
+  "categoriesToPrint": [
+    {
+      "path": "summary.html"
+    },
+    {
+      "title": "Bar",
+      "category": "BAR",
+      "path": "bar.html"
+    }
+  ],
+  "stockWarningLimit": 20,
+  "barCashDeskCategories": ["BAR"],
+  "cashDeskCategoriesOrder": ["CUCINA", "PIZZA", "BAR"]
+}

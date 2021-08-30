@@ -1,0 +1,104 @@
+@import "./variables.scss";
+
+.custom-card {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  min-height: 150px;
+  min-width: 300px;
+  max-width: 400px;
+  cursor: pointer;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all 0.2s ease-in;
+  position: relative;
+
+  &--small {
+    .card__header {
+      &-title {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &--warning {
+    background-color: rgb(255, 238, 0);
+  }
+
+  &--readonly {
+    background-color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  }
+
+  &__header {
+    display: flex;
+
+    &-icon {
+      color: $secondary-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      font-size: 28px;
+    }
+
+    &-title {
+      color: $secondary-color;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 5px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+
+  &__body {
+    display: flex;
+
+    &-description {
+      color: $tertiary-color;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 5px;
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    &-quantity {
+      color: $secondary-color;
+      padding: 10px;
+      font-size: 50px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      line-height: 40px;
+
+      &-error {
+        color: red;
+      }
+    }
+
+    &-stock {
+      color: $tertiary-color;
+      padding: 10px 15px;
+      font-size: 14px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      line-height: 14px;
+    }
+
+    &-price {
+      color: $tertiary-color;
+      padding: 5px;
+    }
+  }
+}
