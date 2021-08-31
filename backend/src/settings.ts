@@ -24,7 +24,8 @@ export const SETTING_ORDER_FILE = "./order"
 export const SETTING_CATEGORY = [
     "CUCINA",
     "PIZZA",
-    "BAR"
+    "BAR",
+    "CAFFE"
 ]
 
 export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter"]
