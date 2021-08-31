@@ -38,19 +38,31 @@ export default new MutexAuthApiCall(
         const order =  new Order(code, user, products.map(e => e.product), products.map(e => e.qta), body.takeaway, body.notes)
         await order.save()
 
-        const printList = SETTING_PRINTERS.map(e => ({
-            name: e.name,
-            payload: jwt.sign({
-                cart: products.filter(v => e.category_filter.includes(v.product.category)).map(e => ({product: e.product.getObject(), qta: e.qta})),
-                code,
-                takeaway: body.takeaway,
-                notes: body.notes,
-                total: price
-            }, SETTING_JWT_PRIVATE, {
-                algorithm: 'ES256',
-                expiresIn: SETTING_TOKEN_EXPIRE_HOURS
-            })
+        const printList = SETTING_PRINTERS
+            .map((e: any) => (
+                {
+                    name: e.name,
+                    category_filter: e.category_filter,
+                    list: products
+                        .filter(v => e.category_filter.includes(v.product.category))
+                        .map(e => ({product: e.product.getObject(), qta: e.qta}))
+                }))
+            .filter(e => e.list.length > 0)
+            .map(e => ({
+                name: e.name,
+                payload: jwt.sign({
+                    cart: e.list,
+                    code,
+                    takeaway: body.takeaway,
+                    notes: body.notes,
+                    total: price
+                }, SETTING_JWT_PRIVATE, {
+                    algorithm: 'ES256',
+                    expiresIn: SETTING_TOKEN_EXPIRE_HOURS
+                })
         }))
+
+
 
         return {
             code,

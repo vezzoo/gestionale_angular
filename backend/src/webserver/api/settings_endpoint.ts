@@ -1,18 +1,13 @@
 import ApiCall from "../apicalls/ApiCall";
 import Endpoint from "../Endpoint";
-import {SETTING_CATEGORY} from "../../settings";
+import {SETTING_CATEGORY, SETTING_USER_PERM} from "../../settings";
 
 export default new Endpoint("/settings")
     .addCallback(new ApiCall(
             "GET",
             "/permissions",
             async () => {
-                return [
-                    "user_management",
-                    "storage_write",
-                    "storage_read",
-                    "cash_desk"
-                ]
+                return SETTING_USER_PERM
             },
             {}
         )

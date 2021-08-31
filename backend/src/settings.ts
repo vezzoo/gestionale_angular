@@ -32,7 +32,7 @@ export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_r
 
 export const SETTING_PRINTERS = [
     {
-        name: "http://raspberrypi.sagrasanlorenzo.it/cucina/print",
+        name: "http://raspberrypi.sagrasanlorenzo.it/cucina1/order",
         category_filter: ["CUCINA"]
     }
 ]
