@@ -19,6 +19,7 @@ export default new AuthApiCall(
         try {
             await new_user.save()
         } catch (e) {
+            // @ts-ignore
             if (e.constructor.name === "MongoError" && e.code === 11000)
                 return ECODE.E_DUP
             return ECODE.E_UNCOMMON(500, "Database error", e)
