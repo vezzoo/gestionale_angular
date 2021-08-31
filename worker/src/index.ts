@@ -1,4 +1,4 @@
-import fs from "fs";
+import * as fs from "fs";
 import {SETTING_PID_FILE, SETTING_PRINTERS} from "./settings";
 import {sleep} from "./_utils";
 import Webserver from "./webserver/Webserver";
@@ -17,7 +17,7 @@ import Printer from "./webserver/printers/Printer";
     fs.writeFileSync(SETTING_PID_FILE, Buffer.from("" + process.pid))
 
     const webserver = new Webserver()
-    SETTING_PRINTERS.forEach((e: any) => webserver.add(Printer(e.name, e.ip)))
+    SETTING_PRINTERS.forEach((e: any) => webserver.add(Printer(e.name, e.ip, "Cucina")))
 
     process.on('SIGINT', () => {
         webserver.close()
