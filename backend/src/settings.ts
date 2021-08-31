@@ -25,14 +25,14 @@ export const SETTING_CATEGORY = [
     "CUCINA",
     "PIZZA",
     "BAR",
-    "DOLCI"
+    "CAFFE"
 ]
 
-export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "todo"]
+export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter"]
 
 export const SETTING_PRINTERS = [
     {
-        name: "http://raspberrypi.sagrasanlorenzo.it/cucina/print",
+        name: "http://raspberrypi.sagrasanlorenzo.it/cucina1/order",
         category_filter: ["CUCINA"]
     }
 ]
