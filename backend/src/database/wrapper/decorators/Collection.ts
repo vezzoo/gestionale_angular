@@ -36,7 +36,7 @@ export default function<T extends {new(...args: any[]): DBDocument}>(constructor
                 this.instance_document = new model(doc)
         }
 
-        private update_from_document(){ //todo array support
+        private update_from_document(){
             Object.keys(this.instance_document._doc).forEach(e => {
                 if(Database.getModel(model_name).model_references[e]) {
                     if(Array.isArray(this.instance_document[e])){
