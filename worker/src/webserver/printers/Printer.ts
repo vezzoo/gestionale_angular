@@ -3,10 +3,11 @@ import ApiCall from "../apicalls/ApiCall";
 import S from "fluent-json-schema"
 import {SETTING_JWT_PUBLIC} from "../../settings";
 import jwt from "jsonwebtoken"
+import CorsApiCall from "../apicalls/CorsApiCall";
 
 export default function Printer (printername:string, ip: string){
     return new Endpoint(printername)
-        .addCallback(new ApiCall(
+        .addCallback(new CorsApiCall(
             "POST",
             "/order",
             async (req, res, body) => {

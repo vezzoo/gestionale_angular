@@ -9,6 +9,8 @@ export const SETTING_WEBSERVER_BIND = "0.0.0.0"
 
 export const SETTING_PID_FILE = "./pid"
 
+export const SETTING_CORS_ORIGIN = "*"
+
 export const SETTING_PRINTERS = [
     {
         "name": "cucina1",
