@@ -22,6 +22,6 @@ export const SETTING_CUPS_SERVER = "127.0.0.1"
 export const SETTING_PRINTERS = [
     {
         "name": "cucina1",
-        "printer": "casa"
+        "printer": "cucina1"
     }
 ]
