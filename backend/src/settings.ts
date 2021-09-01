@@ -1,3 +1,5 @@
+import {UserPermission} from "./@types/permissions";
+
 export const SETTING_MONGO_URL = "mongodb://localhost:27017/gestionale"
 
 export const SETTING_JWT_PRIVATE = "-----BEGIN EC PRIVATE KEY-----\n" +
@@ -28,7 +30,7 @@ export const SETTING_CATEGORY = [
     "CAFFE"
 ]
 
-export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter"]
+export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter"]
 
 export const SETTING_PRINTERS = [
     {
@@ -36,3 +38,8 @@ export const SETTING_PRINTERS = [
         category_filter: ["CUCINA"]
     }
 ]
+
+export const SETTING_DASBOARD_FUNCTIONS: {[name: string]: UserPermission[]} = {
+    "cassa": ["cash_desk"],
+    "storage": ["storage_write", "storage_read"]
+}
