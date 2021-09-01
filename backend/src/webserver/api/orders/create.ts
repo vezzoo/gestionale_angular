@@ -36,7 +36,7 @@ export default new MutexAuthApiCall(
             product.product.stock -= product.qta
         }
 
-        const order =  new Order(code, user, products.map(e => e.product), products.map(e => e.qta), body.takeaway, body.notes)
+        const order =  new Order(code, user, products.map(e => e.product), products.map(e => e.qta), body.takeAway, body.notes)
         await order.save()
 
         return {
@@ -48,11 +48,12 @@ export default new MutexAuthApiCall(
     {
         body: S.object()
             .prop("notes", S.string())
-            .prop("takeaway", S.boolean())
+            .prop("takeAway", S.boolean())
             .prop("cart", S.object()
                 .minProperties(1) //no ordini vuoti
                 .patternProperties({"^[a-z0-9]{24}$": S.integer().minimum(1)})
                 .additionalProperties(false)
             ).required()
+            .additionalProperties(false)
     }
 )
