@@ -37,3 +37,8 @@ export const SETTING_PRINTERS = [
         category_filter: ["CUCINA"]
     }
 ]
+
+export const SETTING_DASBOARD_FUNCTIONS: {[name: string]: UserPermission[]} = {
+    "cassa": ["cash_desk"],
+    "storage": ["storage_write", "storage_read"]
+}

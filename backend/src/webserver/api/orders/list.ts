@@ -17,7 +17,7 @@ async function return_data_JSON(data: Order[], printlist: boolean) {
                 notes: e.notes,
                 takeaway: e.takeaway,
                 printList: printlist ? generate_print_list(e, 0) : undefined,
-
+                user: e.user.username,
                 content: e.products.map((v, i) => ({title: v.title, qta: e.quantities[i]}))
             }
         })
@@ -67,6 +67,7 @@ FORMAT: Determina il formato dell'output:
                     {
                       "code": "...",
                       "notes": "...",
+                      "user": "..."
                       "takeaway": false,
                       "printList": [ ... ],
                       "content": [
