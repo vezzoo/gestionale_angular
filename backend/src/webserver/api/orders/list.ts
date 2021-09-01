@@ -39,7 +39,7 @@ async function return_data_CSV(data: Order[], printlist: boolean) {
         })
     })
 
-    return "ID;TITLE;CATEGORY;UNITPRICE;QTA;TOT\n" + Object.keys(products).map(e => `${products[e]._id.toString()};${products[e].title};${products[e].category};${(products[e].price / 100).toFixed(2)};${amounts[e]};${((products[e].price*amounts[e]) / 100).toFixed(2)}`).join("\n")
+    return "TITLE;UNITPRICE;QTA;TOT\n" + Object.keys(products).map(e => `${products[e].title};${(products[e].price / 100).toFixed(2)};${amounts[e]};${((products[e].price*amounts[e]) / 100).toFixed(2)}`).join("\n")
 }
 
 async function return_data(fmt: string, data: Order[], printlist: boolean) {
