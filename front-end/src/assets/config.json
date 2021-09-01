@@ -12,6 +12,6 @@
     }
   ],
   "stockWarningLimit": 20,
-  "barCashDeskCategories": ["BAR"],
-  "cashDeskCategoriesOrder": ["CUCINA", "PIZZA", "BAR"]
+  "barCashDeskCategories": ["BAR", "CAFFE"],
+  "cashDeskCategoriesOrder": ["CUCINA", "PIZZA", "BAR", "CAFFE"]
 }
