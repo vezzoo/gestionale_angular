@@ -17,7 +17,7 @@ import Printer from "./webserver/printers/Printer";
     fs.writeFileSync(SETTING_PID_FILE, Buffer.from("" + process.pid))
 
     const webserver = new Webserver()
-    SETTING_PRINTERS.forEach((e: any) => webserver.add(Printer(e.name, e.printer, "Cucina")))
+    SETTING_PRINTERS.forEach((e: any) => webserver.add(Printer(e.name, e.printer, e.title)))
 
     process.on('SIGINT', () => {
         webserver.close()
