@@ -9,7 +9,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subject, Subscription } from 'rxjs';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
@@ -26,7 +26,6 @@ import {
   CashDeskOrderConfirmRequest,
   CashDeskOrderConfirmResponse,
 } from 'src/types/cash-desk';
-import { AuthService } from '../auth/auth.service';
 import { CashDeskModalComponent } from './cash-desk-modal/cash-desk-modal.component';
 
 @Component({
@@ -58,6 +57,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   computedAmount: number;
 
   private sub: Subscription;
+  private categoriesPrinted = new Subject<boolean>();
+  private billsPrinted = new Subject<boolean>();
 
   constructor(
     private routerService: RouterService,
@@ -109,12 +110,29 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           if (cat) this.categories.push(cat);
           else console.warn(`No category found for ${co}!`);
         });
+
+        this.scrollTo('top');
       },
       (error: ApiError) => {}
     );
+
+    this.sub = combineLatest([
+      this.categoriesPrinted,
+      this.billsPrinted,
+    ]).subscribe(([categories, bills]) => {
+      if (categories && bills) {
+        this.cart = [];
+        this.clearSub();
+        this.ngOnInit();
+      }
+    });
   }
 
   ngOnDestroy(): void {
+    this.clearSub();
+  }
+
+  private clearSub() {
     this.sub?.unsubscribe();
     this.sub = undefined;
   }
@@ -182,8 +200,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  scrollToBottom() {
-    const element = document.querySelector('#scrollDestionation');
+  scrollTo(pos: 'bottom' | 'top') {
+    const element = document.querySelector(`#${pos}ScrollDestionation`);
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
@@ -224,17 +242,28 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           this.print(Number(response.code) || 0);
         }
 
-        response?.printList.forEach((pl) => {
-          console.log(`TODO PRINT CALL FOR ${pl.name}`);
+        if (response?.printList?.length === 0) {
+          this.categoriesPrinted.next(true);
+          return;
+        }
+
+        response?.printList.forEach((pl, i) => {
+          this.httpClientService.post<any>(
+            pl.name,
+            { payload: pl.payload },
+            (res: any) => {
+              if (i === response.printList.length - 1) {
+                this.categoriesPrinted.next(true);
+              }
+            },
+            (error: ApiError) => {
+              this.categoriesPrinted.next(false);
+            }
+          );
         });
       },
       (error: ApiError) => {}
     );
-  }
-
-  private reset() {
-    this.cart = [];
-    this.ngOnInit();
   }
 
   private print(orderNumber: number) {
@@ -257,7 +286,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         document.body.removeChild(iframeElement);
 
         if (i === environment.categoriesToPrint.length - 1) {
-          this.reset();
+          this.billsPrinted.next(true);
         }
       };
 

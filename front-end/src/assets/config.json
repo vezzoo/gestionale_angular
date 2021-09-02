@@ -9,9 +9,14 @@
       "title": "Bar",
       "category": "BAR",
       "path": "bar.html"
+    },
+    {
+      "title": "Caffè",
+      "category": "CAFFE",
+      "path": "caffe.html"
     }
   ],
   "stockWarningLimit": 20,
-  "barCashDeskCategories": ["BAR"],
-  "cashDeskCategoriesOrder": ["CUCINA", "PIZZA", "BAR"]
+  "barCashDeskCategories": ["BAR", "CAFFE"],
+  "cashDeskCategoriesOrder": ["CUCINA", "PIZZA", "BAR", "CAFFE"]
 }

@@ -25,12 +25,17 @@ export class HttpClientService {
   ) {}
 
   getUrl(url: string): string {
-    return (
-      environment.path +
-      (environment.port !== undefined ? ':' + environment.port : '') +
-      environment.optionalLayer +
-      url
-    );
+    if (url.includes('http')) {
+      console.log(url)
+      return url;
+    } else {
+      return (
+        environment.path +
+        (environment.port !== undefined ? ':' + environment.port : '') +
+        environment.optionalLayer +
+        url
+      );
+    }
   }
 
   post<T>(
