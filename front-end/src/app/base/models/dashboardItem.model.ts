@@ -1,5 +1,5 @@
 export interface DashboardItem {
-  id: string;
+  id?: string;
   title: string;
   icon: string;
   description?: string;

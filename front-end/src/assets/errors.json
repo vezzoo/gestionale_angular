@@ -1,5 +1,5 @@
 {
-  "E_NOT_FOUND": "Risorsa on trovata",
+  "E_NOT_FOUND": "Risorsa non trovata",
   "E_VALIDATION": "Errore strutturale nel body",
   "E_MALFORMED_REQ": "Errore strutturale negli headers",
   "E_JWT_INVALID": "Token invalido o scaduto",

@@ -27,12 +27,10 @@ export interface CashDeskOrderConfirmRequest {
 export interface CashDeskOrderConfirmResponse {
   code: string;
   price: number;
-  printList: [
-    {
-      name: string;
-      payload: string;
-    }
-  ];
+  printList: {
+    name: string;
+    payload: string;
+  }[];
 }
 
 export interface CashDeskPrintRequest {
