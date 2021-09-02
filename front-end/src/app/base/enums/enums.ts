@@ -16,4 +16,5 @@ export enum ApiUrls {
   STORAGE = '/storage/',
   CATEGORIES = '/settings/categories',
   RESET_ORDER = '/order/reset/',
+  DASHBOARD = '/settings/dashboard',
 }

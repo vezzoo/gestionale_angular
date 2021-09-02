@@ -98,7 +98,10 @@ export class StorageEditModalComponent implements OnInit {
             title: title !== this.title ? title : undefined,
             description:
               description !== this.description ? description : undefined,
-            price: price !== this.price ? Number(price * 100) : undefined,
+            price:
+              price !== this.price
+                ? Math.round(Number(price) * 100)
+                : undefined,
             stock: stock !== this.stock ? Number(stock) : undefined,
             category: category !== this.category ? category : undefined,
           },
@@ -118,7 +121,7 @@ export class StorageEditModalComponent implements OnInit {
       const body: StoragePutRequest = {
         title: title,
         description: description,
-        price: Number(price * 100),
+        price: Math.round(Number(price) * 100),
         stock: Number(stock),
         category: category,
       };

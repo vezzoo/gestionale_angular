@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  path: 'https://192.168.1.8',
+  path: 'https://gst.applehome.it',
   port: undefined,
   optionalLayer: '/api',
 

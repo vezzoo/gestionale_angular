@@ -106,11 +106,11 @@
     mat-fab
     type="button"
     color="primary"
-    (click)="scrollToBottom()"
+    (click)="scrollTo('bottom')"
     [@animateScrollButton]="showScrollButton ? 'visible' : 'hidden'"
   >
     <mat-icon aria-hidden="false">arrow_downward</mat-icon>
   </button>
 </div>
 
-<div id="scrollDestionation" style="visibility: hidden"></div>
+<div id="bottomScrollDestionation" style="visibility: hidden"></div>
