@@ -35,11 +35,11 @@ export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_
 
 export const SETTING_PRINTERS = [
     {
-        name: "http://192.168.1.2:3001/cucina1/order",
+        name: "http://192.168.1.2:3001/api/cucina1/order",
         category_filter: ["CUCINA"]
     },
     {
-        name: "http://192.168.1.2:3001/cucina1/order",
+        name: "http://192.168.1.2:3001/api/cucina2/order",
         category_filter: ["PIZZA"]
     }
 ]
@@ -51,13 +51,13 @@ export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
             {
                 title: "Standard",
                 permissions: ["cash_desk"],
-                icon: "local_atm",
+                icon: "shopping_cart",
                 description: "Cassa completa",
             },
             {
                 title: "Bar",
                 permissions: ["cash_desk_bar"],
-                icon: "money",
+                icon: "local_bar",
                 description: "Cassa solo bar e caffe",
             },
             {
@@ -74,7 +74,7 @@ export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
             {
                 title: "Magazzino",
                 permissions: ["storage_write", "storage_read"],
-                icon: "storage",
+                icon: "store",
                 description: "Gestione prodotti e giacenze",
             },
             {
@@ -86,7 +86,7 @@ export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
             {
                 title: "Vis. ordini",
                 permissions: ["show_orders"],
-                icon: "list_alt",
+                icon: "fact_check",
                 description: "Visualizzazione e ristampa ordini",
             },
         ],
@@ -103,7 +103,7 @@ export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
             {
                 title: "Chiusura giornata",
                 permissions: ["reset_counter"],
-                icon: "close",
+                icon: "restart_alt",
                 description: "Reset del contatore",
             },
         ]
