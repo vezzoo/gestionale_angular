@@ -37,6 +37,10 @@ export const SETTING_PRINTERS = [
     {
         name: "http://192.168.1.2:3001/cucina1/order",
         category_filter: ["CUCINA"]
+    },
+    {
+        name: "http://192.168.1.2:3001/cucina1/order",
+        category_filter: ["PIZZA"]
     }
 ]
 
