@@ -15,7 +15,6 @@ import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
 import { CategoryToPrint } from 'src/app/base/models/categoryToPrint.model';
 import { NormalizePricePipe } from 'src/app/base/pipes/normalizePrice.pipe';
-import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
 import { CommonUtils } from 'src/app/base/utils/common.utils';
@@ -53,6 +52,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   cart: CashDeskItem[] = [];
   showScrollButton: boolean = false;
+  printing: boolean = false;
   formGroup: FormGroup;
   computedAmount: number;
 
@@ -65,7 +65,6 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     private ngbModal: NgbModal,
     private decimalPipe: DecimalPipe,
     private httpClientService: HttpClientService,
-    private translateErrorPipe: TranslateErrorPipe,
     private normalizePricePipe: NormalizePricePipe,
     private fb: FormBuilder
   ) {}
@@ -111,7 +110,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           else console.warn(`No category found for ${co}!`);
         });
 
-        this.scrollTo('top');
+        this.printing = false;
+        window.scrollTo(0, 0);
       },
       (error: ApiError) => {}
     );
@@ -124,6 +124,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         this.cart = [];
         this.clearSub();
         this.ngOnInit();
+      } else {
+        this.printing = false;
       }
     });
   }
@@ -200,8 +202,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  scrollTo(pos: 'bottom' | 'top') {
-    const element = document.querySelector(`#${pos}ScrollDestionation`);
+  scrollToBottom() {
+    const element = document.querySelector(`#bottomScrollDestionation`);
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
@@ -234,6 +236,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       takeAway: CommonUtils.getFormControlValue(this.formGroup, 'takeAway'),
     };
 
+    this.printing = true;
     this.httpClientService.put<CashDeskOrderConfirmResponse>(
       ApiUrls.ORDER,
       body,

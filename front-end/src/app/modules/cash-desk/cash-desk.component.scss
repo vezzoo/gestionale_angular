@@ -71,6 +71,20 @@
   }
 }
 
+.printing {
+  &-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-text {
+    padding: 15px;
+    font-size: 24px;
+  }
+}
+
 .mt-15 {
   margin-top: 15px;
 }
