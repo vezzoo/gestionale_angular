@@ -1,3 +1,4 @@
+import { DashboardCategory } from "./@types/dashboard";
 import {UserPermission} from "./@types/permissions";
 
 export const SETTING_MONGO_URL = "mongodb://localhost:27017/gestionale"
@@ -29,7 +30,7 @@ export const SETTING_CATEGORY = [
     "BAR"
 ]
 
-export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter"]
+export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter", "show_orders"]
 
 export const SETTING_PRINTERS = [
     {
@@ -38,7 +39,68 @@ export const SETTING_PRINTERS = [
     }
 ]
 
-export const SETTING_DASBOARD_FUNCTIONS: {[name: string]: UserPermission[]} = {
-    "cassa": ["cash_desk"],
-    "storage": ["storage_write", "storage_read"]
-}
+export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
+    {
+        title: "cassa",
+        children: [
+            {
+                title: "Standard",
+                permissions: ["cash_desk"],
+                icon: "local_atm",
+                description: "Cassa completa",
+            },
+            {
+                title: "Bar",
+                permissions: ["cash_desk_bar"],
+                icon: "money",
+                description: "Cassa solo bar e caffe",
+            },
+            {
+                title: "Asporto",
+                permissions: ["cash_desk_takeaway"],
+                icon: "card_travel",
+                description: "Cassa completa, solo asporto",
+            },
+        ],
+    },
+    {
+        title: "gestione",
+        children: [
+            {
+                title: "Magazzino",
+                permissions: ["storage_write", "storage_read"],
+                icon: "storage",
+                description: "Gestione prodotti e giacenze",
+            },
+            {
+                title: "Reports",
+                permissions: ["reports"],
+                icon: "equalizer",
+                description: "Download dati statistici",
+            },
+            {
+                title: "Vis. ordini",
+                permissions: ["show_orders"],
+                icon: "list_alt",
+                description: "Visualizzazione e ristampa ordini",
+            },
+        ],
+    },
+    {
+        title: "amministrazione",
+        children: [
+            {
+                title: "Gestione utenti",
+                permissions: ["user_management"],
+                icon: "account_circle",
+                description: "Creazione/modifica utenti",
+            },
+            {
+                title: "Chiusura giornata",
+                permissions: ["reset_counter"],
+                icon: "close",
+                description: "Reset del contatore",
+            },
+        ]
+    },
+]
