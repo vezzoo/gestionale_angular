@@ -25,11 +25,14 @@ export default new Endpoint("/settings")
             "GET",
             "/dashboard",
             async (req, res, user) => {
-                const ret: string[] = []
-                Object.keys(SETTING_DASBOARD_FUNCTIONS).forEach(e => {
-                    if(user.has_permission(SETTING_DASBOARD_FUNCTIONS[e]))
-                        ret.push(e)
-                })
+                const ret = {
+                    categories: SETTING_DASBOARD_FUNCTIONS
+                        .map(cat => {
+                            cat.children = cat.children.filter(func => func.permissions.every(p => user.has_permission(p)))
+                            return cat;
+                        })
+                        .filter(cat => cat.children.length > 0)
+                }
                 return ret;
             },
             {}
