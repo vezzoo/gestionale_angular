@@ -1,4 +1,4 @@
-<div class="cash-desk container">
+<div class="cash-desk container" [hidden]="printing">
   <div class="row mt-20">
     <div class="col" (resized)="checkIfShowScrollButton()">
       <ng-container *ngFor="let category of categories">
@@ -106,11 +106,15 @@
     mat-fab
     type="button"
     color="primary"
-    (click)="scrollTo('bottom')"
+    (click)="scrollToBottom()"
     [@animateScrollButton]="showScrollButton ? 'visible' : 'hidden'"
   >
     <mat-icon aria-hidden="false">arrow_downward</mat-icon>
   </button>
+</div>
+
+<div *ngIf="printing" class="printing-wrapper">
+  <span class="printing-text">Stampa in corso ...</span>
 </div>
 
 <div id="bottomScrollDestionation" style="visibility: hidden"></div>
