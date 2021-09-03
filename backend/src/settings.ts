@@ -44,7 +44,7 @@ export const SETTING_PRINTERS = [
     }
 ]
 
-export const SETTING_DASBOARD_FUNCTIONS: DashboardCategory[] = [
+export const SETTING_DASHBOARD_FUNCTIONS: DashboardCategory[] = [
     {
         title: "cassa",
         children: [

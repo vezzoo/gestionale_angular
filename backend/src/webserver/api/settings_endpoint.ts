@@ -1,6 +1,6 @@
 import ApiCall from "../apicalls/ApiCall";
 import Endpoint from "../Endpoint";
-import {SETTING_CATEGORY, SETTING_DASBOARD_FUNCTIONS, SETTING_USER_PERM} from "../../settings";
+import {SETTING_CATEGORY, SETTING_DASHBOARD_FUNCTIONS, SETTING_USER_PERM} from "../../settings";
 import AuthApiCall from "../apicalls/AuthApiCall";
 
 export default new Endpoint("/settings")
@@ -25,15 +25,10 @@ export default new Endpoint("/settings")
             "GET",
             "/dashboard",
             async (req, res, user) => {
-                const ret = {
-                    categories: SETTING_DASBOARD_FUNCTIONS
-                        .map(cat => {
-                            cat.children = cat.children.filter(func => func.permissions.every(p => user.has_permission(p)))
-                            return cat;
-                        })
-                        .filter(cat => cat.children.length > 0)
-                }
-                return ret;
+                return SETTING_DASHBOARD_FUNCTIONS.map(e => ({
+                    title: e.title,
+                    children: e.children.filter(func => user.has_permission(func.permissions, false))
+                })).filter(e => e.children.length > 0);
             },
             {}
         )
