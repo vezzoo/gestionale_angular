@@ -5,6 +5,8 @@ export enum Urls {
   CASSA_BAR = 'cassa/bar',
   CASSA_ASPORTO = 'cassa/asporto',
   GESTIONE_MAGAZZINO = 'gestione/magazzino',
+  GESTIONE_UTENTI = 'AMMINISTRAZIONE_GESTIONE_UTENTI',
+  CHIUSURA_GIORNATA = 'AMMINISTRAZIONE_CHIUSURA_GIORNATA',
 }
 
 export enum ApiUrls {
