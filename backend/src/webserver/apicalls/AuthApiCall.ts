@@ -87,10 +87,11 @@ export default class AuthApiCall extends AbstractCall {
         if(user.permissions.includes("root")) return true
 
         for(let p of perms){
-            if(user.permissions.includes(p))
+            if(user.permissions.includes(p)) {
                 if(ored) return true
-            else
+            } else {
                 if (!ored) return false
+            }
         }
 
         return !ored
