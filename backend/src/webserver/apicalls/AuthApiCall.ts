@@ -31,7 +31,7 @@ export default class AuthApiCall extends AbstractCall {
                         //update token
                     } catch (e) {
                         // @ts-ignore
-                        if (process.env.PRODUCTION !== "1") console.log(e.message, e.stack)
+                        if(process.env.PRODUCTION !== "1") console.log(e.message, e.stack)
                         // @ts-ignore
                         if (fallback) return await fallback(req, res, e);
                         // @ts-ignore
@@ -42,19 +42,19 @@ export default class AuthApiCall extends AbstractCall {
         });
     }
 
-    public static async tokenValidation(permission: UserPermission | UserPermission[] | null, req: FastifyRequest): Promise<User> {
+    public static async tokenValidation(permission: UserPermission | UserPermission[] | null, req: FastifyRequest): Promise<User>{
         const token: string | undefined | string[] = req.headers[SETTING_AUTHENTICATION_HEADER.toLowerCase()]
 
-        if (!token)
+        if(!token)
             throw Error("E_MALFORMED_REQ")
 
-        if (Array.isArray(token))
+        if(Array.isArray(token))
             throw Error("E_MALFORMED_REQ")
 
         let ver_data: any
-        try {
+        try{
             ver_data = jwt.verify(token, SETTING_JWT_PUBLIC) as any
-        } catch (e) {
+        } catch (e){
             // @ts-ignore
             switch (e.message) {
                 case "jwt expired":
@@ -74,17 +74,17 @@ export default class AuthApiCall extends AbstractCall {
         if (!this.has_permission(user_data, permission)) throw Error("E_PERM");
 
         const user = await UserModel.findById(user_data.id) as User
-        if (!user)
+        if(!user)
             throw Error("E_NO_USER")
 
         return user
     }
 
-    public static has_permission(user: User | UserAuthData, perms: UserPermission[] | UserPermission | null, ored = true): boolean {
-        if (perms === null) return false
+    public static has_permission(user: User | UserAuthData, perms: UserPermission[] | UserPermission | null, ored=true): boolean{
+        if (perms === null) return true
         if (!Array.isArray(perms)) perms = [perms]
 
-        if (user.permissions.includes("root")) return true
+        if(user.permissions.includes("root")) return true
 
         for (let p of perms) {
             if (user.permissions.includes(p)) {
