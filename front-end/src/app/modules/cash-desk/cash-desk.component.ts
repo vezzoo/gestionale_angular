@@ -286,13 +286,11 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         iframe.setData(this.getDataToPrint(c.title, c.category, orderNumber));
         iframe.printBill();
 
-        setTimeout(() => {
-          document.body.removeChild(iframeElement);
+        document.body.removeChild(iframeElement);
 
-          if (i === environment.categoriesToPrint.length - 1) {
-            this.billsPrinted.next(true);
-          }
-        }, 200);
+        if (i === environment.categoriesToPrint.length - 1) {
+          this.billsPrinted.next(true);
+        }
       };
 
       document.body.appendChild(iframeElement);

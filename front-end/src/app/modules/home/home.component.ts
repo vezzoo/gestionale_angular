@@ -35,9 +35,9 @@ export class HomeComponent implements OnInit {
 
   onCardClick(cardTitle: string, isCtrlPressed: boolean) {
     const path = this.getUrlFromTitle(cardTitle);
-    if (path === Urls.GESTIONE_UTENTI) {
+    if (path === 'AMMINISTRAZIONE_GESTIONE_UTENTI') {
       this.usersManagementService.openModal();
-    } else if (path === Urls.CHIUSURA_GIORNATA) {
+    } else if (path === 'AMMINISTRAZIONE_CHIUDI_GIORNATA') {
       if (!isCtrlPressed) {
         console.log('CTRL + click expected');
       } else {
