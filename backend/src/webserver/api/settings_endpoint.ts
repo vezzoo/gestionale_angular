@@ -25,10 +25,12 @@ export default new Endpoint("/settings")
             "GET",
             "/dashboard",
             async (req, res, user) => {
-                return SETTING_DASHBOARD_FUNCTIONS.map(e => ({
-                    title: e.title,
-                    children: e.children.filter(func => user.has_permission(func.permissions, false))
-                })).filter(e => e.children.length > 0);
+                return {
+                    categories: SETTING_DASHBOARD_FUNCTIONS.map(e => ({
+                        title: e.title,
+                        children: e.children.filter(func => user.has_permission(func.permissions, false))
+                    })).filter(e => e.children.length > 0)
+                };
             },
             {}
         )
