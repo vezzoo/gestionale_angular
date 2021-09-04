@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  path: 'http://127.0.0.1', // Connection to locale
+  path: 'http://localhost', // Connection to locale
   port: 3000,
   optionalLayer: '/api',
 
@@ -17,4 +17,5 @@ export const environment = {
   barCashDeskCategories: [],
   stockWarningLimit: undefined,
   cashDeskCategoriesOrder: [],
+  reportsHourDifference: undefined,
 };

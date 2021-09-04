@@ -7,4 +7,8 @@ export class CommonUtils {
   ): any {
     return form?.controls[formControlName]?.value;
   }
+
+  public static formatNumberWithStartingZero(value: string | number): string {
+    return ('00' + value).substr(-2);
+  }
 }

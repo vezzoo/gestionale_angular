@@ -7,6 +7,7 @@ export enum Urls {
   GESTIONE_MAGAZZINO = 'gestione/magazzino',
   GESTIONE_UTENTI = 'AMMINISTRAZIONE_GESTIONE_UTENTI',
   CHIUSURA_GIORNATA = 'AMMINISTRAZIONE_CHIUSURA_GIORNATA',
+  REPORTS = 'GESTIONE_REPORTS',
 }
 
 export enum ApiUrls {
@@ -19,4 +20,5 @@ export enum ApiUrls {
   CATEGORIES = '/settings/categories',
   RESET_ORDER = '/order/reset/',
   DASHBOARD = '/settings/dashboard',
+  REPORTS = '/order/CSV/',
 }

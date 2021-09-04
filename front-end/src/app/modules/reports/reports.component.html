@@ -1,0 +1,19 @@
+<div class="reports__header">
+  <span class="reports__title">Download reports</span>
+  <button
+    class="reports__close"
+    mat-icon-button
+    type="button"
+    (click)="modal.dismiss()"
+  >
+    <mat-icon aria-hidden="false" aria-label="Chiudi">close</mat-icon>
+  </button>
+</div>
+<div class="reports__body">
+  <div class="row">
+    <div class="col-12">
+      <span *ngIf="printing">Stampa in corso dei reports delle ultime 12 ore ...</span>
+      <span *ngIf="!printing">Reports delle ultime 12 ore scaricato ({{ file }}).</span>
+    </div>
+  </div>
+</div>

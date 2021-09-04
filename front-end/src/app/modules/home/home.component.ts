@@ -5,6 +5,7 @@ import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
 import { ApiError } from 'src/types/api-error';
 import { DashBoardGetResponse } from 'src/types/dashboard';
+import { ReportsService } from '../reports/reports.service';
 import { ResetCounterService } from '../reset-counter/reset-counter.service';
 import { UsersManagementService } from '../users-management/users-management.service';
 
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
     private routerService: RouterService,
     private httpClientService: HttpClientService,
     private resetCounterService: ResetCounterService,
-    private usersManagementService: UsersManagementService
+    private usersManagementService: UsersManagementService,
+    private reportsService: ReportsService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,8 @@ export class HomeComponent implements OnInit {
       } else {
         this.resetCounterService.reset();
       }
+    } else if (path === Urls.REPORTS) {
+      this.reportsService.openModal();
     } else if (path && Urls[path]) {
       this.routerService.navigate(Urls[path]);
     } else {

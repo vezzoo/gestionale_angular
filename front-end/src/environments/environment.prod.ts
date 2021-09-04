@@ -13,4 +13,5 @@ export const environment = {
   barCashDeskCategories: [],
   stockWarningLimit: undefined,
   cashDeskCategoriesOrder: [],
+  reportsHourDifference: undefined,
 };

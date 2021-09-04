@@ -21,6 +21,7 @@ import { CashDeskModalComponent } from './modules/cash-desk/cash-desk-modal/cash
 import { UsersManagementComponent } from './modules/users-management/users-management.component';
 import { StorageComponent } from './modules/storage/storage.component';
 import { StorageEditModalComponent } from './modules/storage/storage-edit-modal/storage-edit-modal.component';
+import { ReportsComponent } from './modules/reports/reports.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { TranslateErrorPipe } from './base/pipes/translateError.pipe';
@@ -37,6 +38,7 @@ import { DecimalPipe } from '@angular/common';
     UsersManagementComponent,
     StorageComponent,
     StorageEditModalComponent,
+    ReportsComponent,
     ToolbarComponent,
     CardComponent,
     CategoryComponent,
