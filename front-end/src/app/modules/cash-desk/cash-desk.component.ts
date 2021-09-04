@@ -281,10 +281,16 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       iframeElement.classList.add('iframe-hidden');
       iframeElement.name = name;
       iframeElement.src = `${basePath}${environment.basePathToTemplates}/${c.path}`;
+
+      document.body.appendChild(iframeElement);
+
       iframeElement.onload = () => {
         const iframe = window.frames[name];
         iframe.setData(this.getDataToPrint(c.title, c.category, orderNumber));
         iframe.printBill();
+
+        const now = Date.now();
+        while (Date.now() - now < 200);
 
         document.body.removeChild(iframeElement);
 
@@ -292,8 +298,6 @@ export class CashDeskComponent implements OnInit, OnDestroy {
           this.billsPrinted.next(true);
         }
       };
-
-      document.body.appendChild(iframeElement);
     });
   }
 
