@@ -56,9 +56,9 @@ async function return_data_CSV(data: Order[], printlist: boolean) {
 async function return_data(fmt: string, data: Order[], printlist: boolean) {
     switch (fmt) {
         case "JSON":
-            return return_data_JSON(data, printlist)
+            return { data: await return_data_JSON(data, printlist) }
         case "CSV":
-            return return_data_CSV(data, printlist)
+            return { data: await return_data_CSV(data, printlist) }
         default:
             return ECODE.E_MALFORMED_REQ
     }
