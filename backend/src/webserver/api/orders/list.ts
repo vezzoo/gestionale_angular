@@ -8,6 +8,8 @@ import Order from "../../../database/models/Orders.model";
 import OrderManager from "../../OrderManager";
 import AuthApiCall from "../../apicalls/AuthApiCall";
 import {generate_print_list} from "./_utils";
+import ProductModel from "../../../database/models/Product.model";
+import User from "../../../database/models/User.model";
 
 async function return_data_JSON(data: Order[], printlist: boolean) {
     return {
@@ -39,7 +41,16 @@ async function return_data_CSV(data: Order[], printlist: boolean) {
         })
     })
 
-    return "TITLE;UNITPRICE;QTA;TOT\n" + Object.keys(products).map(e => `${products[e].title};${(products[e].price / 100).toFixed(2)};${amounts[e]};${((products[e].price*amounts[e]) / 100).toFixed(2)}`).join("\n")
+    return "Descrizione;P.unit;Q.tà;P.tot\n" +
+        Object.keys(products)
+        .map(e => `${products[e].title};${(products[e].price / 100).toFixed(2)};${amounts[e]};${((products[e].price*amounts[e]) / 100).toFixed(2)}`.replace('.', ',').replace('.', ','))
+        .sort((a, b) => {
+            if (a < b) return -1;
+            if (a > b) return 1;
+
+            return 0;
+        })
+        .join("\n")
 }
 
 async function return_data(fmt: string, data: Order[], printlist: boolean) {
@@ -97,6 +108,13 @@ export default new AuthApiCall(
         const to = (req.query as any).to ? new Date((req.query as any).to).toISOString() : new Date().toISOString()
 
         const requested = await Order.find(Object.assign(params.filter ? {code: params.filter} : {}, {$and: [{createdAt: {$gte: from}}, {createdAt: {$lt: to}}]})) as Order[]
+        const products = await ProductModel.find({}) as Product[]
+
+        products.forEach(p => {
+            const found = requested.some(o => o.products.some(op => String(op._id) === String(p._id)))
+            if (!found) requested.push(new Order("", new User("", "", []), [p], [0], false, ""))
+        })
+
         return return_data(params.format, requested, (req.query as any).printlist)
     },
     {
