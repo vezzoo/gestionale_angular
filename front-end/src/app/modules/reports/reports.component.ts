@@ -30,7 +30,7 @@ export class ReportsComponent implements OnInit {
     const timestamp = date - environment.reportsHourDifference * 3600;
 
     this.httpClientService.get<ReportsGetResponse>(
-      `${ApiUrls.REPORTS}`,
+      `${ApiUrls.REPORTS}?from=${timestamp * 1000}`,
       (response: ReportsGetResponse) => {
         this.download(response?.data);
       },
