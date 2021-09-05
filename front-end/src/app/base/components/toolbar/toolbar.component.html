@@ -3,8 +3,13 @@
     <div class="vertical-center">
       <span>{{ title }}</span>
     </div>
+
+    <div class="data-box">
+      <p *ngIf="!username">{{ time }}</p>
+      <p *ngIf="username">{{ time }} - {{ username }}</p>
+    </div>
+
     <ng-container *ngIf="username">
-      <p class="username-box">{{ username }}</p>
       <div class="functions-box vertical-center">
         <button
           *ngFor="let f of functions"

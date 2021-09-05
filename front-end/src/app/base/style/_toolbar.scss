@@ -3,6 +3,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+
+    .data-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     p {
       margin: 0;
@@ -15,7 +23,7 @@
     }
 
     @media (max-width: 767.98px) {
-      .username-box {
+      .data-box {
         display: none;
       }
     }

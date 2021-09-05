@@ -6,6 +6,7 @@ import { Urls } from '../../enums/enums';
 import { ToolbarFunction } from '../../models/function.model';
 import { ConfigurationsService } from '../../services/configurations.service';
 import { RouterService } from '../../services/router.service';
+import { CommonUtils } from '../../utils/common.utils';
 import { ToolbarService } from './toolbar.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   title: string;
   username: string = null;
   functions: ToolbarFunction[] = [];
+  time: string;
 
   private subs: Array<Subscription> = [];
 
@@ -51,11 +53,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.authService.onUserChange.subscribe((user) => (this.username = user))
     );
+
+    this.updateTime();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub?.unsubscribe());
     this.subs = [];
+  }
+
+  private updateTime(diff: number = 0) {
+    setTimeout(() => {
+      const date = new Date();
+      // prettier-ignore
+      this.time = `${CommonUtils.formatNumberWithStartingZero(date.getHours())}:${CommonUtils.formatNumberWithStartingZero(date.getMinutes())}`
+
+      this.updateTime(60 - date.getSeconds());
+    }, diff * 1000);
   }
 
   doLogout(): void {
