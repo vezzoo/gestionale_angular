@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  client: 'DFLT',
+  client: 'DEF',
   path: undefined,
   port: undefined,
   optionalLayer: '/api',

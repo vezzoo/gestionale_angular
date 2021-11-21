@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  client: 'DFLT',
+  client: 'DEF',
   path: 'http://localhost', // Connection to locale
   port: 3000,
   optionalLayer: '/api',
