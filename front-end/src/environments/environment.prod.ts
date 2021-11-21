@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
-  path: 'https://gst.applehome.it',
+  client: 'DFLT',
+  path: undefined,
   port: undefined,
   optionalLayer: '/api',
 
   currency: '€',
 
-  // valorized by app.component from config.json
   title: undefined,
   basePathToTemplates: undefined,
   categoriesToPrint: [],

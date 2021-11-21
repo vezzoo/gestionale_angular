@@ -18,7 +18,11 @@ export class ConfigurationsService {
 
     this.readFile('./assets/config.json', (data: Configs) => {
       if (data) {
-        Object.keys(data).forEach((k) => (environment[k] = data[k]));
+        Object.keys(data).forEach((k) => {
+          if (data[k]) {
+            environment[k] = data[k];
+          }
+        });
       }
 
       this.onEnvironmentReady.next();

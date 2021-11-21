@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  client: 'DFLT',
   path: 'http://localhost', // Connection to locale
   port: 3000,
   optionalLayer: '/api',
@@ -10,7 +11,6 @@ export const environment = {
 
   currency: '€',
 
-  // valorized by app.component from config.json
   title: undefined,
   basePathToTemplates: undefined,
   categoriesToPrint: [],
