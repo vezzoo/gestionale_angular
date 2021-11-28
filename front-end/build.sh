@@ -56,7 +56,11 @@ for client in "${clients[@]}" ; do
   cp "$clientConfigsDir"/BE.ts "$backendDir"/src/settings.ts
   cp "$clientConfigsDir"/order "$backendDir"/order
   cp "$clientConfigsDir"/pid "$backendDir"/pid
+  echo ""
 
+  echo "[34mRestarting $client back-end...[0m"
+  # Riavviandosi il processo prova a killare il precedente
+  ~/gestionale/startBackend.sh "$client"
   echo ""
 done
 
