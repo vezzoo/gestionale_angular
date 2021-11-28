@@ -1,9 +1,6 @@
-# #!/bin/sh
+#!/bin/bash
 
-echo "[34mRemoving files...[0m"
-rm -R ~/gestionale/gestionale_angular/front-end/dist/*
-rm /var/www/gestionale_angular/*
-echo ""
+declare -a clients=("DEF" "BAR")
 
 echo "[34mPull from git...[0m"
 git pull origin main
@@ -11,18 +8,49 @@ echo ""
 
 echo "[34mInstall dependecies...[0m"
 npm i
+echo ""
 
-echo "[34mBuilding...[0m"
-ng build --prod
+for client in "${clients[@]}"
+do
+  echo "[34mRemoving previous build files...[0m"
+  distDir=~/gestionale/gestionale_angular/front-end/dist/*
+  if [ -d "$distDir" ]; then
+    rm -R "$distDir"
+  fi
+  echo ""
 
-echo "[34mCoping files...[0m"
-cp -r ~/gestionale/gestionale_angular/front-end/dist/gestionale_angular/* /var/www/gestionale_angular/html/
-for d in ~/gestionale/configs/ ; do
-    echo "$d"
+  href="/${client,,}/"
+  if [ "$client" == "DEF" ]; then
+    href="/"
+  fi
+
+  echo "[34mBuilding for client $client...[0m"
+  ng build --prod --base-href "$href"
+  echo ""
+
+  echo "^[[34mRemoving nginx files for client $client...^[[0m"
+  nginxClientDir=/var/www/gestionale_angular/"$client"/*
+  if [ -d "$nginxClientDir" ]; then
+    rm -R "$nginxClientDir"
+  fi
+  echo ""
+
+  echo "[34mCoping files for client $client...[0m"
+  mkdir -p /var/www/gestionale_angular/"$client"/html
+  cp -r ~/gestionale/gestionale_angular/front-end/dist/gestionale_angular/* /var/www/gestionale_angular/"$client"/html/
+  cp ~/gestionale/configs/"$client"/FE.json /var/www/gestionale_angular/"$client"/html/assets/config.json
+
+  echo TODO BE.ts
+
+  echo ""
 done
-echo ""
 
-echo "[34mRestart nginx...[0m"
-sudo systemctl restart nginx
-sudo systemctl status nginx
-echo ""
+for dir in /var/www/gestionale_angular/*/ ; do
+  cleanedDir="${dir::-1}"
+  d="${cleanedDir##*/}"
+  if [[ ! "${clients[*]}" =~ "$d" ]]; then
+    echo "^[[34mFound '$d' directory. Removing it...^[[0m"
+    rm -R "$dir"
+    echo ""
+  fi
+done
