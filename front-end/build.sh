@@ -23,7 +23,7 @@ for client in "${clients[@]}" ; do
   echo "[34mBuilding for client $client...[0m"
   ng build --prod --base-href "$href"
 
-  echo "[[34mRemoving nginx files for client $client...[[0m"
+  echo "[34mRemoving nginx files for client $client...[0m"
   nginxClientDir=/var/www/gestionale_angular/"$client"/*
   if [ -d "$nginxClientDir" ]; then
     rm -R "$nginxClientDir"
@@ -40,12 +40,12 @@ for client in "${clients[@]}" ; do
   echo ""
 done
 
-echo "[[34mCleaning /var/www/gestionale_angular...[[0m"
+echo "[34mCleaning /var/www/gestionale_angular...[0m"
 for dir in /var/www/gestionale_angular/*/ ; do
   cleanedDir="${dir::-1}"
   d="${cleanedDir##*/}"
   if [[ ! "${clients[*]}" =~ "$d" ]]; then
-    echo "[[34mFound '$d' directory. Removing it...[[0m"
+    echo "[34mFound '$d' directory. Removing it...[0m"
     rm -R "$dir"
     echo ""
   fi
