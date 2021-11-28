@@ -16,7 +16,7 @@ for client in "${clients[@]}" ; do
 
   # build process
   echo "[34mRemoving previous build files...[0m"
-  if [ -d "$distDir" ]; then
+  if [ -d "$distDir"/* ]; then
     rm -R "$distDir"/*
   fi
   echo ""
@@ -31,7 +31,7 @@ for client in "${clients[@]}" ; do
   ng build --prod --base-href "$href"
 
   echo "[34mRemoving files for client $client...[0m"
-  if [ -d "$clientRootDir" ]; then
+  if [ -d "$clientRootDir"/* ]; then
     rm -R "$clientRootDir"/*
   fi
   echo ""
@@ -46,18 +46,13 @@ for client in "${clients[@]}" ; do
     cp "$backendDir"/order "$clientConfigsDir"/order
     cp "$backendDir"/pid "$clientConfigsDir"/pid
     rm -R "$clientRootDir"/back-end
-echo "Copied order&pid to configs"
   else
     echo "0" > "$clientConfigsDir"/order
     touch "$clientConfigsDir"/pid
   fi
 
-ls "$clientConfigsDir"
-cat "$clientConfigsDir"/order
-cat "$clientConfigsDir"/pid
-
   mkdir "$backendDir"
-  cp -r ~/gestionale/gestionale_angular/back-end/* "$backendDir"/
+  cp -r ~/gestionale/gestionale_angular/backend/* "$backendDir"/
   cp "$clientConfigsDir"/BE.ts "$backendDir"/src/settings.ts
   cp "$clientConfigsDir"/order "$backendDir"/order
   cp "$clientConfigsDir"/pid "$backendDir"/pid
