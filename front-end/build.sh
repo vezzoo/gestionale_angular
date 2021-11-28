@@ -6,10 +6,6 @@ echo "[34mPull from git...[0m"
 git pull origin main
 echo ""
 
-echo "[34mInstall dependecies...[0m"
-npm i
-echo ""
-
 for client in "${clients[@]}" ; do
   echo "[34mRemoving previous build files...[0m"
   distDir=~/gestionale/gestionale_angular/front-end/dist/*
