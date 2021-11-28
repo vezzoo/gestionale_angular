@@ -22,7 +22,6 @@ for client in "${clients[@]}" ; do
 
   echo "[34mBuilding for client $client...[0m"
   ng build --prod --base-href "$href"
-  echo ""
 
   echo "[[34mRemoving nginx files for client $client...[[0m"
   nginxClientDir=/var/www/gestionale_angular/"$client"/*
