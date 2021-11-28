@@ -30,12 +30,10 @@ for client in "${clients[@]}" ; do
   fi
   echo ""
 
-  echo "[34mCoping files for client $client...[0m"
-  mkdir -p /var/www/gestionale_angular/"$client"/html
-  cp -r ~/gestionale/gestionale_angular/front-end/dist/gestionale_angular/* /var/www/gestionale_angular/"$client"/html/
-  cp ~/gestionale/configs/"$client"/FE.json /var/www/gestionale_angular/"$client"/html/assets/config.json
-
-  echo TODO BE.ts
+  echo "[34mCoping front-end files for client $client...[0m"
+  mkdir -p /var/www/gestionale_angular/"$client"/front-end
+  cp -r ~/gestionale/gestionale_angular/front-end/dist/gestionale_angular/* /var/www/gestionale_angular/"$client"/front-end/
+  cp ~/gestionale/configs/"$client"/FE.json /var/www/gestionale_angular/"$client"/front-end/assets/config.json
 
   echo ""
 done
