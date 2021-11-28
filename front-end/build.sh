@@ -10,8 +10,7 @@ echo "[34mInstall dependecies...[0m"
 npm i
 echo ""
 
-for client in "${clients[@]}"
-do
+for client in "${clients[@]}" ; do
   echo "[34mRemoving previous build files...[0m"
   distDir=~/gestionale/gestionale_angular/front-end/dist/*
   if [ -d "$distDir" ]; then
@@ -19,9 +18,10 @@ do
   fi
   echo ""
 
-  href="/${client,,}/"
   if [ "$client" == "DEF" ]; then
     href="/"
+  else
+    href="/${client,,}/"
   fi
 
   echo "[34mBuilding for client $client...[0m"
@@ -45,12 +45,14 @@ do
   echo ""
 done
 
+echo "[[34mCleaning /var/www/gestionale_angular...[[0m"
 for dir in /var/www/gestionale_angular/*/ ; do
   cleanedDir="${dir::-1}"
   d="${cleanedDir##*/}"
   if [[ ! "${clients[*]}" =~ "$d" ]]; then
-    echo "^[[34mFound '$d' directory. Removing it...^[[0m"
+    echo "[[34mFound '$d' directory. Removing it...[[0m"
     rm -R "$dir"
     echo ""
   fi
 done
+echo ""
