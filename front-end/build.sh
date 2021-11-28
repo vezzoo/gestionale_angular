@@ -7,10 +7,17 @@ git pull origin main
 echo ""
 
 for client in "${clients[@]}" ; do
+  # variables declarations
+  distDir=~/gestionale/gestionale_angular/front-end/dist
+  clientRootDir=/var/www/gestionale_angular/"$client"
+  frontendDir=/var/www/gestionale_angular/"$client"/front-end
+  backendDir=/var/www/gestionale_angular/"$client"/back-end
+  clientConfigsDir=~/gestionale/configs/"$client"
+
+  # build process
   echo "[34mRemoving previous build files...[0m"
-  distDir=~/gestionale/gestionale_angular/front-end/dist/*
   if [ -d "$distDir" ]; then
-    rm -R "$distDir"
+    rm -R "$distDir"/*
   fi
   echo ""
 
@@ -23,17 +30,37 @@ for client in "${clients[@]}" ; do
   echo "[34mBuilding for client $client...[0m"
   ng build --prod --base-href "$href"
 
-  echo "[34mRemoving nginx files for client $client...[0m"
-  nginxClientDir=/var/www/gestionale_angular/"$client"/*
-  if [ -d "$nginxClientDir" ]; then
-    rm -R "$nginxClientDir"
+  echo "[34mRemoving files for client $client...[0m"
+  if [ -d "$clientRootDir" ]; then
+    rm -R "$clientRootDir"/*
   fi
   echo ""
 
   echo "[34mCoping front-end files for client $client...[0m"
-  mkdir -p /var/www/gestionale_angular/"$client"/front-end
-  cp -r ~/gestionale/gestionale_angular/front-end/dist/gestionale_angular/* /var/www/gestionale_angular/"$client"/front-end/
-  cp ~/gestionale/configs/"$client"/FE.json /var/www/gestionale_angular/"$client"/front-end/assets/config.json
+  mkdir -p "$frontendDir"
+  cp -r "$distDir"/gestionale_angular/* "$frontendDir"/
+  cp "$clientConfigsDir"/FE.json "$frontendDir"/assets/config.json
+
+  echo "[34mCoping back-end files for client $client...[0m"
+  if [ -d "$backendDir" ]; then
+    cp "$backendDir"/order "$clientConfigsDir"/order
+    cp "$backendDir"/pid "$clientConfigsDir"/pid
+    rm -R "$clientRootDir"/back-end
+echo "Copied order&pid to configs"
+  else
+    echo "0" > "$clientConfigsDir"/order
+    touch "$clientConfigsDir"/pid
+  fi
+
+ls "$clientConfigsDir"
+cat "$clientConfigsDir"/order
+cat "$clientConfigsDir"/pid
+
+  mkdir "$backendDir"
+  cp -r ~/gestionale/gestionale_angular/back-end/* "$backendDir"/
+  cp "$clientConfigsDir"/BE.ts "$backendDir"/src/settings.ts
+  cp "$clientConfigsDir"/order "$backendDir"/order
+  cp "$clientConfigsDir"/pid "$backendDir"/pid
 
   echo ""
 done
