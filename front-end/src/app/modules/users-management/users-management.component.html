@@ -58,6 +58,7 @@
                     autocomplete="off"
                     name="username"
                     [type]="'text'"
+                    [disabled]="isRoot()"
                   />
                 </mat-form-field>
               </div>
@@ -77,6 +78,7 @@
                   autocomplete="off"
                   name="newPassword"
                   [type]="newPasswordHide ? 'password' : 'text'"
+                  [disabled]="isRoot()"
                 />
                 <button
                   mat-icon-button
@@ -85,6 +87,7 @@
                   (click)="newPasswordHide = !newPasswordHide"
                   [attr.aria-label]="'Mostra password'"
                   [attr.aria-pressed]="newPasswordHide"
+                  [disabled]="isRoot()"
                 >
                   <mat-icon>{{
                     newPasswordHide ? "visibility_off" : "visibility"
@@ -101,6 +104,7 @@
                   autocomplete="off"
                   name="confirmPassword"
                   [type]="confirmPassword ? 'password' : 'text'"
+                  [disabled]="isRoot()"
                 />
                 <button
                   mat-icon-button
@@ -109,6 +113,7 @@
                   (click)="confirmPassword = !confirmPassword"
                   [attr.aria-label]="'Mostra password'"
                   [attr.aria-pressed]="confirmPassword"
+                  [disabled]="isRoot()"
                 >
                   <mat-icon>{{
                     confirmPassword ? "visibility_off" : "visibility"
@@ -126,7 +131,7 @@
               <mat-checkbox
                 [name]="p.name"
                 [(ngModel)]="p.value"
-                [disabled]="!hasPermissions()"
+                [disabled]="!hasPermissions() || isRoot()"
               >
                 {{ p.name }}
               </mat-checkbox>
@@ -144,7 +149,7 @@
         color="primary"
         type="button"
         mat-raised-button
-        [disabled]="!isValid()"
+        [disabled]="!isValid() || isRoot()"
         (click)="onSave()"
       >
         Salva
@@ -156,6 +161,7 @@
         type="button"
         mat-raised-button
         (click)="onDelete($event)"
+        [disabled]="isRoot()"
       >
         Elimina
       </button>
