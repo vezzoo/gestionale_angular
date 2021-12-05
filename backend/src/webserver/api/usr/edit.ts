@@ -30,6 +30,11 @@ export default new AuthApiCall(
             target_user.permissions = body.permissions
         }
 
+        if(body.isLefthanded){
+            console.info(`lefthanded change for user ${target_user.username} by ${user.username} from ${target_user.is_lefthanded} to ${body.isLefthanded}`)
+            target_user.is_lefthanded = body.isLefthanded
+        }
+
         await target_user.save()
         return {status: true}
     },
@@ -38,5 +43,6 @@ export default new AuthApiCall(
             .prop("id", S.string())
             .prop("password", S.string())
             .prop("permissions", S.array().items(S.string()))
+            .prop("isLefthanded", S.boolean())
     }
 )
