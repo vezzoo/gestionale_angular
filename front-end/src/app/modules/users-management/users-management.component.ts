@@ -190,7 +190,10 @@ export class UsersManagementComponent implements OnInit {
       this.selected = this.users[0];
     }
 
-    if (!this.selected) return;
+    if (this.me?.username === 'root' && this.users.length === 0) {
+      this.onAdd();
+      return;
+    }
 
     this.form.controls['newPassword'].setValue(null);
     this.form.controls['confirmPassword'].setValue(null);
@@ -202,10 +205,6 @@ export class UsersManagementComponent implements OnInit {
     });
 
     this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
-  }
-
-  isRoot() {
-    return this.me?.username === 'root';
   }
 
   private updateUser(id: string) {
