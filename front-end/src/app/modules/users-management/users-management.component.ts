@@ -133,8 +133,7 @@ export class UsersManagementComponent implements OnInit {
             this.updateUser(response?.id);
           }
         },
-        (error: ApiError) =>
-          {}
+        (error: ApiError) => {}
       );
     }
   }
@@ -148,8 +147,7 @@ export class UsersManagementComponent implements OnInit {
         (response: Object) => {
           if (response) this.modal.close();
         },
-        (error: ApiError) =>
-          {}
+        (error: ApiError) => {}
       );
     }
   }
@@ -169,7 +167,7 @@ export class UsersManagementComponent implements OnInit {
   }
 
   hasPermissions() {
-    return this.users?.length > 1;
+    return this.users?.length > 1 || this.me?.username === 'root';
   }
 
   getUserIcon(id: string): string {
@@ -191,6 +189,12 @@ export class UsersManagementComponent implements OnInit {
     } else {
       this.selected = this.users[0];
     }
+
+    if (!this.selected) return;
+
+    this.form.controls['newPassword'].setValue(null);
+    this.form.controls['confirmPassword'].setValue(null);
+
     this.addingUser = false;
     this.permissions = this.permissions.map((e) => {
       e.value = this.selected.permissions.includes(e.name);
@@ -200,13 +204,23 @@ export class UsersManagementComponent implements OnInit {
     this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
   }
 
+  isRoot() {
+    return this.me?.username === 'root';
+  }
+
   private updateUser(id: string) {
     let body: UsersPatchRequest = {
       id: id,
     };
 
-    const newPassword = CommonUtils.getFormControlValue(this.form, 'newPassword');
-    const confirmPassword = CommonUtils.getFormControlValue(this.form, 'confirmPassword');
+    const newPassword = CommonUtils.getFormControlValue(
+      this.form,
+      'newPassword'
+    );
+    const confirmPassword = CommonUtils.getFormControlValue(
+      this.form,
+      'confirmPassword'
+    );
 
     if (newPassword && newPassword === confirmPassword) {
       body.password = newPassword;
