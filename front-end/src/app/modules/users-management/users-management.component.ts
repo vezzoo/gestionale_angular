@@ -167,7 +167,10 @@ export class UsersManagementComponent implements OnInit {
   }
 
   hasPermissions() {
-    return this.users?.length > 1 || this.me?.username === 'root';
+    return (
+      this.me?.permissions?.includes('user_management') ||
+      this.me?.username === 'root'
+    );
   }
 
   getUserIcon(id: string): string {
