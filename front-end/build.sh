@@ -1,6 +1,13 @@
 #!/bin/bash
 
-declare -a clients=("DEF" "BAR")
+if ! [ -z "$1" ]; then # Se l'argomento non è vuoto
+  echo "Found client $1 in arguments"
+  declare -a clients=("$1")
+else
+  echo "No client found in arguments"
+  declare -a clients=("DEF" "BAR")
+fi
+echo ""
 
 echo "[34mPull from git...[0m"
 git pull origin main
@@ -60,7 +67,7 @@ for client in "${clients[@]}" ; do
 
   echo "[34mRestarting $client back-end...[0m"
   # Riavviandosi il processo prova a killare il precedente
-  ~/gestionale/startBackend.sh "$client"
+  bash ~/gestionale/startBackend.sh "$client"
   echo ""
 done
 
