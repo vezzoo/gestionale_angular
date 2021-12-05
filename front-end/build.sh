@@ -23,8 +23,8 @@ for client in "${clients[@]}" ; do
 
   # build process
   echo "[34mRemoving previous build files...[0m"
-  if [ -d "$distDir"/* ]; then
-    rm -R "$distDir"/*
+  if [ -d "$distDir/*" ]; then
+    rm -R "$distDir/*"
   fi
   echo ""
 
@@ -38,8 +38,8 @@ for client in "${clients[@]}" ; do
   ng build --prod --base-href "$href"
 
   echo "[34mRemoving files for client $client...[0m"
-  if [ -d "$clientRootDir"/* ]; then
-    rm -R "$clientRootDir"/*
+  if [ -d "$clientRootDir/*" ]; then
+    rm -R "$clientRootDir/*"
   fi
   echo ""
 
@@ -52,10 +52,12 @@ for client in "${clients[@]}" ; do
   if [ -d "$backendDir" ]; then
     cp "$backendDir"/order "$clientConfigsDir"/order
     cp "$backendDir"/pid "$clientConfigsDir"/pid
+    cp "$backendDir"/root_credentials "$clientConfigsDir"/root_credentials
     rm -R "$clientRootDir"/back-end
   else
     echo "0" > "$clientConfigsDir"/order
     touch "$clientConfigsDir"/pid
+    touch "$clientConfigsDir"/root_credentials
   fi
 
   mkdir "$backendDir"
