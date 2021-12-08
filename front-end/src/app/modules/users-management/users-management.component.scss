@@ -69,8 +69,13 @@
 
     &__username,
     &__password,
-    &__permissions {
+    &__permissions,
+    &__preferences {
       padding: 10px 15px;
+    }
+
+    &__permissions {
+      padding-bottom: 28px;
     }
   }
 }

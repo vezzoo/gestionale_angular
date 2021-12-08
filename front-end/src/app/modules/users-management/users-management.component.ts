@@ -35,6 +35,7 @@ export class UsersManagementComponent implements OnInit {
   addingUser: boolean = false;
 
   private oldPermissions: Permission[] = [];
+  private oldIsLefthanded: boolean;
   private me: User;
   private selected: User;
 
@@ -99,7 +100,7 @@ export class UsersManagementComponent implements OnInit {
           CommonUtils.getFormControlValue(this.form, 'confirmPassword')
         );
       } else {
-        return this.arePermissionsChanged();
+        return this.arePermissionsChanged() || this.isLefthandedChanged();
       }
     } else {
       const isUsrOk = !!CommonUtils.getFormControlValue(this.form, 'username');
@@ -122,6 +123,10 @@ export class UsersManagementComponent implements OnInit {
       const body: UsersPutRequest = {
         username: CommonUtils.getFormControlValue(this.form, 'username'),
         permissions: this.permissions.filter((p) => p.value).map((p) => p.name),
+        isLefthanded: CommonUtils.getFormControlValue(
+          this.form,
+          'isLefthanded'
+        ),
       };
       this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
 
@@ -153,6 +158,8 @@ export class UsersManagementComponent implements OnInit {
   }
 
   onAdd() {
+    this.resetForm();
+
     this.addingUser = true;
     this.permissions = this.permissions.map((e) => {
       e.value = false;
@@ -198,8 +205,8 @@ export class UsersManagementComponent implements OnInit {
       return;
     }
 
-    this.form.controls['newPassword'].setValue(null);
-    this.form.controls['confirmPassword'].setValue(null);
+    this.resetForm();
+    this.form.controls['isLefthanded'].setValue(this.selected.isLefthanded);
 
     this.addingUser = false;
     this.permissions = this.permissions.map((e) => {
@@ -208,6 +215,7 @@ export class UsersManagementComponent implements OnInit {
     });
 
     this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
+    this.oldIsLefthanded = this.selected.isLefthanded;
   }
 
   private updateUser(id: string) {
@@ -234,6 +242,13 @@ export class UsersManagementComponent implements OnInit {
         .map((p) => p.name);
     }
 
+    if (this.isLefthandedChanged()) {
+      body.isLefthanded = CommonUtils.getFormControlValue(
+        this.form,
+        'isLefthanded'
+      );
+    }
+
     this.httpClientService.patch<UsersPatchResponse>(
       ApiUrls.USERS,
       body,
@@ -248,5 +263,18 @@ export class UsersManagementComponent implements OnInit {
     return (
       JSON.stringify(this.permissions) !== JSON.stringify(this.oldPermissions)
     );
+  }
+
+  private isLefthandedChanged() {
+    return (
+      CommonUtils.getFormControlValue(this.form, 'isLefthanded') !==
+      this.oldIsLefthanded
+    );
+  }
+
+  private resetForm() {
+    this.form.controls['newPassword'].setValue(null);
+    this.form.controls['confirmPassword'].setValue(null);
+    this.form.controls['isLefthanded'].setValue(false);
   }
 }

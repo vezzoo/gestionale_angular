@@ -132,6 +132,17 @@
               </mat-checkbox>
             </div>
           </div>
+          <app-section-title
+            [title]="'Preferenze'"
+            [type]="'secondary'"
+          ></app-section-title>
+          <div class="row user-details__preferences">
+            <div class="col-3">
+              <mat-checkbox [name]="'isLefthanded'" ngModel matInput>
+                Mancino/a
+              </mat-checkbox>
+            </div>
+          </div>
         </form>
       </div>
     </div>

@@ -10,6 +10,7 @@ export interface UsersGetResponse {
 export interface UsersPutRequest {
   username: string;
   permissions: string[];
+  isLefthanded: boolean;
 }
 
 export interface UsersPutResponse {
@@ -21,6 +22,7 @@ export interface UsersPatchRequest {
   id: string;
   password?: string;
   permissions?: string[];
+  isLefthanded?: boolean;
 }
 
 export interface UsersPatchResponse {
