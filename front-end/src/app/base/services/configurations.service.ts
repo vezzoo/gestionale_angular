@@ -11,6 +11,14 @@ export class ConfigurationsService {
 
   constructor(private http: HttpClient) {}
 
+  __isClient(...clients: string[]) {
+    return clients.includes(environment.client);
+  }
+
+  __isNotClient(...clients: string[]) {
+    return !this.__isClient(...clients);
+  }
+
   loadConfigurations(): void {
     this.readFile('./assets/errors.json', (data: any) => {
       this.errorTranslations = data;

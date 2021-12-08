@@ -1,4 +1,8 @@
-<div class="cash-desk container" [class.is-lefthanded]="isUserLefthanded" [hidden]="printing">
+<div
+  class="cash-desk container"
+  [class.is-lefthanded]="isUserLefthanded"
+  [hidden]="printing"
+>
   <div class="row mt-20">
     <div class="col" (resized)="checkIfShowScrollButton()">
       <ng-container *ngFor="let category of categories">
@@ -38,7 +42,7 @@
           <app-section-title [title]="'Note e riepilogo'"></app-section-title>
         </div>
         <div class="mt-15">
-          <div class="row">
+          <div class="row" *ngIf="configurationsService.__isNotClient('BAR')">
             <div class="col-lg-6 cash-desk__notes">
               <mat-form-field appearance="outline">
                 <mat-label>Note cucina</mat-label>
@@ -51,31 +55,10 @@
             </div>
             <div class="col-lg-6 cash-desk__summary">
               <div class="row">
-                <div class="col-lg-12 cash-desk__splitter">
-                  <mat-form-field
-                    class="cash-desk__splitter__amounts-received"
-                    appearance="outline"
-                  >
-                    <mat-label>Importo ricevuto {{ currency }} </mat-label>
-                    <input
-                      matInput
-                      autocomplete="off"
-                      type="number"
-                      formControlName="receivedAmount"
-                      (keypress)="formatReceivedAmount($event)"
-                    />
-                  </mat-form-field>
-                  <div class="cash-desk__splitter__amounts-computed">
-                    <span>Importo dovuto: </span>
-                    <span
-                      *ngIf="computedAmount !== undefined"
-                      class="cash-desk__splitter__amounts-computed-amount"
-                    >
-                      {{ computedAmount | normalizePrice | number: "1.2-2" }}
-                    </span>
-                    <span *ngIf="computedAmount === undefined">----</span>
-                    <span> {{ currency }}</span>
-                  </div>
+                <div class="col-lg-12">
+                  <ng-container
+                    *ngTemplateOutlet="changeAmountWrapper"
+                  ></ng-container>
                 </div>
               </div>
               <div class="row">
@@ -83,14 +66,21 @@
                   <mat-checkbox formControlName="takeAway">
                     Asporto
                   </mat-checkbox>
-                  <button
-                    class="cash-desk__splitter-button"
-                    mat-raised-button
-                    color="primary"
-                    (click)="onSubmit()"
-                  >
-                    Invia
-                  </button>
+                  <ng-container *ngTemplateOutlet="sendButton"></ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="configurationsService.__isClient('BAR')">
+            <div class="col-lg-12 cash-desk__summary">
+              <div class="row">
+                <div class="col-lg-6">
+                  <ng-container
+                    *ngTemplateOutlet="changeAmountWrapper"
+                  ></ng-container>
+                </div>
+                <div class="col-lg-6 cash-desk__send-button-wrapper">
+                  <ng-container *ngTemplateOutlet="sendButton"></ng-container>
                 </div>
               </div>
             </div>
@@ -118,3 +108,43 @@
 </div>
 
 <div id="bottomScrollDestionation" style="visibility: hidden"></div>
+
+<ng-template #changeAmountWrapper>
+  <div class="cash-desk__splitter" [formGroup]="formGroup">
+    <mat-form-field
+      class="cash-desk__splitter__amounts-received"
+      appearance="outline"
+    >
+      <mat-label>Importo ricevuto {{ currency }} </mat-label>
+      <input
+        matInput
+        autocomplete="off"
+        type="number"
+        formControlName="receivedAmount"
+        (keypress)="formatReceivedAmount($event)"
+      />
+    </mat-form-field>
+    <div class="cash-desk__splitter__amounts-computed">
+      <span>Importo dovuto: </span>
+      <span
+        *ngIf="computedAmount !== undefined"
+        class="cash-desk__splitter__amounts-computed-amount"
+      >
+        {{ computedAmount | normalizePrice | number: "1.2-2" }}
+      </span>
+      <span *ngIf="computedAmount === undefined">----</span>
+      <span> {{ currency }}</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #sendButton>
+  <button
+    class="cash-desk__splitter-button"
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+  >
+    Invia
+  </button>
+</ng-template>

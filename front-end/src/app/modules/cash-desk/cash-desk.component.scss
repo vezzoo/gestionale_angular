@@ -35,6 +35,7 @@
 
   &__notes {
     padding-top: 15px;
+    border-right: 1px solid $secondary-color;
 
     textarea {
       height: 100px;
@@ -42,7 +43,6 @@
   }
 
   &__summary {
-    border-left: 1px solid $secondary-color;
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -73,6 +73,14 @@
     &-button {
       width: 30%;
       height: 70px;
+    }
+  }
+
+  &__send-button-wrapper {
+    text-align: right;
+
+    button.cash-desk__splitter-button {
+      width: 50%;
     }
   }
 }

@@ -15,6 +15,7 @@ import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
 import { CategoryToPrint } from 'src/app/base/models/categoryToPrint.model';
 import { NormalizePricePipe } from 'src/app/base/pipes/normalizePrice.pipe';
+import { ConfigurationsService } from 'src/app/base/services/configurations.service';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
 import { CommonUtils } from 'src/app/base/utils/common.utils';
@@ -69,7 +70,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     private httpClientService: HttpClientService,
     private normalizePricePipe: NormalizePricePipe,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    public configurationsService: ConfigurationsService
   ) {}
 
   ngOnInit(): void {
