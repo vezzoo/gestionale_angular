@@ -67,6 +67,10 @@ for client in "${clients[@]}" ; do
       href="/${client,,}/"
     fi
 
+    echo "[34mReplacing variables.scss for client $client...[0m"
+    cp "clientConfigsDir"/variables.scss ~/gestionale/gestionale_angular/front-end/app/src/base/styles/
+    echo ""
+
     echo "[34mBuilding for client $client...[0m"
     ng build --prod --base-href "$href"
 
