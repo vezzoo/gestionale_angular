@@ -25,6 +25,7 @@ import {
   CashDeskOrderConfirmRequest,
   CashDeskOrderConfirmResponse,
 } from 'src/types/cash-desk';
+import { AuthService } from '../auth/auth.service';
 import { CashDeskModalComponent } from './cash-desk-modal/cash-desk-modal.component';
 
 @Component({
@@ -55,6 +56,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   printing: boolean = false;
   formGroup: FormGroup;
   computedAmount: number;
+  isUserLefthanded: boolean;
 
   private sub: Subscription;
   private categoriesPrinted = new Subject<boolean>();
@@ -66,7 +68,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     private decimalPipe: DecimalPipe,
     private httpClientService: HttpClientService,
     private normalizePricePipe: NormalizePricePipe,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +82,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     this.formGroup.controls['receivedAmount'].valueChanges.subscribe((value) =>
       this.calculateComputedAmount(value)
     );
+
+    this.isUserLefthanded = this.authService.isUserLefthanded;
 
     let url: string = ApiUrls.CASH_DESK;
     if (this.routerService.getUrl() === Urls.CASSA_BAR) {

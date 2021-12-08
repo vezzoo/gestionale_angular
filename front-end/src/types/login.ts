@@ -6,4 +6,5 @@ export interface LoginGetRequest {
 export interface LoginGetResponse {
   username: string;
   token: string;
+  isLefthanded: boolean;
 }

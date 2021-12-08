@@ -10,6 +10,7 @@ import { HttpClientService } from '../../base/services/httpClient.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   onUserChange = new Subject<string>();
+  isUserLefthanded: boolean;
   private user: string;
   private tokenJWT: string;
 
@@ -19,8 +20,9 @@ export class AuthService {
     private translateErrorPipe: TranslateErrorPipe
   ) {}
 
-  private setUser(value: string) {
+  private setUser(value: string, isUserLefthanded: boolean) {
     this.user = value;
+    this.isUserLefthanded = isUserLefthanded;
     this.onUserChange.next(this.user);
   }
 
@@ -40,7 +42,7 @@ export class AuthService {
       body,
       (response: LoginGetResponse) => {
         if (response) {
-          this.setUser(response.username);
+          this.setUser(response.username, response.isLefthanded);
           this.tokenJWT = response.token;
           callBackSuccess(response);
         }
@@ -51,7 +53,7 @@ export class AuthService {
   }
 
   doLogout(): void {
-    this.setUser(null);
+    this.setUser(null, null);
     this.tokenJWT = null;
 
     this.routerService.navigate(Urls.AUTH);

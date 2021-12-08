@@ -1,7 +1,13 @@
 @import "../../base/style/variables.scss";
 
 .cash-desk {
-  margin-left: 10px;
+  &:not(.is-lefthanded) {
+    margin-left: 10px;
+  }
+
+  &.is-lefthanded {
+    margin-right: 10px;
+  }
 
   @media (min-width: 1920px) {
     width: 1720px;
