@@ -84,6 +84,7 @@ for client in "${clients[@]}" ; do
     mkdir -p "$frontendDir"
     cp -r "$distDir"/gestionale_angular/* "$frontendDir"/
     cp "$clientConfigsDir"/FE.json "$frontendDir"/assets/config.json
+    echo ""
   fi
 
   if [[ " ${systems[*]} " =~ " BE " ]]; then
