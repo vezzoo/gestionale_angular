@@ -67,8 +67,9 @@ for client in "${clients[@]}" ; do
       href="/${client,,}/"
     fi
 
-    echo "[34mReplacing variables.scss for client $client...[0m"
+    echo "[34mReplacing config files for client $client...[0m"
     cp "$clientConfigsDir"/variables.scss ~/gestionale/gestionale_angular/front-end/src/app/base/style/variables.scss
+    cp "$clientConfigsDir"/environment.prod.ts ~/gestionale/gestionale_angular/front-end/src/environments/environment.prod.ts
     echo ""
 
     echo "[34mBuilding for client $client...[0m"
