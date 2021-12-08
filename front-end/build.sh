@@ -68,7 +68,7 @@ for client in "${clients[@]}" ; do
     fi
 
     echo "[34mReplacing variables.scss for client $client...[0m"
-    cp "clientConfigsDir"/variables.scss ~/gestionale/gestionale_angular/front-end/app/src/base/styles/
+    cp "$clientConfigsDir"/variables.scss ~/gestionale/gestionale_angular/front-end/src/app/base/style/variables.scss
     echo ""
 
     echo "[34mBuilding for client $client...[0m"
