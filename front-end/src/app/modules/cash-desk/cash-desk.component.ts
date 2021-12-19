@@ -248,16 +248,19 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       ApiUrls.ORDER,
       body,
       (response: CashDeskOrderConfirmResponse) => {
-        if (response?.code) {
+        if (environment.categoriesToPrint?.length > 0 && response?.code) {
           this.print(Number(response.code) || 0);
+        }
+
+        if (environment.categoriesToPrint?.length === 0) {
+          this.billsPrinted.next(true);
         }
 
         if (response?.printList?.length === 0) {
           this.categoriesPrinted.next(true);
-          return;
         }
 
-        response?.printList.forEach((pl, i) => {
+        response?.printList?.forEach((pl, i) => {
           this.httpClientService.post<any>(
             pl.name,
             { payload: pl.payload },
