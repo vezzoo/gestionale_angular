@@ -23,11 +23,21 @@ export class CardComponent {
   readonly currency = environment.currency;
   readonly steps = [environment.stockWarningLimit, 0];
 
+  private removeClicked: boolean = false;
+
   onClick(event: any) {
     this.onClickEvent.emit({
-      isShiftPressed: event.shiftKey,
+      isShiftPressed: event.shiftKey || this.removeClicked,
       isCtrlPressed: event.ctrlKey,
     });
+
+    if (this.removeClicked) {
+      this.removeClicked = false;
+    }
+  }
+
+  onRemoveClick() {
+    this.removeClicked = true;
   }
 
   getLeft() {
