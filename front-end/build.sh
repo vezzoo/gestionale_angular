@@ -3,6 +3,8 @@
 declare -a clients=("DEF" "BAR")
 declare -a systems=("FE" "BE")
 
+bar_title="Baretto calcio"
+
 while test $# -gt 0; do
   case "$1" in
     -c)
@@ -85,6 +87,11 @@ for client in "${clients[@]}" ; do
     mkdir -p "$frontendDir"
     cp -r "$distDir"/gestionale_angular/* "$frontendDir"/
     cp "$clientConfigsDir"/FE.json "$frontendDir"/assets/config.json
+
+    if [ "$client" == "BAR" ]; then
+      sed -i -e "s/<title>[^>]\+<\/title>/<title>$bar_title<\/title>/g" /var/www/gestionale_angular/BAR/front-end/index.html
+    fi
+
     echo ""
   fi
 
