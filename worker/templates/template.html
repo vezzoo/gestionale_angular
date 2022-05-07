@@ -1,0 +1,108 @@
+<html dir="ltr" lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <title>Summary</title>
+    <style>
+      body {
+        margin: 0 1cm;
+      }
+
+      /* separatore */
+      .separator {
+        border-bottom: 1px solid black;
+      }
+
+      /* header */
+      .header {
+        padding: 0.1cm 0;
+        position: relative;
+        text-align: right;
+      }
+
+      .header-title {
+        position: absolute;
+        left: 0;
+        bottom: 28px;
+        display: block;
+        font-size: 70px;
+        font-weight: 600;
+      }
+
+      .header-number {
+        display: block;
+        font-size: 220px;
+        font-weight: 800;
+      }
+
+      /* lista prodotti */
+      .products {
+        padding: 0.3cm 0;
+        font-weight: 400;
+      }
+
+      .product-wrapper {
+        font-size: 24px;
+      }
+      
+      .product-header-wrapper {
+        font-size: 28px;
+        margin-bottom: 0.3cm;
+      }
+      
+      .product-quantity-header,
+      .product-quantity {
+        width: 50px;
+        float: left;
+        margin-right: 10px;
+        text-align: right;
+      }
+
+      /* note */
+      .notes-wrapper {
+        padding: 0.3cm 0;
+      }
+
+      .notes-title {
+        display: block;
+        font-size: 28px;
+        font-weight: 400;
+        margin-bottom: 0.3cm;
+      }
+
+      .notes-text {
+	font-size: 24px;
+        margin-left: 0.5cm;
+      }
+
+      /* asporto */
+
+      .takeaway {
+        font-size: 180px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span id="title" class="header-title">
+        <!-- valore inserito da codice -->
+        %TITLE%
+      </span>
+      <span id="orderNumber" class="header-number">
+        <!-- valore inserito da codice -->
+        %ORDNUM%
+      </span>
+    </div>
+    <div class="separator"></div>
+    <div id="products-wrapper" class="products">
+      <div class="product-wrapper product-header-wrapper">
+        <span id="product-quantity-header" class="product-quantity">Q.ta</span>
+        <span id="product-description-header">Descrizione</span>
+      </div>
+      %PRODUCTLIST%
+    </div>
+    <div class="separator"></div>
+    %NOTES%
+    %TAKEAWAY%
+  </body>
+</html>

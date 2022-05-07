@@ -1,0 +1,23 @@
+{
+  "name": "gestionale_backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "tsc": "tsc --resolveJsonModule",
+    "run": "tsc; node lib/index.js"
+  },
+  "author": "tetofonta",
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "phantomjs-prebuilt": "^2.1.16"
+  },
+  "dependencies": {
+    "fastify": "^3.20.1",
+    "@types/node": "^16.4.13",
+    "jsonwebtoken": "^8.5.1",
+    "@types/jsonwebtoken": "^8.5.4",
+    "fluent-json-schema": "^3.0.1",
+    "ipp": "^2.0.1",
+    "html-pdf": "^3.0.1"
+  }
+}
