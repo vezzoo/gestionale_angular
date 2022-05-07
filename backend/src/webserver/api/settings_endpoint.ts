@@ -1,6 +1,6 @@
 import ApiCall from "../apicalls/ApiCall";
 import Endpoint from "../Endpoint";
-import {SETTING_CATEGORY, SETTING_DASHBOARD_FUNCTIONS, SETTING_USER_PERM} from "../../settings";
+import {SETTING_CATEGORY, SETTING_DASHBOARD_FUNCTIONS, SETTING_PRINTERS, SETTING_USER_PERM} from "../../settings";
 import AuthApiCall from "../apicalls/AuthApiCall";
 
 export default new Endpoint("/settings")
@@ -30,6 +30,16 @@ export default new Endpoint("/settings")
                         title: e.title,
                         children: e.children.filter(func => user.has_permission(func.permissions, false))
                     })).filter(e => e.children.length > 0)
+                };
+            },
+            {}
+        )
+    ).addCallback(new ApiCall(
+            "GET",
+            "/printers",
+            async () => {
+                return {
+                    printers: [...new Set(SETTING_PRINTERS.map(p => new URL(p.name).origin))]
                 };
             },
             {}

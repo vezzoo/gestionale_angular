@@ -31,7 +31,18 @@ export const SETTING_CATEGORY = [
     "CAFFE"
 ]
 
-export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter", "show_orders"]
+export const SETTING_USER_PERM: UserPermission[] = [
+    "user_management",
+    "storage_write",
+    "storage_read",
+    "cash_desk",
+    "cash_desk_bar",
+    "cash_desk_takeaway",
+    "reports",
+    "reset_counter",
+    // "show_orders",
+    // "printers_management"
+]
 
 export const SETTING_PRINTERS = [
     {
@@ -83,12 +94,12 @@ export const SETTING_DASHBOARD_FUNCTIONS: DashboardCategory[] = [
                 icon: "equalizer",
                 description: "Download dati statistici",
             },
-            {
-                title: "Vis. ordini",
-                permissions: ["show_orders"],
-                icon: "fact_check",
-                description: "Visualizzazione e ristampa ordini",
-            },
+            // {
+            //     title: "Vis. ordini",
+            //     permissions: ["show_orders"],
+            //     icon: "fact_check",
+            //     description: "Visualizzazione e ristampa ordini",
+            // },
         ],
     },
     {
@@ -106,6 +117,12 @@ export const SETTING_DASHBOARD_FUNCTIONS: DashboardCategory[] = [
                 icon: "restart_alt",
                 description: "Reset del contatore",
             },
+            // {
+            //     title: "Gestione stampanti",
+            //     permissions: ["printers_management"],
+            //     icon: "print",
+            //     description: "Visualizza lo stato delle stampanti",
+            // },
         ]
     },
 ]
