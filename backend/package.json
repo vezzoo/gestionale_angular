@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "tsc": "tsc --resolveJsonModule",
-    "run": "tsc; node lib/index.js",
+    "start": "npm run tsc && node lib/index.js",
     "jwt_keygen": "openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem && openssl ec -in ec-secp256k1-priv-key.pem -pubout -out ec-secp256k1-priv-key.pub.pem"
   },
   "author": "tetofonta",
