@@ -15,10 +15,11 @@ export default new AuthApiCall(
     "/",
     async (req, res, user, body)=>{
         const psw = Math.random().toString(26).substr(2);
-        const new_user = new UserModel(body.username, psw, body.permissions)
+        const new_user = new UserModel(body.username, psw, body.permissions, body.isLefthanded)
         try {
             await new_user.save()
         } catch (e) {
+            // @ts-ignore
             if (e.constructor.name === "MongoError" && e.code === 11000)
                 return ECODE.E_DUP
             return ECODE.E_UNCOMMON(500, "Database error", e)
@@ -33,5 +34,6 @@ export default new AuthApiCall(
         body: S.object()
             .prop("username", S.string()).required()
             .prop("permissions", S.array().items(S.string().enum(SETTING_USER_PERM)))
+            .prop("isLefthanded", S.boolean()).default(false)
     }
 )

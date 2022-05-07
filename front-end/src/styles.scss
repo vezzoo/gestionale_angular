@@ -1,0 +1,73 @@
+@import "./app/base/style/variables.scss";
+
+@import "./app/base/style/form-container";
+@import "./app/base/style/toolbar";
+@import "./app/base/style/card";
+@import "./app/base/style/category";
+@import "./app/base/style/section-title";
+@import "./app/base/style/cart-detail";
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family;
+  background-color: $bgColor;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.mat-form-field,
+button {
+  width: 100%;
+}
+
+div.vertical-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+  font-weight: 400;
+}
+
+.iframe-hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.modal-backdrop.fade {
+  opacity: 0.5;
+}
+
+.modal-open .modal {
+  opacity: 1;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 99999 !important;
+}
+
+.snack-success {
+  background-color: rgb(0, 200, 0) !important;
+  color: white !important;
+}
+
+.snack-error {
+  background-color: rgb(200, 0, 0) !important;
+  color: white !important;
+}

@@ -1,0 +1,81 @@
+@import "../../base/style/variables.scss";
+
+.users {
+  &-management {
+    // header
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+    }
+
+    &__title {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    // body
+    &__body {
+      padding: 15px;
+    }
+
+    // footer
+    &__footer {
+      padding: 15px;
+
+      div.row {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  &-wrapper {
+    background-color: #fff;
+    border-radius: 8px;
+  }
+}
+
+.user {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    border-radius: 8px;
+    color: $secondary-color;
+
+    &:hover {
+      background-color: #ddd;
+    }
+
+    &.selected {
+      color: $primary-color;
+    }
+  }
+
+  &-icon {
+    font-size: 30px;
+    padding: 15px;
+  }
+
+  &-name {
+    font-size: 18px;
+    padding-right: 15px;
+  }
+
+  &-details {
+    padding: 15px;
+
+    &__username,
+    &__password,
+    &__permissions,
+    &__preferences {
+      padding: 10px 15px;
+    }
+
+    &__permissions {
+      padding-bottom: 28px;
+    }
+  }
+}

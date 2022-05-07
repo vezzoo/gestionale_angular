@@ -9,10 +9,10 @@ export default new AuthApiCall(
     async (req, res, user, _, __, parameters) => {
         let user_list = undefined
         if(user.has_permission("user_management"))
-            user_list = (await User.find(!!parameters.userid ? {_id: parameters.userid} : {}) as User[]).map(e => ({id: e._id?.toString() || "nope", username: e.username, permissions: e.permissions})) //all users
+            user_list = (await User.find(!!parameters.userid ? {_id: parameters.userid} : {}) as User[]).map(e => ({id: e._id?.toString() || "nope", username: e.username, permissions: e.permissions, isLefthanded: e.is_lefthanded})) //all users
 
         return {
-            me: {id: user._id?.toString(), username: user.username, permissions: user.permissions},
+            me: {id: user._id?.toString(), username: user.username, permissions: user.permissions, isLefthanded: user.is_lefthanded},
             user_list: !!parameters.userid ? undefined : user_list,
             user: !!parameters.userid && user_list && user_list.length > 0 ? user_list[0] : undefined
         }

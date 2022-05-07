@@ -1,0 +1,11 @@
+<div class="cart-detail">
+  <div class="cart-detail__header">
+    <span class="cart-detail__header-quantity" *ngIf="quantity !== undefined">
+      {{ quantity }}x
+    </span>
+    <span class="cart-detail__header-title" *ngIf="title">{{ title }}</span>
+  </div>
+  <span class="cart-detail__body-price" *ngIf="quantity !== undefined && price">
+    {{ quantity * price | normalizePrice | number: "1.2-2" }} {{ currency }}
+  </span>
+</div>

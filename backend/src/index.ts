@@ -38,7 +38,6 @@ import OrderManager from "./webserver/OrderManager";
         console.warn("Root usr credentials sored in current working directory under ./root_credentials")
         console.warn("copy them in a safe place and delete the file")
     }
-
     const webserver = new Webserver()
         .add(settings_endpoint)
         .add(user_endpoint)
@@ -51,6 +50,5 @@ import OrderManager from "./webserver/OrderManager";
             process.exit(0)
         })
     });
-
     await webserver.exec()
 })()

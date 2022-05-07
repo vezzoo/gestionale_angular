@@ -1,18 +1,14 @@
 import ApiCall from "../apicalls/ApiCall";
 import Endpoint from "../Endpoint";
-import {SETTING_CATEGORY} from "../../settings";
+import {SETTING_CATEGORY, SETTING_DASHBOARD_FUNCTIONS, SETTING_USER_PERM} from "../../settings";
+import AuthApiCall from "../apicalls/AuthApiCall";
 
 export default new Endpoint("/settings")
     .addCallback(new ApiCall(
             "GET",
             "/permissions",
             async () => {
-                return [
-                    "user_management",
-                    "storage_write",
-                    "storage_read",
-                    "cash_desk"
-                ]
+                return SETTING_USER_PERM
             },
             {}
         )
@@ -21,6 +17,20 @@ export default new Endpoint("/settings")
             "/categories",
             async () => {
                 return SETTING_CATEGORY
+            },
+            {}
+        )
+    ).addCallback(new AuthApiCall(
+            SETTING_USER_PERM,
+            "GET",
+            "/dashboard",
+            async (req, res, user) => {
+                return {
+                    categories: SETTING_DASHBOARD_FUNCTIONS.map(e => ({
+                        title: e.title,
+                        children: e.children.filter(func => user.has_permission(func.permissions, false))
+                    })).filter(e => e.children.length > 0)
+                };
             },
             {}
         )

@@ -30,8 +30,11 @@ export default class AuthApiCall extends AbstractCall {
                         return await handler(req, res, await AuthApiCall.tokenValidation(permission, req), body, headers, params);
                         //update token
                     } catch (e) {
+                        // @ts-ignore
                         if(process.env.PRODUCTION !== "1") console.log(e.message, e.stack)
+                        // @ts-ignore
                         if (fallback) return await fallback(req, res, e);
+                        // @ts-ignore
                         return ECODE.get(e.message)
                     }
                 })
@@ -52,6 +55,7 @@ export default class AuthApiCall extends AbstractCall {
         try{
             ver_data = jwt.verify(token, SETTING_JWT_PUBLIC) as any
         } catch (e){
+            // @ts-ignore
             switch (e.message) {
                 case "jwt expired":
                     throw Error("E_JWT_EXPIRED")
@@ -60,6 +64,7 @@ export default class AuthApiCall extends AbstractCall {
                 case "jwt malformed":
                     throw Error("E_MALFORMED_REQ")
                 default:
+                    // @ts-ignore
                     throw Error(e.message)
             }
         }
@@ -81,11 +86,12 @@ export default class AuthApiCall extends AbstractCall {
 
         if(user.permissions.includes("root")) return true
 
-        for(let p of perms){
-            if(user.permissions.includes(p))
-                if(ored) return true
-            else
+        for (let p of perms) {
+            if (user.permissions.includes(p)) {
+                if (ored) return true
+            } else {
                 if (!ored) return false
+            }
         }
 
         return !ored

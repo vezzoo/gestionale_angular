@@ -8,18 +8,49 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/usr/
+POST http://localhost:3000/api/usr/login
 Content-Type: application/json
-Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
 
 {
-  "username": "mario",
-  "permissions": ["user_management"]
+  "username": "marione",
+  "password": "k3b1f3mpgkjj"
+}
+
+###
+
+POST http://localhost:3000/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "giorgio",
+  "password": "ji0h5fp60hog"
+}
+
+###
+
+GET http://localhost:3000/api/settings/dashboard
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjMwNjU0NzI1LCJleHAiOjE2MzA2NjkxMjV9.74rEPVaQw6mEZQr-UoZZOWHYDGW1CioLUJ2AxfGQRarIi4hZwdWZdenQUKB-QF6EJcIBDsCjkiJe_TGAPrWgGw
+
+###
+
+GET http://localhost:3000/api/settings/dashboard
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzFkMDdmZjg1MzgzMGQ5NGRhY2MwYSIsInBlcm1pc3Npb25zIjpbInVzZXJfbWFuYWdlbWVudCIsInN0b3JhZ2VfcmVhZCJdLCJpYXQiOjE2MzA2NTQ4NzQsImV4cCI6MTYzMDY2OTI3NH0.i-5owXwfBPMowJ4ckBfwoISukSzRhSpLuqwxKwIrvYuRzJf3cOCf8euluztJWgiUUSpXehYaEv47dLgNScRWrg
+
+###
+
+
+PUT http://localhost:3000/api/usr/
+Content-Type: application/json
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjMwNjU0NTE4LCJleHAiOjE2MzA2Njg5MTh9.mQCjF9c9CLZJ1GLb55efU5q84Nr8bsrpnOYxJ7Tp_rcscMZ7Z_SxdmrMvgCN812_8-kN521GB8Vn23gWYMH4GQ
+
+{
+  "username": "giorgio",
+  "permissions": ["user_management", "storage_read", "storage_write"]
 }
 
 ###
 GET http://localhost:3000/api/usr/
-Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjI5NTQ3ODQ1LCJleHAiOjE2Mjk1NjIyNDV9.8WpaJK9pRuz6OihWbaJx6LLi5x1N6BFuNRX7_XjASn8T2wv2CP9OU6kEt0bVaoIUHgHuUe4_tUOM2QI2se0Afg
+Authorization: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjBlY2Y2MTcxZWFhOTA4YjJhNjZkMCIsInBlcm1pc3Npb25zIjpbInJvb3QiXSwiaWF0IjoxNjMwNjU0NTE4LCJleHAiOjE2MzA2Njg5MTh9.mQCjF9c9CLZJ1GLb55efU5q84Nr8bsrpnOYxJ7Tp_rcscMZ7Z_SxdmrMvgCN812_8-kN521GB8Vn23gWYMH4GQ
 
 ###
 GET http://localhost:3000/api/usr/6120ed72171eaa908b2a66d5

@@ -19,7 +19,8 @@ export default new ApiCall(
             username: user.username,
             id: user._id?.toString(),
             token: tok,
-            permissions: user.permissions //Aggiunta
+            permissions: user.permissions, //Aggiunta
+            isLefthanded: user.is_lefthanded
         }
     },
     {

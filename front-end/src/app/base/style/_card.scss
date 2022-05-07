@@ -1,0 +1,139 @@
+@import "./variables.scss";
+
+.custom-card {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  height: 150px;
+  width: 300px;
+  cursor: pointer;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all 0.2s ease-in;
+  position: relative;
+
+  &--small {
+    .card__header {
+      &-title {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      margin: 5px;
+      padding: 5px;
+      width: 220px;
+      height: 130px;
+
+      .custom-card {
+        &__body {
+          &-bottom {
+            width: 210px;
+            bottom: 4px;
+            left: 5px;
+
+            &-quantity {
+              margin-right: -1px;
+            }
+
+            &-remove-icon {
+              opacity: 1;
+              pointer-events: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &--warning {
+    background-color: rgb(255, 238, 0);
+  }
+
+  &--readonly {
+    background-color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  }
+
+  &__header {
+    display: flex;
+
+    &-icon {
+      color: $secondary-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      font-size: 28px;
+    }
+
+    &-title {
+      color: $secondary-color;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 5px;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+
+    &-description {
+      color: $tertiary-color;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 5px;
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    &-stock {
+      color: $tertiary-color;
+      padding: 6px;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    &-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 7px;
+      left: 10px;
+      width: 280px;
+
+      &-quantity {
+        color: $secondary-color;
+        font-size: 50px;
+        line-height: 40px;
+        margin-right: -3px;
+
+        &-error {
+          color: red;
+        }
+      }
+
+      &-remove-icon {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    &-price {
+      color: $tertiary-color;
+      padding: 5px;
+    }
+  }
+}

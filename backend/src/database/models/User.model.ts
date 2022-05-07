@@ -10,6 +10,7 @@ import Field, {FieldArray} from "../wrapper/decorators/Field";
 import Unique from "../wrapper/decorators/Unique";
 import Required from "../wrapper/decorators/Required";
 import Collection from "../wrapper/decorators/Collection";
+import Default from "../wrapper/decorators/Default";
 
 @Collection
 export default class User extends DBDocument{
@@ -32,6 +33,10 @@ export default class User extends DBDocument{
     @Required
     public permissions: string[]
 
+    @Field
+    @Default(false)
+    public is_lefthanded?: boolean;
+
     set password(value: string) {
         const psw = Buffer.from(value || "insecure", 'utf-8');
         this._password = crypto.createHmac("sha384", psw).update(this.password_salt).digest('base64');
@@ -53,7 +58,7 @@ export default class User extends DBDocument{
         return AuthApiCall.has_permission(this, perms, ored)
     }
 
-    constructor(username: string, password: string, permissions: string[], password_salt?: string) {
+    constructor(username: string, password: string, permissions: string[], is_lefthanded?: boolean, password_salt?: string) {
         super();
         this.username = username
         if(password_salt)
@@ -62,5 +67,6 @@ export default class User extends DBDocument{
             this.password_salt = Math.random().toString(26).substr(2)
         this.password = password
         this.permissions = permissions
+        this.is_lefthanded = is_lefthanded
     }
 }

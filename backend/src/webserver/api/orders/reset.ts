@@ -12,18 +12,9 @@ export default new MutexAuthApiCall(
     "POST",
     "/reset/",
     async (req, res, user, body) => {
-        await OrderManager.getInstance().reset(1)
+        await OrderManager.getInstance().reset(0)
         console.info(`User ${user.username} reset the order count to 0001`)
         return {status: true}
     },
-    {
-        body: S.object()
-            .prop("notes", S.string())
-            .prop("takeaway", S.boolean())
-            .prop("cart", S.object()
-                .minProperties(1) //no ordini vuoti
-                .patternProperties({"^[a-z0-9]{24}$": S.integer().minimum(1)})
-                .additionalProperties(false)
-            ).required()
-    }
+    {}
 )

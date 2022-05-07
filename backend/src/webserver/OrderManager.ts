@@ -7,7 +7,7 @@ export default class OrderManager{
     private current_order_number: number;
     private static instance: OrderManager | null = null;
 
-    private constructor(start_number=1) {
+    private constructor(start_number=0) {
 
         if (fs.existsSync(SETTING_ORDER_FILE)) {
             console.info(`Loading order number...`)
@@ -30,7 +30,7 @@ export default class OrderManager{
         })
     }
 
-    public static getInstance(start_number=1){
+    public static getInstance(start_number=0){
         if(this.instance === null) this.instance = new OrderManager(start_number)
         return this.instance
     }

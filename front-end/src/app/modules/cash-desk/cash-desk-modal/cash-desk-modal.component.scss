@@ -1,0 +1,40 @@
+@import "../../../base/style/variables.scss";
+
+.cash-desk-modal {
+  // header
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  // body
+  &__body {
+    padding: 15px;
+  }
+
+  // footer
+  &__footer {
+    padding: 15px;
+
+    div.row {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__text {
+    color: $secondary-color;
+
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -1,3 +1,6 @@
+import { DashboardCategory } from "./@types/dashboard";
+import {UserPermission} from "./@types/permissions";
+
 export const SETTING_MONGO_URL = "mongodb://localhost:27017/gestionale"
 
 export const SETTING_JWT_PRIVATE = "-----BEGIN EC PRIVATE KEY-----\n" +
@@ -25,14 +28,84 @@ export const SETTING_CATEGORY = [
     "CUCINA",
     "PIZZA",
     "BAR",
-    "DOLCI"
+    "CAFFE"
 ]
 
-export const SETTING_USER_PERM = ["user_management", "storage_write", "storage_read", "cash_desk", "todo"]
+export const SETTING_USER_PERM: UserPermission[] = ["user_management", "storage_write", "storage_read", "cash_desk", "cash_desk_bar", "cash_desk_takeaway", "reports", "reset_counter", "show_orders"]
 
 export const SETTING_PRINTERS = [
     {
-        name: "http://raspberrypi.sagrasanlorenzo.it/cucina/print",
+        name: "http://192.168.1.2:3001/api/cucina1/order",
         category_filter: ["CUCINA"]
+    },
+    {
+        name: "http://192.168.1.2:3001/api/cucina2/order",
+        category_filter: ["PIZZA"]
     }
+]
+
+export const SETTING_DASHBOARD_FUNCTIONS: DashboardCategory[] = [
+    {
+        title: "cassa",
+        children: [
+            {
+                title: "Standard",
+                permissions: ["cash_desk"],
+                icon: "shopping_cart",
+                description: "Cassa completa",
+            },
+            {
+                title: "Bar",
+                permissions: ["cash_desk_bar"],
+                icon: "local_bar",
+                description: "Cassa solo bar e caffe",
+            },
+            {
+                title: "Asporto",
+                permissions: ["cash_desk_takeaway"],
+                icon: "card_travel",
+                description: "Cassa completa, solo asporto",
+            },
+        ],
+    },
+    {
+        title: "gestione",
+        children: [
+            {
+                title: "Magazzino",
+                permissions: ["storage_write", "storage_read"],
+                icon: "store",
+                description: "Gestione prodotti e giacenze",
+            },
+            {
+                title: "Reports",
+                permissions: ["reports"],
+                icon: "equalizer",
+                description: "Download dati statistici",
+            },
+            {
+                title: "Vis. ordini",
+                permissions: ["show_orders"],
+                icon: "fact_check",
+                description: "Visualizzazione e ristampa ordini",
+            },
+        ],
+    },
+    {
+        title: "amministrazione",
+        children: [
+            {
+                title: "Gestione utenti",
+                permissions: ["user_management"],
+                icon: "account_circle",
+                description: "Creazione/modifica utenti",
+            },
+            {
+                title: "Chiusura giornata",
+                permissions: ["reset_counter"],
+                icon: "restart_alt",
+                description: "Reset del contatore",
+            },
+        ]
+    },
 ]
