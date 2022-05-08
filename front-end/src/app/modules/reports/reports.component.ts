@@ -29,13 +29,14 @@ export class ReportsComponent implements OnInit {
     const date = Math.round(new Date().getTime() / 1000);
     const timestamp = date - environment.reportsHourDifference * 3600;
 
-    this.httpClientService.get<ReportsGetResponse>(
-      `${ApiUrls.REPORTS}?from=${timestamp * 1000}`,
-      (response: ReportsGetResponse) => {
-        this.download(response?.data);
-      },
-      (error: ApiError) => {}
-    );
+    this.httpClientService
+      .get<ReportsGetResponse>(`${ApiUrls.REPORTS}?from=${timestamp * 1000}`)
+      .subscribe(
+        (response: ReportsGetResponse) => {
+          this.download(response?.data);
+        },
+        (error: ApiError) => {}
+      );
   }
 
   private download(data: string) {

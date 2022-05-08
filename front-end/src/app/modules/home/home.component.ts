@@ -26,13 +26,14 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.httpClientService.get<DashBoardGetResponse>(
-      ApiUrls.DASHBOARD,
-      (response: DashBoardGetResponse) => {
-        this.categories = response?.categories;
-      },
-      (error: ApiError) => {}
-    );
+    this.httpClientService
+      .get<DashBoardGetResponse>(ApiUrls.DASHBOARD)
+      .subscribe(
+        (response: DashBoardGetResponse) => {
+          this.categories = response?.categories;
+        },
+        (error: ApiError) => {}
+      );
   }
 
   onCardClick(cardTitle: string, isCtrlPressed: boolean) {

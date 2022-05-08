@@ -37,19 +37,19 @@ export class AuthService {
       password: pwd,
     };
 
-    this.httpClientService.post<LoginGetResponse>(
-      ApiUrls.LOGIN,
-      body,
-      (response: LoginGetResponse) => {
-        if (response) {
-          this.setUser(response.username, response.isLefthanded);
-          this.tokenJWT = response.token;
-          callBackSuccess(response);
-        }
-      },
-      (error: ApiError) =>
-        callBackError(this.translateErrorPipe.transform(error))
-    );
+    this.httpClientService
+      .post<LoginGetResponse>(ApiUrls.LOGIN, body)
+      .subscribe(
+        (response: LoginGetResponse) => {
+          if (response) {
+            this.setUser(response.username, response.isLefthanded);
+            this.tokenJWT = response.token;
+            callBackSuccess(response);
+          }
+        },
+        (error: ApiError) =>
+          callBackError(this.translateErrorPipe.transform(error))
+      );
   }
 
   doLogout(): void {

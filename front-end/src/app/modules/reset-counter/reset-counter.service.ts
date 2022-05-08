@@ -15,13 +15,13 @@ export class ResetCounterService {
   reset(): void {
     const body = {};
 
-    this.httpClientService.post<OrderResetPostResponse>(
-      ApiUrls.RESET_ORDER,
-      body,
-      (response: OrderResetPostResponse) => {
-        if (response?.status) this.snackBarService.openSuccessSnackBar();
-      },
-      (error: ApiError) => {}
-    );
+    this.httpClientService
+      .post<OrderResetPostResponse>(ApiUrls.RESET_ORDER, body)
+      .subscribe(
+        (response: OrderResetPostResponse) => {
+          if (response?.status) this.snackBarService.openSuccessSnackBar();
+        },
+        (error: ApiError) => {}
+      );
   }
 }

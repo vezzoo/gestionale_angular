@@ -53,8 +53,7 @@ export class StorageEditModalComponent implements OnInit {
       category: this.category,
     });
 
-    this.httpClientService.get<Array<string>>(
-      ApiUrls.CATEGORIES,
+    this.httpClientService.get<Array<string>>(ApiUrls.CATEGORIES).subscribe(
       (response: Array<string>) => {
         this.categories = response.map((e) => {
           return {
@@ -108,15 +107,15 @@ export class StorageEditModalComponent implements OnInit {
         ],
       };
 
-      this.httpClientService.patch<StoragePatchResponse>(
-        ApiUrls.STORAGE,
-        body,
-        (response: StoragePatchResponse) => {
-          if (response?.[id]?.status) this.modal.close();
-        },
-        (error: ApiError) =>
-          console.log(this.translateErrorPipe.transform(error))
-      );
+      this.httpClientService
+        .patch<StoragePatchResponse>(ApiUrls.STORAGE, body)
+        .subscribe(
+          (response: StoragePatchResponse) => {
+            if (response?.[id]?.status) this.modal.close();
+          },
+          (error: ApiError) =>
+            console.log(this.translateErrorPipe.transform(error))
+        );
     } else {
       const body: StoragePutRequest = {
         title: title,
@@ -126,15 +125,15 @@ export class StorageEditModalComponent implements OnInit {
         category: category,
       };
 
-      this.httpClientService.put<StoragePutResponse>(
-        ApiUrls.STORAGE,
-        body,
-        (response: StoragePutResponse) => {
-          if (response?.status) this.modal.close();
-        },
-        (error: ApiError) =>
-          console.log(this.translateErrorPipe.transform(error))
-      );
+      this.httpClientService
+        .put<StoragePutResponse>(ApiUrls.STORAGE, body)
+        .subscribe(
+          (response: StoragePutResponse) => {
+            if (response?.status) this.modal.close();
+          },
+          (error: ApiError) =>
+            console.log(this.translateErrorPipe.transform(error))
+        );
     }
   }
 

@@ -44,8 +44,7 @@ export class StorageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.httpClientService.get<StorageGetResponse>(
-      ApiUrls.STORAGE,
+    this.httpClientService.get<StorageGetResponse>(ApiUrls.STORAGE).subscribe(
       (response: StorageGetResponse) => {
         const products: Product[] = (
           [].concat(
@@ -103,12 +102,13 @@ export class StorageComponent implements OnInit, OnDestroy {
     if (!event.ctrlKey) {
       console.log('CTRL + click expected');
     } else {
-      this.httpClientService.delete<Object>(
-        `${ApiUrls.STORAGE}${id}`,
-        (response: Object) => this.ngOnInit(),
-        (error: ApiError) =>
-          console.log(this.translateErrorPipe.transform(error))
-      );
+      this.httpClientService
+        .delete<Object>(`${ApiUrls.STORAGE}${id}`)
+        .subscribe(
+          (response: Object) => this.ngOnInit(),
+          (error: ApiError) =>
+            console.log(this.translateErrorPipe.transform(error))
+        );
     }
   }
 

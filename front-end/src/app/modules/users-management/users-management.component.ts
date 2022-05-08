@@ -46,8 +46,7 @@ export class UsersManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.httpClientService.get<string[]>(
-      ApiUrls.PERMISSIONS,
+    this.httpClientService.get<string[]>(ApiUrls.PERMISSIONS).subscribe(
       (response: string[]) => {
         this.permissions = response.map((e) => {
           return {
@@ -59,8 +58,7 @@ export class UsersManagementComponent implements OnInit {
       (error: ApiError) => {}
     );
 
-    this.httpClientService.get<UsersGetResponse>(
-      ApiUrls.USERS,
+    this.httpClientService.get<UsersGetResponse>(ApiUrls.USERS).subscribe(
       (response: UsersGetResponse) => {
         this.me = response?.me;
 
@@ -130,16 +128,16 @@ export class UsersManagementComponent implements OnInit {
       };
       this.oldPermissions = JSON.parse(JSON.stringify(this.permissions));
 
-      this.httpClientService.put<UsersPutResponse>(
-        ApiUrls.USERS,
-        body,
-        (response: UsersPutResponse) => {
-          if (response?.id) {
-            this.updateUser(response?.id);
-          }
-        },
-        (error: ApiError) => {}
-      );
+      this.httpClientService
+        .put<UsersPutResponse>(ApiUrls.USERS, body)
+        .subscribe(
+          (response: UsersPutResponse) => {
+            if (response?.id) {
+              this.updateUser(response?.id);
+            }
+          },
+          (error: ApiError) => {}
+        );
     }
   }
 
@@ -147,13 +145,14 @@ export class UsersManagementComponent implements OnInit {
     if (!event.ctrlKey) {
       console.log('CTRL + click expected');
     } else {
-      this.httpClientService.delete<Object>(
-        `${ApiUrls.USERS}${this.selected?.id}`,
-        (response: Object) => {
-          if (response) this.modal.close();
-        },
-        (error: ApiError) => {}
-      );
+      this.httpClientService
+        .delete<Object>(`${ApiUrls.USERS}${this.selected?.id}`)
+        .subscribe(
+          (response: Object) => {
+            if (response) this.modal.close();
+          },
+          (error: ApiError) => {}
+        );
     }
   }
 
@@ -249,14 +248,14 @@ export class UsersManagementComponent implements OnInit {
       );
     }
 
-    this.httpClientService.patch<UsersPatchResponse>(
-      ApiUrls.USERS,
-      body,
-      (response: UsersPatchResponse) => {
-        if (response?.status) this.modal.close();
-      },
-      (error: ApiError) => {}
-    );
+    this.httpClientService
+      .patch<UsersPatchResponse>(ApiUrls.USERS, body)
+      .subscribe(
+        (response: UsersPatchResponse) => {
+          if (response?.status) this.modal.close();
+        },
+        (error: ApiError) => {}
+      );
   }
 
   private arePermissionsChanged() {

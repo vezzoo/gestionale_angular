@@ -95,8 +95,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       this.formGroup.controls['takeAway'].setValue(true);
     }
 
-    this.httpClientService.get<CashDeskGetResponse>(
-      url,
+    this.httpClientService.get<CashDeskGetResponse>(url).subscribe(
       (response: CashDeskGetResponse) => {
         const categories = response?.categories?.map((c) => {
           c.children.forEach((e) => {
@@ -244,39 +243,40 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     };
 
     this.printing = true;
-    this.httpClientService.put<CashDeskOrderConfirmResponse>(
-      ApiUrls.ORDER,
-      body,
-      (response: CashDeskOrderConfirmResponse) => {
-        if (environment.categoriesToPrint?.length > 0 && response?.code) {
-          this.print(Number(response.code) || 0);
-        }
+    this.httpClientService
+      .put<CashDeskOrderConfirmResponse>(ApiUrls.ORDER, body)
+      .subscribe(
+        (response: CashDeskOrderConfirmResponse) => {
+          if (environment.categoriesToPrint?.length > 0 && response?.code) {
+            this.print(Number(response.code) || 0);
+          }
 
-        if (environment.categoriesToPrint?.length === 0) {
-          this.billsPrinted.next(true);
-        }
+          if (environment.categoriesToPrint?.length === 0) {
+            this.billsPrinted.next(true);
+          }
 
-        if (response?.printList?.length === 0) {
-          this.categoriesPrinted.next(true);
-        }
+          if (response?.printList?.length === 0) {
+            this.categoriesPrinted.next(true);
+          }
 
-        response?.printList?.forEach((pl, i) => {
-          this.httpClientService.post<any>(
-            pl.name,
-            { payload: pl.payload },
-            (res: any) => {
-              if (i === response.printList.length - 1) {
-                this.categoriesPrinted.next(true);
-              }
-            },
-            (error: ApiError) => {
-              this.categoriesPrinted.next(false);
-            }
-          );
-        });
-      },
-      (error: ApiError) => {}
-    );
+          response?.printList?.forEach((pl, i) => {
+            this.httpClientService
+              // TODO(luca): fix types
+              .post<any>(pl.name, { payload: pl.payload })
+              .subscribe(
+                (res: any) => {
+                  if (i === response.printList.length - 1) {
+                    this.categoriesPrinted.next(true);
+                  }
+                },
+                (error: ApiError) => {
+                  this.categoriesPrinted.next(false);
+                }
+              );
+          });
+        },
+        (error: ApiError) => {}
+      );
   }
 
   private print(orderNumber: number) {
