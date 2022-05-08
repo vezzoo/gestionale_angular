@@ -13,6 +13,7 @@
     }
 
     p {
+      display: inline-block;
       margin: 0;
     }
 
@@ -26,6 +27,11 @@
       .data-box {
         display: none;
       }
+    }
+
+    .popover-error-toggle {
+      background-color: #ff0000;
+      margin-left: 8px;
     }
   }
 }

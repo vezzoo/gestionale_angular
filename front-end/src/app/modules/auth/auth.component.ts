@@ -10,14 +10,17 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Urls } from 'src/app/base/enums/enums';
+import { ApiUrls, Urls } from 'src/app/base/enums/enums';
+import { HttpClientService } from 'src/app/base/services/httpClient.service';
 import { RouterService } from 'src/app/base/services/router.service';
+import { SessionService } from 'src/app/base/services/session.service';
 import { FocusUtils } from 'src/app/base/utils/focus.utils';
+import { ApiError } from 'src/types/api-error';
+import { PrintersListResponse } from 'src/types/printers';
 import { AuthService } from './auth.service';
 
 const delta = 80;
@@ -59,7 +62,9 @@ export class AuthComponent implements OnDestroy, AfterViewInit {
 
   constructor(
     private authService: AuthService,
-    private routerService: RouterService
+    private routerService: RouterService,
+    private httpClientService: HttpClientService,
+    private sessionService: SessionService
   ) {}
 
   ngAfterViewInit(): void {
@@ -76,8 +81,16 @@ export class AuthComponent implements OnDestroy, AfterViewInit {
       this.form.controls['username'].value,
       this.form.controls['password'].value,
       (user) => {
-        this.loading = false;
-        this.routerService.navigate(Urls.HOME);
+        this.httpClientService
+          .get<PrintersListResponse>(ApiUrls.PRINTERS)
+          .subscribe(
+            (response: PrintersListResponse) => {
+              this.sessionService.setPrinters(response.printers);
+              this.loading = false;
+              this.routerService.navigate(Urls.HOME);
+            },
+            (error: ApiError) => {}
+          );
       },
       (error) => {
         this.loading = false;

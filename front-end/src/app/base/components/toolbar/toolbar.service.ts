@@ -6,6 +6,7 @@ import { ToolbarFunction } from '../../models/function.model';
 export class ToolbarService {
   addToolbarFunction = new Subject<ToolbarFunction>();
   removeToolbarFunction = new Subject<string>();
+  startCheckingPrintersStatus = new Subject<void>();
 
   addFunction(f: ToolbarFunction) {
     this.addToolbarFunction.next(f);

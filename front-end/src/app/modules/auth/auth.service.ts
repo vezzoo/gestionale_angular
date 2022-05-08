@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { TranslateErrorPipe } from 'src/app/base/pipes/translateError.pipe';
 import { RouterService } from 'src/app/base/services/router.service';
+import { SessionService } from 'src/app/base/services/session.service';
 import { ApiError } from 'src/types/api-error';
 import { LoginGetRequest, LoginGetResponse } from 'src/types/login';
 import { HttpClientService } from '../../base/services/httpClient.service';
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(
     private routerService: RouterService,
     private httpClientService: HttpClientService,
-    private translateErrorPipe: TranslateErrorPipe
+    private translateErrorPipe: TranslateErrorPipe,
+    private sessionService: SessionService
   ) {}
 
   private setUser(value: string, isUserLefthanded: boolean) {
@@ -55,6 +57,7 @@ export class AuthService {
   doLogout(): void {
     this.setUser(null, null);
     this.tokenJWT = null;
+    this.sessionService.resetErrors();
 
     this.routerService.navigate(Urls.AUTH);
   }

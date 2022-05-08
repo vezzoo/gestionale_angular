@@ -21,4 +21,5 @@ export enum ApiUrls {
   RESET_ORDER = '/order/reset/',
   DASHBOARD = '/settings/dashboard',
   REPORTS = '/order/CSV/',
+  PRINTERS = '/settings/printers',
 }

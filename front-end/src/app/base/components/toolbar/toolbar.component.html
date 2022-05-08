@@ -4,9 +4,22 @@
       <span>{{ title }}</span>
     </div>
 
-    <div class="data-box">
+    <div class="data-box vertical-center">
       <p *ngIf="!username">{{ time }}</p>
       <p *ngIf="username">{{ time }} - {{ username }}</p>
+      <button
+        *ngIf="errors?.length"
+        class="popover-error-toggle"
+        mat-icon-button
+        type="button"
+        placement="bottom"
+        container="body"
+        [ngbPopover]="popoverList"
+      >
+        <mat-icon aria-hidden="false" aria-label="Errori">
+          error_outline
+        </mat-icon>
+      </button>
     </div>
 
     <ng-container *ngIf="username">
@@ -39,3 +52,11 @@
     </ng-container>
   </mat-toolbar>
 </div>
+
+<ng-template #popoverList>
+  <ul class="popover-error-list">
+    <li class="popover-error-item" *ngFor="let error of errors">
+      {{ error }}
+    </li>
+  </ul>
+</ng-template>
