@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "tsc": "tsc --resolveJsonModule",
-    "start": "npm run tsc && node lib/index.js"
+    "start:dev": "npm run tsc && npm run start",
+    "start": "node lib/index.js"
   },
   "author": "tetofonta",
   "devDependencies": {
