@@ -1,5 +1,6 @@
 import { DashboardCategory } from "./@types/dashboard";
 import {UserPermission} from "./@types/permissions";
+import { Printer } from "./@types/printer";
 
 export const SETTING_MONGO_URL = "mongodb://localhost:27017/gestionale"
 
@@ -44,7 +45,7 @@ export const SETTING_USER_PERM: UserPermission[] = [
     // "printers_management"
 ]
 
-export const SETTING_PRINTERS = [
+export const SETTING_PRINTERS: Printer[] = [
     {
         name: "http://192.168.1.2:3001/api/cucina1/order",
         category_filter: ["CUCINA"]
