@@ -12,6 +12,8 @@ import OrderManager from "./webserver/OrderManager";
 
 
 (async function (){
+    console.info(new Date())
+
     //create pid file
     if (fs.existsSync(SETTING_PID_FILE) && process.env.NO_STOP_PID !== "true") {
         console.info(`Trying to stop previously running instance (pid)... use env NO_STOP_PID=true to disable`)
