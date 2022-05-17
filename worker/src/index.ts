@@ -3,6 +3,7 @@ import {SETTING_PID_FILE, SETTING_PRINTERS} from "./settings";
 import {sleep} from "./_utils";
 import Webserver from "./webserver/Webserver";
 import Printer from "./webserver/printers/Printer";
+import status_endpoint from "./webserver/api/status_endpoint";
 
 
 (async function (){
@@ -18,7 +19,7 @@ import Printer from "./webserver/printers/Printer";
     }
     fs.writeFileSync(SETTING_PID_FILE, Buffer.from("" + process.pid))
 
-    const webserver = new Webserver()
+    const webserver = new Webserver().add(status_endpoint)
     SETTING_PRINTERS.forEach((e: any) => webserver.add(Printer(e.name, e.printer, e.title)))
 
     process.on('SIGINT', () => {
