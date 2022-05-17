@@ -12,7 +12,12 @@ import OrderManager from "./webserver/OrderManager";
 
 
 (async function (){
-    console.info(new Date())
+    process.env.TZ = 'Europe/Rome'
+    const d = new Date();
+    const day = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+    const time = `${d.getHours()}:${d.getMinutes()}.${d.getSeconds()}`;
+
+    console.info(`Start date: ${day} ${time}`);
 
     //create pid file
     if (fs.existsSync(SETTING_PID_FILE) && process.env.NO_STOP_PID !== "true") {
