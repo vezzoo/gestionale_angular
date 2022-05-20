@@ -58,6 +58,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   computedAmount: number;
   isUserLefthanded: boolean;
+  showTakeAway: boolean;
 
   private sub: Subscription;
   private categoriesPrinted = new Subject<boolean>();
@@ -72,7 +73,9 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     public configurationsService: ConfigurationsService
-  ) {}
+  ) {
+    this.showTakeAway = environment.showTakeAway;
+  }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({

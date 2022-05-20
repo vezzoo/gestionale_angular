@@ -69,18 +69,14 @@
         }
       }
     }
-
-    &-button {
-      width: 30%;
-      height: 70px;
-    }
   }
 
   &__send-button-wrapper {
     text-align: right;
 
     button.cash-desk__splitter-button {
-      width: 50%;
+      width: 80%;
+      height: 70px;
     }
   }
 }

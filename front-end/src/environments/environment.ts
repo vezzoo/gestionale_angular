@@ -18,4 +18,5 @@ export const environment = {
   stockWarningLimit: undefined,
   cashDeskCategoriesOrder: [],
   reportsHourDifference: undefined,
+  showTakeAway: undefined,
 };

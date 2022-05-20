@@ -62,10 +62,12 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-12 cash-desk__splitter">
-                  <mat-checkbox formControlName="takeAway">
+                <div class="col-lg-6 cash-desk__splitter">
+                  <mat-checkbox *ngIf="showTakeAway" formControlName="takeAway">
                     Asporto
                   </mat-checkbox>
+                </div>
+                <div class="col-lg-6 cash-desk__send-button-wrapper">
                   <ng-container *ngTemplateOutlet="sendButton"></ng-container>
                 </div>
               </div>
