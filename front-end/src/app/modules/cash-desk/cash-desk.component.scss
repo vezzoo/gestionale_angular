@@ -3,10 +3,18 @@
 .cash-desk {
   &:not(.is-lefthanded) {
     margin-left: 10px;
+
+    .cash-desk__scroll-button {
+      right: 20px;
+    }
   }
 
   &.is-lefthanded {
     margin-right: 10px;
+
+    .cash-desk__scroll-button {
+      left: 20px;
+    }
   }
 
   @media (min-width: 1920px) {
@@ -28,7 +36,6 @@
 
   &__scroll-button {
     position: fixed;
-    right: 20px;
     bottom: 20px;
     transform: translateY(100px);
   }
