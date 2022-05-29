@@ -63,9 +63,19 @@
               </div>
               <div class="row">
                 <div class="col-lg-6 cash-desk__splitter">
-                  <mat-checkbox *ngIf="showTakeAway" formControlName="takeAway">
+                  <!-- <mat-checkbox *ngIf="showTakeAway" formControlName="takeAway">
                     Asporto
-                  </mat-checkbox>
+                  </mat-checkbox> -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Da detrarre {{ currency }} </mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      type="number"
+                      formControlName="amountToBeDeducted"
+                      (keypress)="formatAmount('amountToBeDeducted', $event)"
+                    />
+                  </mat-form-field>
                 </div>
                 <div class="col-lg-6 cash-desk__send-button-wrapper">
                   <ng-container *ngTemplateOutlet="sendButton"></ng-container>
@@ -112,21 +122,23 @@
 <div id="bottomScrollDestionation" style="visibility: hidden"></div>
 
 <ng-template #changeAmountWrapper>
-  <div class="cash-desk__splitter" [formGroup]="formGroup">
-    <mat-form-field
-      class="cash-desk__splitter__amounts-received"
-      appearance="outline"
-    >
-      <mat-label>Importo ricevuto {{ currency }} </mat-label>
-      <input
-        matInput
-        autocomplete="off"
-        type="number"
-        formControlName="receivedAmount"
-        (keypress)="formatReceivedAmount($event)"
-      />
-    </mat-form-field>
-    <div class="cash-desk__splitter__amounts-computed">
+  <div class="row">
+    <div class="col-lg-6 cash-desk__splitter" [formGroup]="formGroup">
+      <mat-form-field
+        class="cash-desk__splitter__amounts-received"
+        appearance="outline"
+      >
+        <mat-label>Importo ricevuto {{ currency }} </mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          type="number"
+          formControlName="receivedAmount"
+          (keypress)="formatAmount('receivedAmount', $event)"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-lg-6 cash-desk__splitter__amounts-computed">
       <span>Importo dovuto: </span>
       <span
         *ngIf="computedAmount !== undefined"
@@ -134,7 +146,11 @@
       >
         {{ computedAmount | normalizePrice | number: "1.2-2" }}
       </span>
-      <span *ngIf="computedAmount === undefined">----</span>
+      <span
+        *ngIf="computedAmount === undefined"
+        class="cash-desk__splitter__amounts-computed-amount"
+        >---</span
+      >
       <span> {{ currency }}</span>
     </div>
   </div>

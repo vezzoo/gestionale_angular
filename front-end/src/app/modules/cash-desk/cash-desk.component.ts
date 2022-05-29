@@ -10,6 +10,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest, Subject, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
@@ -60,7 +61,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   isUserLefthanded: boolean;
   showTakeAway: boolean;
 
-  private sub: Subscription;
+  private fieldSubscriptions: { [k: string]: Subscription } = {};
+  private printSub: Subscription;
   private categoriesPrinted = new Subject<boolean>();
   private billsPrinted = new Subject<boolean>();
 
@@ -82,11 +84,13 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       notes: '',
       takeAway: false,
       receivedAmount: null,
+      amountToBeDeducted: null,
     });
 
-    this.formGroup.controls['receivedAmount'].valueChanges.subscribe((value) =>
-      this.calculateComputedAmount(value)
-    );
+    // prettier-ignore
+    this.subscribeToFieldChanges('receivedAmount', (value) => this.calculateComputedAmount());
+    // prettier-ignore
+    this.subscribeToFieldChanges('amountToBeDeducted', (value) => this.calculateComputedAmount());
 
     this.isUserLefthanded = this.authService.isUserLefthanded;
 
@@ -125,13 +129,13 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       (error: ApiError) => {}
     );
 
-    this.sub = combineLatest([
+    this.printSub = combineLatest([
       this.categoriesPrinted,
       this.billsPrinted,
     ]).subscribe(([categories, bills]) => {
       if (categories && bills) {
         this.cart = [];
-        this.clearSub();
+        this.printSub?.unsubscribe();
         this.ngOnInit();
       } else {
         this.printing = false;
@@ -140,12 +144,10 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clearSub();
-  }
-
-  private clearSub() {
-    this.sub?.unsubscribe();
-    this.sub = undefined;
+    this.printSub?.unsubscribe();
+    Object.keys(this.fieldSubscriptions).forEach((k) =>
+      this.fieldSubscriptions[k]?.unsubscribe()
+    );
   }
 
   @HostListener('window:scroll')
@@ -153,10 +155,19 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     this.checkIfShowScrollButton();
   }
 
+  private subscribeToFieldChanges(
+    fieldName: string,
+    callback: (value: any) => void
+  ) {
+    this.fieldSubscriptions[fieldName]?.unsubscribe();
+    const valueChanges = this.formGroup.controls[fieldName].valueChanges;
+    this.fieldSubscriptions[fieldName] = valueChanges.subscribe(callback);
+  }
+
   // prettier-ignore
-  formatReceivedAmount(event: any): boolean {
+  formatAmount(fieldName: string, event: any): boolean {
     const isCharCodeOk: boolean = event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57);
-    const value: string = String(this.formGroup.controls['receivedAmount']?.value);
+    const value: string = String(this.formGroup.controls[fieldName]?.value);
     const isLenOk: boolean = !(value?.includes('.') && value.split('.')?.[1]?.length > 1);
 
     return isCharCodeOk && isLenOk;
@@ -200,15 +211,17 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     }
 
     this.updateCart(card, cardTitle.substr(0, cardTitle.indexOf('/')));
-    this.calculateComputedAmount(
-      this.formGroup.controls['receivedAmount'].value
-    );
+    this.calculateComputedAmount();
   }
 
   getTotal(): number {
-    return this.cart.reduce((accumulator, currentValue) => {
+    const total = this.cart.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.price * currentValue.quantity;
     }, 0);
+    // prettier-ignore
+    const toBeDeducted = Number(this.formGroup.controls['amountToBeDeducted'].value) * 100;
+
+    return Math.max(0, total - toBeDeducted);
   }
 
   scrollToBottom() {
@@ -227,9 +240,12 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     );
   }
 
-  calculateComputedAmount(value: number) {
+  calculateComputedAmount() {
     const total = this.getTotal();
-    value *= 100;
+    // prettier-ignore
+    const value = Number(this.formGroup.controls['receivedAmount'].value) * 100;
+
+    console.log(value, total);
 
     if (value && value >= total) {
       this.computedAmount = value - total;
