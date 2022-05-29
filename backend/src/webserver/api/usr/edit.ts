@@ -30,7 +30,7 @@ export default new AuthApiCall(
             target_user.permissions = body.permissions
         }
 
-        if(body.isLefthanded){
+        if(body.isLefthanded != null){
             console.info(`lefthanded change for user ${target_user.username} by ${user.username} from ${target_user.is_lefthanded} to ${body.isLefthanded}`)
             target_user.is_lefthanded = body.isLefthanded
         }
