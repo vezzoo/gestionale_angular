@@ -303,7 +303,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         iframe.printBill();
 
         const now = Date.now();
-        while (Date.now() - now < 200);
+        while (Date.now() - now < 500);
 
         document.body.removeChild(iframeElement);
 
