@@ -25,7 +25,7 @@ export class CardComponent {
 
   private removeClicked: boolean = false;
 
-  onClick(event: any) {
+  onClick(event: MouseEvent) {
     this.onClickEvent.emit({
       isShiftPressed: event.shiftKey || this.removeClicked,
       isCtrlPressed: event.ctrlKey,
