@@ -9,8 +9,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, Subject, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { combineLatest, forkJoin, Subject, Subscription } from 'rxjs';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
@@ -272,25 +271,24 @@ export class CashDeskComponent implements OnInit, OnDestroy {
             this.billsPrinted.next(true);
           }
 
-          if (response?.printList?.length === 0) {
+          if (!response?.printList || response.printList.length === 0) {
             this.categoriesPrinted.next(true);
+          } else {
+            forkJoin(
+              response?.printList?.map((pl) =>
+                this.httpClientService.post(pl.name, {
+                  payload: pl.payload,
+                })
+              )
+            ).subscribe(
+              (res: any) => {
+                this.categoriesPrinted.next(true);
+              },
+              (error: ApiError) => {
+                this.categoriesPrinted.next(false);
+              }
+            );
           }
-
-          response?.printList?.forEach((pl, i) => {
-            this.httpClientService
-              // TODO(luca): fix types
-              .post<any>(pl.name, { payload: pl.payload })
-              .subscribe(
-                (res: any) => {
-                  if (i === response.printList.length - 1) {
-                    this.categoriesPrinted.next(true);
-                  }
-                },
-                (error: ApiError) => {
-                  this.categoriesPrinted.next(false);
-                }
-              );
-          });
         },
         (error: ApiError) => {}
       );
@@ -339,6 +337,14 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       products = products.filter((p) => p.category === categoryTitle);
     }
 
+    const addZero = (n: number) => (`00` + n).substr(-2);
+    const d = new Date();
+    // prettier-ignore
+    const day = `${addZero(d.getDate())}/${addZero(d.getMonth() + 1)}/${addZero(d.getFullYear())}`;
+    // prettier-ignore
+    const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
+    const formattedDate = `${day} ${time}`;
+
     return {
       title: title || environment.title,
       orderNumber: this.decimalPipe
@@ -346,6 +352,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         .replace(/,/g, ''),
       total: this.formatPrice(this.getTotal()),
       products: products,
+      date: formattedDate,
     };
   }
 

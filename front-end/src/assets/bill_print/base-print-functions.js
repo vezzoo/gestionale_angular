@@ -40,6 +40,7 @@ function setData(newData) {
   valorizeValue("title");
   valorizeValue("orderNumber");
   valorizeValue("total");
+  valorizeValue("date");
 
   /**
    * Per ogni prodotto istanzio dinamicamente una riga.
