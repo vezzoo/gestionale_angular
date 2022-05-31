@@ -245,8 +245,6 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     // prettier-ignore
     const value = Number(this.formGroup.controls['receivedAmount'].value) * 100;
 
-    console.log(value, total);
-
     if (value && value >= total) {
       this.computedAmount = value - total;
     } else {
