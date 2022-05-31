@@ -40,6 +40,11 @@
     transform: translateY(100px);
   }
 
+  &__take-away {
+    height: 55.56px;
+    justify-content: flex-end;
+  }
+
   &__notes {
     padding-top: 15px;
     border-right: 1px solid $secondary-color;
@@ -60,19 +65,14 @@
     justify-content: space-between;
 
     &__amounts {
-      // &-received {
-      //   width: 50%;
-      // }
-
       &-computed {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         white-space: nowrap;
         line-height: 1.125;
         padding-bottom: 1.34375em;
         margin: 0.25em 0;
-        // margin-left: 30px;
 
         &-amount {
           padding-left: 5px;
