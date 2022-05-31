@@ -13,9 +13,10 @@ import OrderManager from "./webserver/OrderManager";
 
 (async function (){
     process.env.TZ = 'Europe/Rome'
+    const addZero = (n: number) => (`00` + n).substr(-2);
     const d = new Date();
-    const day = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-    const time = `${d.getHours()}:${d.getMinutes()}.${d.getSeconds()}`;
+    const day = `${addZero(d.getDate())}/${addZero(d.getMonth() + 1)}/${addZero(d.getFullYear())}`;
+    const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
 
     console.info(`Start date: ${day} ${time}`);
 
