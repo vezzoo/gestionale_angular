@@ -64,6 +64,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   private printSub: Subscription;
   private categoriesPrinted = new Subject<boolean>();
   private billsPrinted = new Subject<boolean>();
+  private basePath: string;
 
   constructor(
     private routerService: RouterService,
@@ -92,6 +93,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     this.subscribeToFieldChanges('amountToBeDeducted', (value) => this.calculateComputedAmount());
 
     this.isUserLefthanded = this.authService.isUserLefthanded;
+    const href = window.location.href;
+    this.basePath = href.substr(0, href.indexOf('#') - 1);
 
     let url: string = ApiUrls.CASH_DESK;
     if (this.routerService.getUrl() === Urls.CASSA_BAR) {
@@ -264,7 +267,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: CashDeskOrderConfirmResponse) => {
           if (environment.categoriesToPrint?.length > 0 && response?.code) {
-            this.print(Number(response.code) || 0);
+            this.print(Number(response.code), 0);
           }
 
           if (environment.categoriesToPrint?.length === 0) {
@@ -294,36 +297,34 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       );
   }
 
-  private print(orderNumber: number) {
-    const basePath = window.location.href.substr(
-      0,
-      window.location.href.indexOf('#') - 1
-    );
+  private print(orderNumber: number, index: number) {
+    if (index === environment.categoriesToPrint.length) {
+      this.billsPrinted.next(true);
+      return;
+    }
 
-    environment.categoriesToPrint.forEach((c: CategoryToPrint, i: number) => {
-      const name = `${c.title}PrintIframe`;
-      const iframeElement = document.createElement('iframe');
-      iframeElement.classList.add('iframe-hidden');
-      iframeElement.name = name;
-      iframeElement.src = `${basePath}${environment.basePathToTemplates}/${c.path}`;
+    const c = environment.categoriesToPrint[index];
+    const dataToPrint = this.getDataToPrint(c.title, c.category, orderNumber);
+    if (!(dataToPrint?.products?.length > 0)) {
+      this.print(orderNumber, ++index);
+      return;
+    }
 
-      document.body.appendChild(iframeElement);
+    const name = `${c.title}PrintIframe`;
+    const iframeElement = document.createElement('iframe');
+    iframeElement.classList.add('iframe-hidden');
+    iframeElement.name = name;
+    iframeElement.src = `${this.basePath}${environment.basePathToTemplates}/${c.path}`;
 
-      iframeElement.onload = () => {
-        const iframe = window.frames[name];
-        iframe.setData(this.getDataToPrint(c.title, c.category, orderNumber));
-        iframe.printBill();
+    document.body.appendChild(iframeElement);
 
-        const now = Date.now();
-        while (Date.now() - now < 300);
-
-        document.body.removeChild(iframeElement);
-
-        if (i === environment.categoriesToPrint.length - 1) {
-          this.billsPrinted.next(true);
-        }
-      };
-    });
+    iframeElement.onload = () => {
+      const iframe = window.frames[name];
+      iframe.registerOnDestroy(() => document.body.removeChild(iframeElement));
+      iframe.setData(dataToPrint);
+      iframe.printBill();
+      this.print(orderNumber, ++index);
+    };
   }
 
   private getDataToPrint(

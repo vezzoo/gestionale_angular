@@ -1,12 +1,19 @@
-let title, data;
+let onDestroy;
 
 // internal
-function valorizeValue(id) {
+function valorizeValue(id, data) {
   const el = document.getElementById(id);
   const value = data[id];
 
   if (el && value) {
     el.innerHTML = value;
+  }
+}
+
+// internal
+function setProductColumn(wrapper, product, colName) {
+  if (elementExist("product-" + colName + "-header")) {
+    createEl("span", wrapper, "product-" + colName, product[colName]);
   }
 }
 
@@ -29,18 +36,21 @@ function elementExist(id) {
 }
 
 // from parent
-function setData(newData) {
-  data = newData;
+function registerOnDestroy(_onDestroy) {
+  onDestroy = _onDestroy;
+}
 
+// from parent
+function setData(data) {
   /**
    * Valorizzo tutti i possibili valori. Se non sono presenti
    * l'elemento nel dom o il valore, la funzione non fa nulla
    */
   // summary
-  valorizeValue("title");
-  valorizeValue("orderNumber");
-  valorizeValue("total");
-  valorizeValue("date");
+  valorizeValue("title", data);
+  valorizeValue("orderNumber", data);
+  valorizeValue("total", data);
+  valorizeValue("date", data);
 
   /**
    * Per ogni prodotto istanzio dinamicamente una riga.
@@ -50,27 +60,14 @@ function setData(newData) {
     const parentElement = document.getElementById("products-wrapper");
     const wrapper = createEl("div", parentElement, "product-wrapper");
 
-    if (elementExist("product-description-header")) {
-      createEl("span", wrapper, "product-description", p.description);
-    }
-
-    if (elementExist("product-quantity-header")) {
-      createEl("span", wrapper, "product-quantity", p.quantity);
-    }
-
-    if (elementExist("product-price-header")) {
-      createEl("span", wrapper, "product-price", p.price);
-    }
+    setProductColumn(wrapper, p, "description");
+    setProductColumn(wrapper, p, "quantity");
+    setProductColumn(wrapper, p, "price");
   }
 }
 
 // from parent
 function printBill() {
-  /**
-   * Stampo solo se ho effettivamente qualcosa da stampare
-   */
-  if (data.products.length > 0) {
-    window.print();
-    window.location.reload();
-  }
+  window.print();
+  setTimeout(() => onDestroy(), 1 * 1000);
 }

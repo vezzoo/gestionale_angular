@@ -20,7 +20,7 @@
         ></app-category>
       </ng-container>
 
-      <ng-container [formGroup]="formGroup">
+      <ng-container *ngIf="categories?.length" [formGroup]="formGroup">
         <app-section-title [title]="'Carrello'"></app-section-title>
         <div class="mt-15">
           <ng-container *ngFor="let el of cart">
