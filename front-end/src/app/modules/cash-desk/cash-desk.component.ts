@@ -333,9 +333,18 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     orderNumber: number
   ) {
     let products = this.getProductsToPrint();
+    // forzatura per menù calcio
+    const footballMenus = products.filter((p) => {
+      return p.description.includes(`Menu football`);
+    });
 
     if (categoryTitle) {
       products = products.filter((p) => p.category === categoryTitle);
+    }
+
+    // forzatura per menù calcio
+    if (categoryTitle === 'BAR') {
+      products.push(...footballMenus);
     }
 
     const addZero = (n: number) => (`00` + n).substr(-2);
