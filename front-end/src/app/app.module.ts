@@ -25,6 +25,7 @@ import { CashDeskComponent } from './modules/cash-desk/cash-desk.component';
 import { HomeComponent } from './modules/home/home.component';
 import { ReportsComponent } from './modules/reports/reports.component';
 import { StorageEditModalComponent } from './modules/storage/storage-edit-modal/storage-edit-modal.component';
+import { StorageStockEditModalComponent } from './modules/storage/storage-stock-edit-modal/storage-stock-edit-modal.component';
 import { StorageComponent } from './modules/storage/storage.component';
 import { UsersManagementComponent } from './modules/users-management/users-management.component';
 
@@ -38,6 +39,7 @@ import { UsersManagementComponent } from './modules/users-management/users-manag
     UsersManagementComponent,
     StorageComponent,
     StorageEditModalComponent,
+    StorageStockEditModalComponent,
     ReportsComponent,
     ToolbarComponent,
     CardComponent,
