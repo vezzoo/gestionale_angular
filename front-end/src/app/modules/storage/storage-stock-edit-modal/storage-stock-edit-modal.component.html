@@ -1,0 +1,52 @@
+<div class="storage-stock-edit__header">
+  <span class="storage-stock-edit__title">Modifica giacenze</span>
+  <button
+    class="storage-stock-edit__close"
+    mat-icon-button
+    type="button"
+    (click)="modal.dismiss()"
+  >
+    <mat-icon aria-hidden="false" aria-label="Chiudi">close</mat-icon>
+  </button>
+</div>
+<div class="storage-stock-edit__body" [formGroup]="formGroup">
+  <ng-container *ngIf="products">
+    <div class="row storage-stock-edit__products">
+      <div class="col-4" *ngFor="let product of products">
+        <mat-checkbox [formControlName]="product.id">
+          {{ product.title }}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Giacenza</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            formControlName="stock"
+            required
+            [type]="'text'"
+            (keypress)="formatLeft($event)"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="storage-stock-edit__footer">
+  <div class="row">
+    <div class="col-3">
+      <button
+        color="primary"
+        type="button"
+        mat-raised-button
+        [disabled]="!isValid()"
+        (click)="onSave()"
+      >
+        Salva
+      </button>
+    </div>
+  </div>
+</div>

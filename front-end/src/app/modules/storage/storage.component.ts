@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ApiError } from 'src/types/api-error';
 import { StorageGetResponse } from 'src/types/storage';
 import { StorageEditModalComponent } from './storage-edit-modal/storage-edit-modal.component';
+import { StorageStockEditModalComponent } from './storage-stock-edit-modal/storage-stock-edit-modal.component';
 
 @Component({
   selector: 'app-storage',
@@ -37,9 +38,11 @@ export class StorageComponent implements OnInit, OnDestroy {
   ) {
     this.toolbarService.addFunction({
       name: 'add',
-      onClick: () => {
-        this.openModal(null);
-      },
+      onClick: () => this.openEditModal(null),
+    });
+    this.toolbarService.addFunction({
+      name: 'edit',
+      onClick: () => this.openEditStockModal(),
     });
   }
 
@@ -77,6 +80,7 @@ export class StorageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.toolbarService.removeFunction('add');
+    this.toolbarService.removeFunction('edit');
   }
 
   getRowStatus(stock: number): 'warning' | 'empty' | 'none' {
@@ -95,7 +99,7 @@ export class StorageComponent implements OnInit, OnDestroy {
   }
 
   onEdit(product: Product) {
-    this.openModal(product);
+    this.openEditModal(product);
   }
 
   onDelete(event: any, id: string) {
@@ -112,7 +116,7 @@ export class StorageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openModal(product: Product) {
+  private openEditModal(product: Product) {
     const ref = this.ngbModal.open(StorageEditModalComponent, {
       size: 'lg',
       backdrop: 'static',
@@ -128,5 +132,17 @@ export class StorageComponent implements OnInit, OnDestroy {
       () => this.ngOnInit(),
       () => {}
     );
+  }
+
+  private openEditStockModal() {
+    this.ngbModal
+      .open(StorageStockEditModalComponent, {
+        size: 'lg',
+        backdrop: 'static',
+      })
+      .result.then(
+        () => this.ngOnInit(),
+        () => {}
+      );
   }
 }
