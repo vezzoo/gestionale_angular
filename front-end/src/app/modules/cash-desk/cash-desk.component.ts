@@ -333,18 +333,19 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     orderNumber: number
   ) {
     let products = this.getProductsToPrint();
-    // forzatura per menù calcio
-    const footballMenus = products.filter((p) => {
-      return p.description.includes(`Menu football`);
-    });
+    const productsCpy = [...products];
 
     if (categoryTitle) {
       products = products.filter((p) => p.category === categoryTitle);
     }
 
     // forzatura per menù calcio
-    if (categoryTitle === 'BAR') {
-      products.push(...footballMenus);
+    if (environment.title === 'ASD Capriolo 1912' && categoryTitle === 'BAR') {
+      const menus = productsCpy.filter((p) => {
+        return p.description.toLowerCase().includes(`menu`);
+      });
+
+      products.push(...menus);
     }
 
     const addZero = (n: number) => (`00` + n).substr(-2);
