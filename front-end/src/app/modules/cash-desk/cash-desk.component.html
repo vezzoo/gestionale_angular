@@ -58,15 +58,15 @@
             </div>
             <div class="col-lg-6 cash-desk__summary">
               <div class="row">
-                <div class="col-lg-8">
-                  <ng-container
-                    *ngTemplateOutlet="changeAmountWrapper"
-                  ></ng-container>
-                </div>
                 <div class="col-lg-4 vertical-center cash-desk__take-away">
                   <mat-checkbox *ngIf="showTakeAway" formControlName="takeAway">
                     Asporto
                   </mat-checkbox>
+                </div>
+                <div class="col-lg-8" [class.offset-lg-4]="!showTakeAway">
+                  <ng-container
+                    *ngTemplateOutlet="changeAmountWrapper"
+                  ></ng-container>
                 </div>
               </div>
               <div class="row">

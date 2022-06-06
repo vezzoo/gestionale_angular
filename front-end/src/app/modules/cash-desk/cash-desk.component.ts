@@ -121,8 +121,13 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         environment.cashDeskCategoriesOrder.forEach((co) => {
           const cat = categories.find((c) => c.title === co);
 
-          if (cat) this.categories.push(cat);
-          else console.warn(`No category found for ${co}!`);
+          if (cat) {
+            if (cat.children && cat.children.some((p) => p.stock > 0)) {
+              this.categories.push(cat);
+            }
+          } else {
+            console.warn(`No category found for ${co}!`);
+          }
         });
 
         this.printing = false;
