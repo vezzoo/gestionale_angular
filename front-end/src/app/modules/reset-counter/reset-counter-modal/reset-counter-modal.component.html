@@ -1,0 +1,38 @@
+<div class="reset-counter-modal__header">
+  <span class="reset-counter-modal__title">Chiusura giornata</span>
+  <button
+    class="reset-counter-modal__close"
+    mat-icon-button
+    type="button"
+    (click)="modal.dismiss()"
+  >
+    <mat-icon aria-hidden="false" aria-label="Chiudi">close</mat-icon>
+  </button>
+</div>
+<div class="reset-counter-modal__body">
+  <span>Sei sicuro di voler resettare il contatore?</span>
+</div>
+<div class="reset-counter-modal__footer">
+  <div class="row">
+    <div class="col-3">
+      <button
+        color="primary"
+        type="button"
+        mat-raised-button
+        (click)="close(true)"
+      >
+        Si
+      </button>
+    </div>
+    <div class="col-3">
+      <button
+        color="secondary"
+        type="button"
+        mat-raised-button
+        (click)="close(false)"
+      >
+        No
+      </button>
+    </div>
+  </div>
+</div>

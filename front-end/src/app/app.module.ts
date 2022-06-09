@@ -28,6 +28,7 @@ import { StorageEditModalComponent } from './modules/storage/storage-edit-modal/
 import { StorageStockEditModalComponent } from './modules/storage/storage-stock-edit-modal/storage-stock-edit-modal.component';
 import { StorageComponent } from './modules/storage/storage.component';
 import { UsersManagementComponent } from './modules/users-management/users-management.component';
+import { ResetCounterModalComponent } from './modules/reset-counter/reset-counter-modal/reset-counter-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UsersManagementComponent } from './modules/users-management/users-manag
     FormContainer,
     SectionTitleComponent,
     CartDetailComponent,
+    ResetCounterModalComponent,
     NormalizePricePipe,
   ],
   imports: [

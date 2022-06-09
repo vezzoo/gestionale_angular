@@ -41,11 +41,7 @@ export class HomeComponent implements OnInit {
     if (path === Urls.GESTIONE_UTENTI) {
       this.usersManagementService.openModal();
     } else if (path === Urls.CHIUSURA_GIORNATA) {
-      if (!isCtrlPressed) {
-        console.log('CTRL + click expected');
-      } else {
-        this.resetCounterService.reset();
-      }
+      this.resetCounterService.reset();
     } else if (path === Urls.REPORTS) {
       this.reportsService.openModal();
     } else if (path && Urls[path]) {
