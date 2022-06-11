@@ -73,6 +73,10 @@ export class StorageStockEditModalComponent implements OnInit {
     );
   }
 
+  selectAll() {
+    this.products.forEach((p) => this.formGroup.controls[p.id].setValue(true));
+  }
+
   onSave() {
     const stock = CommonUtils.getFormControlValue(this.formGroup, 'stock');
     const productsIds = this.getChangedProducts().map((p) => p.id);
@@ -86,7 +90,7 @@ export class StorageStockEditModalComponent implements OnInit {
       .patch<StoragePatchResponse>(ApiUrls.STORAGE, body)
       .subscribe(
         (response: StoragePatchResponse) => {
-          /* if (response?.[id]?.status)  */ this.modal.close();
+          this.modal.close();
         },
         (error: ApiError) =>
           console.log(this.translateErrorPipe.transform(error))
