@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   client: 'DEF',
   path: 'http://localhost', // Connection to locale
-  port: 3000,
+  port: undefined,
   optionalLayer: '/api',
 
   // path: 'http://192.168.1.8',    // Connection to LAN server
