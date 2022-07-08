@@ -7,9 +7,7 @@ export default new AuthApiCall(
     "GET",
     "/:category", //List all categoruies concatenated by '&' and specify all for all categories
     async (req, res, user, _, __, params) => {
-        if(!params.category)
-            params.category = "all"
-        const products = await ProductModel.find(params.category === "all" ? {} : {category: {"$in": params.category.split("&")}})
+        const products = await getProductList(params)
         const data: any = {}
 
         products.forEach((e: any) => {
@@ -20,7 +18,7 @@ export default new AuthApiCall(
         return {
             categories: Object.keys(data).map(e => ({
                 title: e,
-                children: data[e]
+                children: data[e].sort((a: any, b: any) => a.position - b.position)
             }))
         }
     },
@@ -29,3 +27,9 @@ export default new AuthApiCall(
             .prop("category", S.string())
     }
 )
+
+export async function getProductList(params: any) {
+    if(!params.category)
+        params.category = "all"
+    return await ProductModel.find(params.category === "all" ? {} : {category: {"$in": params.category.split("&")}})
+}

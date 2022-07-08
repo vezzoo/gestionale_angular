@@ -8,12 +8,13 @@ import Unique from "../wrapper/decorators/Unique";
 
 @Collection
 export default class Product extends DBDocument {
-    constructor(title: string, price: number, category: string, stock?: number, description?: string) {
+    constructor(title: string, price: number, category: string, position: number, stock?: number, description?: string) {
         super();
         this.title = title;
         this.price = price;
         this.category = category;
         this.stock = 0
+        this.position = position;
         if(stock)
             this.stock = stock;
         if(description)
@@ -39,6 +40,9 @@ export default class Product extends DBDocument {
     @Field
     @Default(0)
     public stock: number
+
+    @Field
+    public position: number
 
     @Field
     public description?: string

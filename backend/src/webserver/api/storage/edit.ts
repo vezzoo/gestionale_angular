@@ -2,6 +2,7 @@ import AuthApiCall from "../../apicalls/AuthApiCall";
 import S from "fluent-json-schema";
 import ProductModel from "../../../database/models/Product.model";
 import ECODE from "../../ECODE";
+import { getProductList } from "./list";
 
 export default new AuthApiCall(
     "storage_write",
@@ -11,13 +12,52 @@ export default new AuthApiCall(
         const ret: any = {}
         let errored = false
         await Promise.all(body.editedItems.map(async (e: any) => { //dovrei scrivere dei tipi...
-            const update_object = JSON.parse(JSON.stringify(e))
-            delete update_object.id
-            try {
-                await ProductModel.findByIdAndUpdate(e.id, {"$set": update_object})
-                ret[e.id] = {status: true}
-            } catch (ex) {
-                ret[e.id] = {status: false, err: ex}
+            if (!ret[e.id])
+                ret[e.id] = {}
+
+            if (e.position != null) {
+                const products = await getProducts() as Array<any>
+                const product = products.find((p: any) => p._id.toString() === e.id)
+                
+                if (e.position !== product.position) {
+                    const add = e.position < product.position
+                    const max = add ? product.position : e.position
+                    const min = add ? e.position : product.position
+
+                    const productsToUpdate = products
+                        .filter(p => p.category === product.category)
+                        .filter(p =>
+                            (p.position > min && p.position < max) ||
+                            (add ? p.position === min : p.position === max)
+                        )
+
+                    for (let i = 0; i < productsToUpdate.length; i++) {
+                        const p = productsToUpdate[i]
+                        const position = add ? p.position + 1 : p.position - 1
+                        const id = p._id
+                        const err = await updateItem({ id, position })
+
+                        if (!err) {
+                            ret[e.id][id] = {status: true}
+                        } else {
+                            ret[e.id][id] = {status: false, err}
+                            errored = true
+                        }
+                    }
+                }
+            }
+
+            let err = null
+            if (Object.values(ret[e.id]).some((e: any) => !e.status))
+                err = 'Some item update failed'
+
+            if (!err)
+                err = await updateItem(e)
+
+            if (!err)
+                ret[e.id] = {...ret[e.id], status: true}
+            else {
+                ret[e.id] = {...ret[e.id], status: false, err}
                 errored = true
             }
         }))
@@ -39,3 +79,19 @@ export default new AuthApiCall(
             )).required()
     }
 )
+
+async function getProducts() {
+    return await getProductList({})
+}
+
+export async function updateItem(e: any) {
+    const update_object = JSON.parse(JSON.stringify(e))
+    delete update_object.id
+
+    try {
+        await ProductModel.findByIdAndUpdate(e.id, {"$set": update_object})
+        return null
+    } catch (ex) {
+        return ex
+    }
+}
