@@ -24,8 +24,9 @@ export class StorageEditModalComponent implements OnInit {
   @Input() title: string;
   @Input() description: string;
   @Input() price: number;
-  @Input() stock: string;
+  @Input() stock: number;
   @Input() category: string;
+  @Input() position: number;
 
   formGroup: FormGroup;
   categories: { value: string; viewValue: string }[];
@@ -42,7 +43,6 @@ export class StorageEditModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      id: { value: this.id, disabled: true },
       title: this.title,
       description: this.description,
       price: [
@@ -51,6 +51,7 @@ export class StorageEditModalComponent implements OnInit {
       ],
       stock: [String(this.stock || 0), Validators.min(0)],
       category: this.category,
+      position: { value: this.position, disabled: this.position == null },
     });
 
     this.httpClientService.get<Array<string>>(ApiUrls.CATEGORIES).subscribe(
@@ -76,7 +77,6 @@ export class StorageEditModalComponent implements OnInit {
   }
 
   onSave() {
-    const id = CommonUtils.getFormControlValue(this.formGroup, 'id');
     const title = CommonUtils.getFormControlValue(this.formGroup, 'title');
     const description = CommonUtils.getFormControlValue(
       this.formGroup,
@@ -88,21 +88,27 @@ export class StorageEditModalComponent implements OnInit {
       this.formGroup,
       'category'
     );
+    const position = CommonUtils.getFormControlValue(
+      this.formGroup,
+      'position'
+    );
 
-    if (id) {
+    if (this.id) {
       const body: StoragePatchRequest = {
         editedItems: [
           {
-            id: id,
+            id: this.id,
             title: title !== this.title ? title : undefined,
             description:
               description !== this.description ? description : undefined,
             price:
-              price !== this.price
+              Math.round(Number(price) * 100) !== this.price
                 ? Math.round(Number(price) * 100)
                 : undefined,
-            stock: stock !== this.stock ? Number(stock) : undefined,
+            stock: Number(stock) !== this.stock ? Number(stock) : undefined,
             category: category !== this.category ? category : undefined,
+            position:
+              Number(position) !== this.position ? Number(position) : undefined,
           },
         ],
       };
@@ -111,7 +117,7 @@ export class StorageEditModalComponent implements OnInit {
         .patch<StoragePatchResponse>(ApiUrls.STORAGE, body)
         .subscribe(
           (response: StoragePatchResponse) => {
-            if (response?.[id]?.status) this.modal.close();
+            if (response?.[this.id]?.status) this.modal.close();
           },
           (error: ApiError) =>
             console.log(this.translateErrorPipe.transform(error))

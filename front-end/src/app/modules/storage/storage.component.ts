@@ -128,6 +128,7 @@ export class StorageComponent implements OnInit, OnDestroy {
     ref.componentInstance.price = product?.price;
     ref.componentInstance.stock = product?.stock;
     ref.componentInstance.category = product?.category;
+    ref.componentInstance.position = product?.position;
     ref.result.then(
       () => this.ngOnInit(),
       () => {}
