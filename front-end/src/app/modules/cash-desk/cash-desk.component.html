@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6 cash-desk__splitter">
+                <div class="col-lg-3 cash-desk__splitter">
                   <mat-form-field appearance="outline">
                     <mat-label>Da detrarre {{ currency }} </mat-label>
                     <input
@@ -79,6 +79,18 @@
                       type="number"
                       formControlName="amountToBeDeducted"
                       (keypress)="formatAmount('amountToBeDeducted', $event)"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Numero tavolo</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      type="number"
+                      formControlName="tableNumber"
+                      [min]="1"
                     />
                   </mat-form-field>
                 </div>

@@ -49,6 +49,7 @@ function setData(data) {
   // summary
   valorizeValue("title", data);
   valorizeValue("orderNumber", data);
+  valorizeValue("tableNumber", data);
   valorizeValue("total", data);
   valorizeValue("date", data);
 

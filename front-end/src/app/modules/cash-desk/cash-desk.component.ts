@@ -13,7 +13,6 @@ import { combineLatest, forkJoin, Subject, Subscription } from 'rxjs';
 import { ApiUrls, Urls } from 'src/app/base/enums/enums';
 import { CashDeskItem } from 'src/app/base/models/cashDeskItem.model';
 import { Category } from 'src/app/base/models/category.model';
-import { CategoryToPrint } from 'src/app/base/models/categoryToPrint.model';
 import { NormalizePricePipe } from 'src/app/base/pipes/normalizePrice.pipe';
 import { ConfigurationsService } from 'src/app/base/services/configurations.service';
 import { HttpClientService } from 'src/app/base/services/httpClient.service';
@@ -85,6 +84,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       takeAway: false,
       receivedAmount: null,
       amountToBeDeducted: null,
+      tableNumber: null,
     });
 
     // prettier-ignore
@@ -360,6 +360,8 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     // prettier-ignore
     const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
     const formattedDate = `${day} ${time}`;
+    // prettier-ignore
+    const tableNumber = `Tav. ` + addZero(CommonUtils.getFormControlValue(this.formGroup, 'tableNumber'));
 
     return {
       title: title || environment.title,
@@ -369,6 +371,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       total: this.formatPrice(this.getTotal()),
       products: products,
       date: formattedDate,
+      tableNumber: tableNumber,
     };
   }
 

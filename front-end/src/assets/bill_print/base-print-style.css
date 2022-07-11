@@ -16,6 +16,12 @@
   padding: 0.1cm 0;
 }
 
+.header-numbers {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .header-title {
   display: block;
   font-size: 24px;
@@ -23,10 +29,17 @@
 }
 
 .header-number {
-  display: block;
+  display: inline-block;
   text-align: right;
   font-size: 70px;
   font-weight: 800;
+}
+
+.header-table {
+  display: inline-block;
+  text-align: left;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 /* lista prodotti */

@@ -7,6 +7,11 @@
       "path": "summary.html"
     },
     {
+      "title": "Cucina",
+      "category": "CUCINA",
+      "path": "cucina.html"
+    },
+    {
       "title": "Bar",
       "category": "BAR",
       "path": "bar.html"
