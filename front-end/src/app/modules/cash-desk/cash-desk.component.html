@@ -58,8 +58,11 @@
             </div>
             <div class="col-lg-6 cash-desk__summary">
               <div class="row">
-                <div class="col-lg-4 vertical-center cash-desk__take-away">
-                  <mat-checkbox *ngIf="showTakeAway" formControlName="takeAway">
+                <div
+                  *ngIf="showTakeAway"
+                  class="col-lg-4 vertical-center cash-desk__take-away"
+                >
+                  <mat-checkbox formControlName="takeAway">
                     Asporto
                   </mat-checkbox>
                 </div>
