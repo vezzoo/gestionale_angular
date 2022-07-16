@@ -9,17 +9,17 @@
     {
       "title": "Cucina",
       "category": "CUCINA",
-      "path": "cucina.html"
+      "path": "category.html"
     },
     {
       "title": "Bar",
       "category": "BAR",
-      "path": "bar.html"
+      "path": "category.html"
     },
     {
       "title": "Caffè",
       "category": "CAFFE",
-      "path": "caffe.html"
+      "path": "category.html"
     }
   ],
   "stockWarningLimit": 20,
