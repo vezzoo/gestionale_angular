@@ -361,7 +361,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
     const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
     const formattedDate = `${day} ${time}`;
     // prettier-ignore
-    const tableNumber = `Tav. ` + addZero(CommonUtils.getFormControlValue(this.formGroup, 'tableNumber'));
+    const tableNumber = CommonUtils.getFormControlValue(this.formGroup, 'tableNumber');
 
     return {
       title: title || environment.title,
@@ -371,7 +371,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       total: this.formatPrice(this.getTotal()),
       products: products,
       date: formattedDate,
-      tableNumber: tableNumber,
+      tableNumber: tableNumber != null ? `Tav. ` + addZero(tableNumber) : null,
     };
   }
 
