@@ -19,6 +19,7 @@ export function generate_print_list(order: Order, price: number){
                 cart: e.list,
                 code: order.code,
                 takeaway: order.takeaway,
+                tableNumber: order.tableNumber,
                 notes: order.notes,
                 total: price
             }, SETTING_JWT_PRIVATE, {
