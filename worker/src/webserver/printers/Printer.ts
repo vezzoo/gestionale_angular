@@ -144,6 +144,13 @@ export default function Printer(printername: string, cupsname: string, title: st
                 } else
                     template = template.replace("%TAKEAWAY%", "")
 
+                const addZero = (n: number) => (`00` + n).substr(-2);
+                const d = new Date();
+                const day = `${addZero(d.getDate())}/${addZero(d.getMonth() + 1)}/${addZero(d.getFullYear())}`;
+                const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
+                const formattedDate = `${day} ${time}`;
+                template = template.replace("%DATE%", formattedDate);
+
                 let products = ""
                 payload.cart.forEach((e: any) => {
                     let p = SETTING_PRODUCT

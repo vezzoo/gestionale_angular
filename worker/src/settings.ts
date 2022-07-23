@@ -21,13 +21,13 @@ export const SETTING_PRODUCT = fs.readFileSync("./templates/product.html", {enco
 export const SETTING_CUPS_SERVER = "127.0.0.1"
 export const SETTING_PRINTERS = [
     {
-        "name": "cucina",
+        "name": "griglia",
         "printer": "cucina",
-        "title": "Cucina"
+        "title": "Griglia"
     },
     {
-        "name": "pizza",
-        "printer": "cucina",
-        "title": "Pizza"
+        "name": "primi",
+        "printer": "cucina-p2015",
+        "title": "Primi piatti"
     }
 ]
