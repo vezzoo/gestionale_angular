@@ -130,6 +130,8 @@ export default function Printer(printername: string, cupsname: string, title: st
 
                 if (payload.tableNumber != null && payload.tableNumber !== '') {
                     template = template.replace("%TABLENUM%", payload.tableNumber)
+                } else {
+                    template = template.replace("%TABLENUM%", ``)
                 }
 
                 if (!!payload.notes) {

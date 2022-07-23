@@ -15,7 +15,7 @@
       /* header */
       .header {
         padding: 0.1cm 0;
-        width: 100%;
+        position: relative;
       }
 
       .header-numbers {
@@ -31,10 +31,11 @@
       }
 
       .header-number {
-        display: inline-block;
-        text-align: right;
         font-size: 110px;
         font-weight: 800;
+        position: absolute;
+        top: 0;
+        right: 0;
       }
 
       .header-table {
@@ -42,6 +43,7 @@
         text-align: left;
         font-size: 40px;
         font-weight: 600;
+        margin-bottom: 65px;
       }
 
       /* lista prodotti */
@@ -103,16 +105,14 @@
   </head>
   <body>
     <div class="header">
-      <div class="header-numbers">
-        <span id="tableNumber" class="header-table">
-          <!-- valore inserito da codice -->
-          %TABLENUM%
-        </span>
-        <span id="orderNumber" class="header-number">
-          <!-- valore inserito da codice -->
-          %ORDNUM%
-        </span>
-      </div>
+      <span id="tableNumber" class="header-table">
+        <!-- valore inserito da codice -->
+        %TABLENUM%
+      </span>
+      <span id="orderNumber" class="header-number">
+        <!-- valore inserito da codice -->
+        %ORDNUM%
+      </span>
       <span id="title" class="header-title">
         <!-- valore inserito da codice -->
         %TITLE%
