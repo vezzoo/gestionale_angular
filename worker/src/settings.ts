@@ -28,6 +28,6 @@ export const SETTING_PRINTERS = [
     {
         "name": "primi",
         "printer": "cucina-p2015",
-        "title": "Primi piatti"
+        "title": "Primi"
     }
 ]
