@@ -262,6 +262,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
   onSubmit() {
     const body: CashDeskOrderConfirmRequest = {
       cart: Object.fromEntries(this.cart.map((p) => [p.id, p.quantity])),
+      tableNumber: this.getTableNumber(),
       notes: CommonUtils.getFormControlValue(this.formGroup, 'notes'),
       takeAway: CommonUtils.getFormControlValue(this.formGroup, 'takeAway'),
     };
@@ -353,15 +354,13 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       products.push(...menus);
     }
 
-    const addZero = (n: number) => (`00` + n).substr(-2);
     const d = new Date();
     // prettier-ignore
-    const day = `${addZero(d.getDate())}/${addZero(d.getMonth() + 1)}/${addZero(d.getFullYear())}`;
+    const day = `${this.addZero(d.getDate())}/${this.addZero(d.getMonth() + 1)}/${this.addZero(d.getFullYear())}`;
     // prettier-ignore
-    const time = `${addZero(d.getHours())}:${addZero(d.getMinutes())}.${addZero(d.getSeconds())}`;
+    const time = `${this.addZero(d.getHours())}:${this.addZero(d.getMinutes())}.${this.addZero(d.getSeconds())}`;
     const formattedDate = `${day} ${time}`;
-    // prettier-ignore
-    const tableNumber = CommonUtils.getFormControlValue(this.formGroup, 'tableNumber');
+    const tableNumber = this.getTableNumber();
 
     return {
       title: title || environment.title,
@@ -371,7 +370,7 @@ export class CashDeskComponent implements OnInit, OnDestroy {
       total: this.formatPrice(this.getTotal()),
       products: products,
       date: formattedDate,
-      tableNumber: tableNumber != null ? `Tav. ` + addZero(tableNumber) : null,
+      tableNumber: tableNumber,
     };
   }
 
@@ -418,5 +417,16 @@ export class CashDeskComponent implements OnInit, OnDestroy {
         ?.find((cat) => cat.title === category)
         ?.children?.find((c) => c.title === card)
     );
+  }
+
+  private getTableNumber() {
+    // prettier-ignore
+    const tableNumber = CommonUtils.getFormControlValue(this.formGroup, 'tableNumber')
+
+    return tableNumber != null ? `Tav. ` + this.addZero(tableNumber) : null;
+  }
+
+  private addZero(n: number) {
+    return (`00` + n).substr(-2);
   }
 }

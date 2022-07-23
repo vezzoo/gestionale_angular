@@ -14,7 +14,7 @@ import User from "./User.model";
 @Collection
 @SchemaOption("timestamps", true)
 export default class Order extends DBDocument {
-    constructor(code: string, user: User, products: Product[], quantities: number[], takeaway=false, notes="") {
+    constructor(code: string, user: User, products: Product[], quantities: number[], takeaway=false, notes="", tableNumber="") {
         super();
         this.code = code
         this.products = products
@@ -22,6 +22,7 @@ export default class Order extends DBDocument {
         this.quantities = quantities
         this.takeaway = takeaway
         this.notes = notes
+        this.tableNumber = tableNumber
     }
 
     public _id?: ObjectId
@@ -45,6 +46,9 @@ export default class Order extends DBDocument {
 
     @Field
     public notes: string
+
+    @Field
+    public tableNumber: string
 
     @Ref
     @Populate

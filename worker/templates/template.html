@@ -15,24 +15,47 @@
       /* header */
       .header {
         padding: 0.1cm 0;
-        position: relative;
-        text-align: right;
+        /* position: relative; */
+        /* text-align: right; */
+      }
+
+      .header-numbers {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
       }
 
       .header-title {
-        position: absolute;
+        /* position: absolute;
         left: 0;
         bottom: 28px;
+        display: block;
+        font-size: 70px;
+        font-weight: 600; */
         display: block;
         font-size: 70px;
         font-weight: 600;
       }
 
       .header-number {
-        display: block;
+        display: inline-block;
+        text-align: right;
         font-size: 220px;
         font-weight: 800;
       }
+
+      .header-table {
+        display: inline-block;
+        text-align: left;
+        font-size: 190apx;
+        font-weight: 600;
+      }
+
+      /* .header-number {
+        display: block;
+        font-size: 220px;
+        font-weight: 800;
+      } */
 
       /* lista prodotti */
       .products {
@@ -43,12 +66,12 @@
       .product-wrapper {
         font-size: 24px;
       }
-      
+
       .product-header-wrapper {
         font-size: 28px;
         margin-bottom: 0.3cm;
       }
-      
+
       .product-quantity-header,
       .product-quantity {
         width: 50px;
@@ -70,7 +93,7 @@
       }
 
       .notes-text {
-	font-size: 24px;
+        font-size: 24px;
         margin-left: 0.5cm;
       }
 
@@ -84,13 +107,19 @@
   </head>
   <body>
     <div class="header">
+      <div class="header-numbers">
+        <span id="tableNumber" class="header-table">
+          <!-- valore inserito da codice -->
+          %TABLENUM%
+        </span>
+        <span id="orderNumber" class="header-number">
+          <!-- valore inserito da codice -->
+          %ORDNUM%
+        </span>
+      </div>
       <span id="title" class="header-title">
         <!-- valore inserito da codice -->
         %TITLE%
-      </span>
-      <span id="orderNumber" class="header-number">
-        <!-- valore inserito da codice -->
-        %ORDNUM%
       </span>
     </div>
     <div class="separator"></div>
@@ -102,7 +131,6 @@
       %PRODUCTLIST%
     </div>
     <div class="separator"></div>
-    %NOTES%
-    %TAKEAWAY%
+    %NOTES% %TAKEAWAY%
   </body>
 </html>

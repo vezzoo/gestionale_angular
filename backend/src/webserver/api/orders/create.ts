@@ -23,7 +23,6 @@ export default new MutexAuthApiCall(
         let code = ("0000" + OrderManager.getInstance().getOrderNumber()).substr(-4)
 
         for (let product of products) {
-
             if (product.product.stock < product.qta)
                 return ECODE.get("E_NO_STOCK", {
                     id: product.product?._id?.toString(),
@@ -36,7 +35,7 @@ export default new MutexAuthApiCall(
             product.product.stock -= product.qta
         }
 
-        const order =  new Order(code, user, products.map(e => e.product), products.map(e => e.qta), body.takeAway, body.notes)
+        const order = new Order(code, user, products.map(e => e.product), products.map(e => e.qta), body.takeAway, body.notes, body.tableNumber)
         await order.save()
 
         return {

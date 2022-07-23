@@ -128,6 +128,10 @@ export default function Printer(printername: string, cupsname: string, title: st
                 template = template.replace("%TITLE%", title)
                 template = template.replace("%ORDNUM%", payload.code)
 
+                if (payload.tableNumber != null && payload.tableNumber !== '') {
+                    template = template.replace("%TABLENUM%", payload.tableNumber)
+                }
+
                 if (!!payload.notes) {
                     let notes = SETTING_NOTES
                     notes = notes.replace("%TEXT%", payload.notes)

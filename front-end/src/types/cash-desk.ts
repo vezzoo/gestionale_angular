@@ -21,6 +21,7 @@ export interface CashDeskOrderConfirmRequest {
     [id: string]: number;
   };
   notes: string;
+  tableNumber: string;
   takeAway: boolean;
 }
 
